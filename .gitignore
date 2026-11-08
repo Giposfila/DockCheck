@@ -1,0 +1,7 @@
+node_modules
+dist
+.DS_Store
+*.log
+AGENT.md
+Agent.md
+agent.md
