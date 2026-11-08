@@ -1,3 +1,4 @@
+import { completePackage } from './helpers';
 import { describe, expect, it } from 'vitest';
 import JSZip from 'jszip';
 import { checkDocx, DEFAULT_REQUIREMENTS } from '../src/checker';
@@ -10,7 +11,7 @@ async function doc(body:string,styles='',parts:Record<string,string>={}) {
  const z=new JSZip(); z.file('word/document.xml',wrap('document',`<w:body>${body}</w:body>`));
  z.file('word/styles.xml',wrap('styles',styles));
  for(const [name,value] of Object.entries(parts)) z.file(name,value);
- return z.generateAsync({type:'uint8array'});
+ return completePackage(z).generateAsync({type:'uint8array'});
 }
 const run=(r:Awaited<ReturnType<typeof checkDocx>>,i=0)=>r.document.paragraphs[0].runs[i].properties;
 describe('OOXML model and checks',()=>{
@@ -60,18 +61,18 @@ describe('OOXML model and checks',()=>{
   const r=await checkDocx(await doc(p('1 Обычный текст.')));expect(r.document.paragraphs[0].role).toBe('body');
  });
  it('retains empty paragraphs, tabs, hyperlinks and notes',async()=>{
-  const r=await checkDocx(await doc('<w:p/><w:p><w:hyperlink><w:r><w:t>Link</w:t><w:tab/><w:br/></w:r></w:hyperlink></w:p>','',{'word/_rels/document.xml.rels':'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="n" Target="footnotes.xml" Type="footnotes"/></Relationships>','word/footnotes.xml':wrap('footnotes',`<w:footnote w:id="1">${p('Note')}</w:footnote>`)}));
+  const r=await checkDocx(await doc('<w:p/><w:p><w:hyperlink><w:r><w:t>Link</w:t><w:footnoteReference w:id="1"/><w:tab/><w:br/></w:r></w:hyperlink></w:p>','',{'word/_rels/document.xml.rels':'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="n" Target="footnotes.xml" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes"/></Relationships>','word/footnotes.xml':wrap('footnotes',`<w:footnote w:id="1">${p('Note')}</w:footnote>`)}));
   expect(r.document.paragraphs.map(p=>p.text)).toEqual(['','Link\t\n','Note']);
  });
  it('marks cyclic and missing styles unknown',async()=>{
   const r=await checkDocx(await doc(p('X','<w:pStyle w:val="A"/>'),'<w:style w:styleId="A"><w:basedOn w:val="A"/></w:style>'));
   expect(run(r).font.status).toBe('unsupported');expect(r.coverage.unknown).toBeGreaterThan(0);
  });
- it('ignores unused footer and checks PAGE paragraph alignment',async()=>{
-  const rels='<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="f" Target="footer2.xml" Type="footer"/></Relationships>';
+ it('ignores unused footer and refuses standalone PAGE instructions',async()=>{
+  const rels='<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="f" Target="footer2.xml" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer"/></Relationships>';
   const footer=wrap('ftr',p('Centered','<w:jc w:val="center"/>')+'<w:p><w:pPr><w:jc w:val="left"/></w:pPr><w:r><w:instrText> PAGE </w:instrText></w:r></w:p>');
   const r=await checkDocx(await doc(p()+'<w:sectPr><w:footerReference r:id="f" w:type="default"/></w:sectPr><w:sectPr/>',defaults,{'word/_rels/document.xml.rels':rels,'word/footer2.xml':footer,'word/footer1.xml':wrap('ftr','<w:p><w:fldSimple w:instr="PAGE"/></w:p>')}));
-  expect(r.results.filter(x=>x.ruleId==='footer.page').map(x=>x.status)).toEqual(['fail','fail']);
+  expect(r.results.filter(x=>x.ruleId==='footer.page').map(x=>x.status)).toEqual(['unknown','unknown']);
  });
  it('does not estimate pages or emit NaN',async()=>{
   const r=await checkDocx(await doc(p('X','<w:ind w:firstLine="invalid"/>')+'<w:sectPr><w:pgSz w:w="bad"/></w:sectPr>'));
@@ -101,9 +102,9 @@ it('gives a direct font priority over an inherited theme reference',async()=>{
  const r=await checkDocx(await doc(p('A','','<w:rFonts w:ascii="Arial"/>'),'<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:asciiTheme="minorHAnsi"/></w:rPr></w:rPrDefault></w:docDefaults>'));
  expect(run(r).font.value).toBe('Arial');
 });
-it('reports unsupported table banding explicitly',async()=>{
- const r=await checkDocx(await doc(`<w:tbl><w:tblPr><w:tblStyle w:val="T"/></w:tblPr><w:tr><w:tc>${p()}</w:tc></w:tr></w:tbl>`,defaults+'<w:style w:styleId="T"><w:tblStylePr w:type="band1Horz"><w:rPr><w:b/></w:rPr></w:tblStylePr></w:style>'));
- expect(run(r).font.status).toBe('unsupported');expect(r.results.find(x=>x.ruleId==='text.font')?.status).toBe('unknown');
+it('resolves table banding explicitly',async()=>{
+ const r=await checkDocx(await doc(`<w:tbl><w:tblPr><w:tblStyle w:val="T"/></w:tblPr><w:tr><w:tc>${p()}</w:tc></w:tr></w:tbl>`,defaults+'<w:style w:styleId="T" w:type="table"><w:tblStylePr w:type="band1Horz"><w:rPr><w:b/></w:rPr></w:tblStylePr></w:style>'));
+ expect(run(r).font.status).toBe('resolved');expect(run(r).bold.value).toBe(true);expect(r.results.find(x=>x.ruleId==='text.font')?.status).toBe('unknown');
 });
 it('does not silently accept tracked content',async()=>{
  const r=await checkDocx(await doc(`<w:ins w:id="1">${p('Pending')}</w:ins>`));

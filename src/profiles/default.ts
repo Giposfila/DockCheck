@@ -1,6 +1,7 @@
 import type { Requirements } from '../types';
 // Inherited configurable profile; clauses have not been independently verified.
 export const DEFAULT_REQUIREMENTS: Requirements = {
+  textRoles: ['body'],
   fontFamily: 'Times New Roman',
   fontSizePt: 14,
   allowedLineSpacing: [1, 1.5],

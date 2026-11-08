@@ -1,7 +1,9 @@
 import { attr, child, children } from './package';
 import type { Properties } from './model';
 const specs: Record<string, [string, string, string?, number?]> = {
- fontSize: ['sz','val','pt',.5], bold:['b','val','boolean'], italic:['i','val','boolean'], underline:['u','val'], color:['color','val'], verticalAlign:['vertAlign','val'], characterSpacing:['spacing','val','pt',.05],
+ fontSizeCs:['szCs','val','pt',.5], fontSize: ['sz','val','pt',.5], bold:['b','val','boolean'], italic:['i','val','boolean'], underline:['u','val'], color:['color','val'], verticalAlign:['vertAlign','val'], characterSpacing:['spacing','val','pt',.05],
+ language:['lang','val'], eastAsiaLanguage:['lang','eastAsia'], bidiLanguage:['lang','bidi'],
+ outlineLevel:['outlineLvl','val','level',1], sectionBreak:['type','val'],
  align:['jc','val'], left:['ind','left','mm',1/56.6929133858], right:['ind','right','mm',1/56.6929133858], firstLine:['ind','firstLine','mm',1/56.6929133858], hanging:['ind','hanging','mm',1/56.6929133858], before:['spacing','before','pt',.05], after:['spacing','after','pt',.05], line:['spacing','line','twips',1], lineRule:['spacing','lineRule'], beforeAuto:['spacing','beforeAutospacing','boolean'], afterAuto:['spacing','afterAutospacing','boolean'], contextualSpacing:['contextualSpacing','val','boolean'],
  keepNext:['keepNext','val','boolean'], keepLines:['keepLines','val','boolean'], pageBreakBefore:['pageBreakBefore','val','boolean'], widowControl:['widowControl','val','boolean'],
  numId:['numPr','numId'], level:['numPr','ilvl'],
@@ -13,9 +15,10 @@ export function extract(node: Element | undefined, part: string, styleId?: strin
  for (const [key,[tag,attribute,unit,factor]] of Object.entries(specs)) {
   const n = child(node,tag); if (!n) continue;
   const raw = tag === 'numPr' ? attr(child(n,attribute),'val') : attr(n,attribute);
-  if (raw === undefined && unit !== 'boolean') continue;
-  const value = unit === 'boolean' ? !['0','false','off'].includes(raw ?? '') : factor ? Number(raw)*factor : raw!;
-  result[key] = { value: typeof value === 'number' && !Number.isFinite(value) ? null : value, status: typeof value === 'number' && !Number.isFinite(value) ? 'unknown':'resolved', source:{part,property:key,styleId}, raw, unit };
+  if (raw === undefined && (unit !== 'boolean' || attribute!=='val')) continue;
+  const valid=unit==='boolean'?raw===undefined||['1','true','on','0','false','off'].includes(raw):!factor||/^[+-]?\d+$/.test(raw ?? '');
+  const value = !valid ? null : unit === 'boolean' ? !['0','false','off'].includes(raw ?? '') : factor ? Number(raw)*factor : raw!;
+  result[key] = { value: typeof value === 'number' && !Number.isFinite(value) ? null : value, status: !valid || typeof value === 'number' && !Number.isFinite(value) ? 'unknown':'resolved', source:{part,property:key,styleId}, raw, unit,reason:!valid?'Некорректное значение OOXML':undefined };
  }
  const fonts = child(node,'rFonts');
  if (fonts) for (const slot of ['ascii','hAnsi','eastAsia','cs','asciiTheme','hAnsiTheme','eastAsiaTheme','cstheme']) {

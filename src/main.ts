@@ -1,4 +1,6 @@
 import './styles.css';
+import { exportReport, groupResults, resultFinding } from './report';
+import { pageLabel, unknownPage } from './analyzer/location';
 import { checkDocx, DEFAULT_REQUIREMENTS } from './checker';
 import type { Category, CheckReport, Finding, Requirements } from './types';
 
@@ -68,7 +70,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </div>
         <div class="standard-note">
           ${icon('file')}
-          <div><strong>Основа проверки</strong><span>СТУ 7.5-07-2021, разделы 6–7</span></div>
+          <div><strong>Основа проверки</strong><span>Настраиваемый профиль; ссылки на СТУ не проверены независимо</span></div>
           <a href="${STANDARD_URL}" target="_blank" rel="noreferrer">Открыть стандарт ↗</a>
         </div>
       </div>
@@ -106,7 +108,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </footer>
 
   <div class="drawer-backdrop hidden" id="drawerBackdrop"></div>
-  <aside class="drawer" id="settingsDrawer" aria-hidden="true" aria-label="Настройки шаблона">
+  <aside class="drawer" id="settingsDrawer" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Настройки шаблона">
     <div class="drawer-head"><div><span class="mini-label">ШАБЛОН ТРЕБОВАНИЙ</span><h2>Что проверять</h2></div><button class="icon-button" id="closeSettings" aria-label="Закрыть">${icon('close')}</button></div>
     <form id="requirementsForm">
       <fieldset><legend>Основной текст</legend>
@@ -114,6 +116,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div class="field-row"><label>Кегль, пт<input type="number" name="fontSizePt" min="8" max="32" step="0.5" value="${requirements.fontSizePt}"></label><label>Абзац, мм<input type="number" name="firstLineIndentMm" min="0" max="30" step="0.5" value="${requirements.firstLineIndentMm}"></label></div>
         <label>Допустимые интервалы<input name="allowedLineSpacing" value="${requirements.allowedLineSpacing.join(', ')}"><small>Через запятую: 1, 1.5</small></label>
         <label class="toggle"><input type="checkbox" name="requireJustified" ${requirements.requireJustified ? 'checked' : ''}><span></span><div><strong>Выравнивание по ширине</strong><small>Для абзацев основного текста</small></div></label>
+      </fieldset>
+      <fieldset><legend>Область проверки шрифта и кегля</legend>
+        <small>Включайте дополнительные роли, если ваш профиль устанавливает для них тот же шрифт и размер.</small>
+        ${([['body','Основной текст'],['heading','Заголовки'],['list','Списки'],['table','Таблицы'],['caption','Подписи'],['note','Сноски'],['header','Верхние колонтитулы'],['footer','Нижние колонтитулы'],['textbox','Текстовые блоки']] as const).map(([role,label])=>`<label><input type="checkbox" name="textRole" value="${role}" ${(requirements.textRoles ?? ['body']).includes(role)?'checked':''}> ${label}</label>`).join('')}
       </fieldset>
       <fieldset><legend>Поля вертикальной страницы</legend>
         <div class="field-grid">
@@ -153,18 +159,29 @@ function openSettings() {
   settingsDrawer.classList.add('open');
   settingsDrawer.setAttribute('aria-hidden', 'false');
   drawerBackdrop.classList.remove('hidden');
+  document.querySelector<HTMLButtonElement>('#closeSettings')!.focus();
 }
 
 function closeSettings() {
   settingsDrawer.classList.remove('open');
   settingsDrawer.setAttribute('aria-hidden', 'true');
   drawerBackdrop.classList.add('hidden');
+  document.querySelector<HTMLButtonElement>('#settingsButton')!.focus();
 }
 
 document.querySelector('#settingsButton')!.addEventListener('click', openSettings);
 document.querySelector('#closeSettings')!.addEventListener('click', closeSettings);
 drawerBackdrop.addEventListener('click', closeSettings);
-document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeSettings(); });
+document.addEventListener('keydown', (event) => {
+ if(!settingsDrawer.classList.contains('open'))return;
+ if(event.key==='Escape')closeSettings();
+ if(event.key==='Tab') {
+  const controls=Array.from(settingsDrawer.querySelectorAll<HTMLElement>('button,input,textarea')).filter(el=>el.getClientRects().length>0);
+  const first=controls[0],last=controls.at(-1);
+  if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}
+  else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
+ }
+});
 document.querySelector('#pickButton')!.addEventListener('click', (event) => { event.stopPropagation(); fileInput.click(); });
 dropzone.addEventListener('click', () => fileInput.click());
 dropzone.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') fileInput.click(); });
@@ -214,16 +231,15 @@ function escapeHtml(value: string): string {
 }
 
 function renderReport(nextReport: CheckReport) {
-  const errors = nextReport.findings.filter((f) => f.severity === 'error').length;
-  const warnings = nextReport.findings.length - errors;
+  const violations=nextReport.coverage.fail;
   const checked = nextReport.coverage.pass + nextReport.coverage.fail;
   const score = Math.round(100 * nextReport.coverage.pass / Math.max(1, nextReport.results.length));
   document.querySelector('#reportTitle')!.textContent = currentFileName;
   document.querySelector('#reportMeta')!.textContent = `${nextReport.coverage.pass} проверок пройдено · ${nextReport.coverage.fail} нарушений · ${nextReport.coverage.unknown} не определено · ${nextReport.stats.paragraphs} абзацев · ${nextReport.stats.tables} таблиц · ${nextReport.stats.images} изображений`;
   document.querySelector('#scoreGrid')!.innerHTML = `
-    <div class="score-card score-main"><div class="score-ring" style="--score:${score * 3.6}deg"><span>${score}</span></div><div><span class="score-label">Подтверждено проверок, %</span><strong>${nextReport.coverage.unknown} не определено</strong><small>Оценка — ориентир, не решение нормоконтроля</small></div></div>
-    <div class="score-card"><span class="metric-icon error">${icon('alert')}</span><div><span class="score-label">Нарушения</span><strong>${errors}</strong><small>Требуют исправления</small></div></div>
-    <div class="score-card"><span class="metric-icon warning">${icon('eye')}</span><div><span class="score-label">Предупреждения</span><strong>${warnings}</strong><small>Стоит перепроверить</small></div></div>
+    <div class="score-card score-main"><div class="score-ring" style="--score:${score * 3.6}deg"><span>${score}</span></div><div><span class="score-label">Подтверждено проверок, %</span><strong>${nextReport.coverage.unknown} не определено</strong><small>Доля результатов, а не оценка качества документа</small></div></div>
+    <div class="score-card"><span class="metric-icon error">${icon('alert')}</span><div><span class="score-label">Нарушения</span><strong>${violations}</strong><small>Требуют исправления</small></div></div>
+    <div class="score-card"><span class="metric-icon warning">${icon('eye')}</span><div><span class="score-label">Не удалось проверить</span><strong>${nextReport.coverage.unknown}</strong><small>Свойство или область неизвестны</small></div></div>
     <div class="score-card"><span class="metric-icon ok">${icon('check')}</span><div><span class="score-label">Проверено свойств</span><strong>${checked}</strong><small>По структуре DOCX</small></div></div>`;
   renderFilters(nextReport);
   renderFindings(nextReport);
@@ -249,25 +265,40 @@ function findingCard(finding: Finding): string {
     <div class="finding-body">
       <div class="finding-top"><span>${categoryLabels[finding.category]} · п. ${escapeHtml(finding.clause)}</span><span class="location">${escapeHtml(finding.location)}</span></div>
       <h3>${escapeHtml(finding.title)}</h3>
-      ${finding.excerpt ? `<blockquote>«${escapeHtml(finding.excerpt)}»</blockquote>` : ''}
-      ${finding.source ? `<p>Источник: ${escapeHtml(finding.source.part)}${finding.source.styleId ? ` → ${escapeHtml(finding.source.styleId)}` : ""} → ${escapeHtml(finding.source.property)}</p>` : ""}
+      <p class="page-reference">${escapeHtml(pageLabel(finding.at?.page ?? unknownPage()))}</p>
+      ${quoteHtml(finding)}
       ${finding.recommendation ? `<p>${escapeHtml(finding.recommendation)}</p>` : ""}
+      <details><summary>Источник свойства и требование</summary><p>${escapeHtml(finding.explanation ?? '')}</p><p>${escapeHtml(JSON.stringify(finding.source ?? 'Источник не определён'))}</p><p>${escapeHtml(finding.clause)}</p></details>
       <div class="comparison"><div><span>СЕЙЧАС</span><p>${escapeHtml(finding.actual)}</p></div><div><span>ТРЕБУЕТСЯ</span><p>${escapeHtml(finding.expected)}</p></div></div>
     </div>
   </article>`;
 }
 
+function visibleText(text:string,spaces=false):string {
+ const escaped=spaces?escapeHtml(text).replace(/ /g,'<span class="invisible-symbol" aria-label="пробел">·</span>').replace(/&nbsp;/g,'<span class="invisible-symbol" aria-label="неразрывный пробел">⍽</span>'):escapeHtml(text);
+ return escaped.replace(/\t/g,'<span class="invisible-symbol" aria-label="табуляция">⇥</span>').replace(/\n/g,'<span class="invisible-symbol" aria-label="разрыв строки">↵</span>\n');
+}
+function quoteHtml(f:Finding):string {
+ const range=f.at?.range, text=f.paragraphText;
+ if(!range || text===undefined || !text.length) return '<p>Текстовая цитата неприменима: используйте расположение объекта.</p>';
+ const start=Math.max(0,range.start-70),end=Math.min(text.length,range.end+70);
+ const quote=(from:number,to:number,spaces=false)=>`${visibleText(text.slice(from,range.start),spaces)}<mark>${visibleText(text.slice(range.start,range.end),spaces)}</mark>${visibleText(text.slice(range.end,to),spaces)}`;
+ return `<blockquote>${start?'…':''}${quote(start,end)}${end<text.length?'…':''}</blockquote>
+ <details><summary>Полный абзац и невидимые символы</summary><blockquote>${quote(0,text.length,true)}</blockquote></details>
+ <button class="button button-ghost copy-quote" data-result="${escapeHtml(f.id)}">Скопировать цитату для поиска</button>`;
+}
 function renderFindings(nextReport: CheckReport) {
-  const container = document.querySelector('#findings')!;
-  if (activeFilter === 'manual') {
-    container.innerHTML = `<div class="list-head"><div><span class="mini-label">ЗОНА ОТВЕТСТВЕННОСТИ ЧЕЛОВЕКА</span><h2>Проверьте вручную</h2></div><span>${nextReport.manualChecks.length} пунктов</span></div>
-      <div class="manual-intro">${icon('eye')} <p><strong>DOCX — не готовая страница.</strong> Эти пункты зависят от визуальной вёрстки, смысла текста или вида учебной работы.</p></div>
-      ${nextReport.manualChecks.map((item, index) => `<article class="manual-card"><span>${String(index + 1).padStart(2, '0')}</span><div><small>П. ${escapeHtml(item.clause)}</small><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.reason)}</p></div></article>`).join('')}`;
-    return;
-  }
-  const items = activeFilter === 'all' ? nextReport.findings : nextReport.findings.filter((f) => f.category === activeFilter);
-  container.innerHTML = `<div class="list-head"><div><span class="mini-label">АВТОМАТИЧЕСКАЯ ПРОВЕРКА</span><h2>${activeFilter === 'all' ? 'Все замечания' : categoryLabels[activeFilter]}</h2></div><span>${items.length} найдено</span></div>
-    ${items.length ? items.map(findingCard).join('') : `<div class="empty-state"><div>${icon('check')}</div><h3>Замечаний не найдено</h3><p>Подтверждённых нарушений в этом разделе нет. Проверьте также неопределённые результаты.</p></div>`}`;
+ const container=document.querySelector('#findings')!;
+ const items=nextReport.results.filter(r=>activeFilter==='manual'?r.status==='unknown':r.status==='fail'&&(activeFilter==='all'||r.category===activeFilter));
+ container.innerHTML=`<div class="list-head"><h2>${activeFilter==='manual'?'Не удалось проверить':'Замечания'}</h2><span>${items.length} мест</span></div>`+
+ [...groupResults(items).values()].map(group=>`<details class="finding-group" open><summary>${escapeHtml(group[0].title)} — ${group.length} мест</summary>${group.map(r=>findingCard(resultFinding(r,nextReport.results.indexOf(r)))).join('')}</details>`).join('')+
+ (!items.length?'<div class="empty-state"><h3>Замечаний не найдено</h3><p>Проверка частичная. Непроверенные свойства доступны в разделе «Проверить вручную».</p></div>':'');
+ container.querySelectorAll<HTMLButtonElement>('.copy-quote').forEach(button=>button.addEventListener('click',async()=>{
+  const r=nextReport.results[Number(button.dataset.result)], range=r.at?.range;
+  if(!range || r.paragraphText===undefined) return;
+  const text=r.paragraphText.slice(range.start,range.end);
+  try {await navigator.clipboard.writeText(text);showToast('Цитата скопирована. Вставьте её в поиск Word (Ctrl+F).');} catch {showToast('Буфер обмена недоступен. Выделите и скопируйте текст цитаты.',true);}
+ }));
 }
 
 document.querySelector('#newFileButton')!.addEventListener('click', () => {
@@ -280,10 +311,7 @@ document.querySelector('#newFileButton')!.addEventListener('click', () => {
 
 document.querySelector('#downloadButton')!.addEventListener('click', () => {
   if (!report) return;
-  const rows = report.findings.map((f, i) => `${i + 1}. [${f.severity === 'error' ? 'НАРУШЕНИЕ' : 'ПРЕДУПРЕЖДЕНИЕ'}] ${f.title}\n   ${f.location}; п. ${f.clause}\n   Сейчас: ${f.actual}\n   Требуется: ${f.expected}${f.excerpt ? `\n   Фрагмент: «${f.excerpt}»` : ''}`).join('\n\n');
-  const manual = report.manualChecks.map((item, i) => `${i + 1}. ${item.title} (${item.clause})\n   ${item.reason}`).join('\n\n');
-  const details = report.results.map(r => `${r.ruleId} [${r.status}] ${r.location}\nФакт: ${JSON.stringify(r.actual)}; требуется: ${JSON.stringify(r.expected)}\nИсточник: ${r.source ? JSON.stringify(r.source) : "не определён"}\n${r.explanation}\n${r.recommendation}`).join("\n\n");
-  const body = `ДОКЧЕК — ОТЧЁТ ПО СТУ СФУ 7.5-07-2021\n\nФайл: ${report.fileName}\nПроверено: ${new Date(report.checkedAt).toLocaleString('ru-RU')}\nАбзацев: ${report.stats.paragraphs}; таблиц: ${report.stats.tables}; изображений: ${report.stats.images}\n\nАВТОМАТИЧЕСКИЕ ЗАМЕЧАНИЯ (${report.findings.length})\n\n${rows || 'Не найдено.'}\n\nПРОВЕРИТЬ ВРУЧНУЮ\n\n${manual}\n\nВСЕ ПРОВЕРКИ\n\n${details}\n\nОтчёт является предварительным и не заменяет нормоконтроль.`;
+  const body = exportReport(report);
   const url = URL.createObjectURL(new Blob([body], { type: 'text/plain;charset=utf-8' }));
   const link = document.createElement('a');
   link.href = url;
@@ -298,6 +326,7 @@ document.querySelector('#requirementsForm')!.addEventListener('submit', (event) 
   const numeric = (name: string, fallback: number) => Number(data.get(name)) || fallback;
   requirements = {
     ...requirements,
+    textRoles: data.getAll("textRole") as NonNullable<Requirements["textRoles"]>,
     fontFamily: String(data.get('fontFamily') || DEFAULT_REQUIREMENTS.fontFamily).trim(),
     fontSizePt: numeric('fontSizePt', DEFAULT_REQUIREMENTS.fontSizePt),
     firstLineIndentMm: numeric('firstLineIndentMm', DEFAULT_REQUIREMENTS.firstLineIndentMm),

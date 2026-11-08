@@ -1,0 +1,70 @@
+const {chromium}=await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
+import { strict as assert } from 'node:assert';
+const browser=await chromium.launch({headless:true});
+const context=await browser.newContext({permissions:['clipboard-read','clipboard-write'],acceptDownloads:true});
+const page=await context.newPage();
+const errors=[];
+const requests=[];page.on('request',r=>requests.push({url:r.url(),method:r.method()}));page.on('pageerror',e=>errors.push(String(e)));
+const root=decodeURIComponent(new URL('../',import.meta.url).pathname).replace(/\/$/,'');
+async function load(kind) {
+ await page.goto(process.env.DOCKCHECK_URL ?? 'http://localhost:4173');
+ await page.locator('#fileInput').setInputFiles(`${root}/tests/fixtures/${kind}.docx`);
+ await page.locator('#reportSection').waitFor({state:'visible'});
+ console.log(kind,await page.locator('#reportMeta').textContent());
+}
+for(const kind of ['correct','incorrect','partial']) {
+ await load(kind);
+ if(kind==='correct')assert.equal(await page.locator('.finding-card').count(),0);
+ if(kind==='incorrect') {
+  assert.equal(await page.locator('.finding-card').count(),2);
+  assert.equal(await page.locator('mark').first().textContent(),'Проверочный документ DockCheck.');
+  await page.locator('.copy-quote').first().click();
+  assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),'Проверочный документ DockCheck.');
+ }
+ await page.locator('[data-filter="manual"]').click();
+ assert.ok(await page.locator('.finding-card').count()>0);
+ assert.match(await page.locator('.finding-card h3').first().textContent(),/Не удалось проверить/);
+ await page.screenshot({path:`/tmp/dockcheck-${kind}-v2.png`,fullPage:true});
+}
+await load('search');
+assert.ok((await page.locator('.page-reference').allTextContents()).some(t=>t.includes('Страница ≈ 2')));
+const card=page.locator('.finding-card').filter({hasText:'Одинаковая цитата'}).first();
+assert.equal(await card.locator('mark').first().textContent(),'Одинаковая цитата');
+await card.locator('summary').filter({hasText:'Полный абзац'}).click();
+assert.ok((await card.locator('blockquote').last().textContent()).includes('😀·Начало.'));
+await card.locator('.copy-quote').click();
+assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),'Одинаковая цитата');
+const summary=page.locator('.finding-group > summary').first();
+await summary.focus();await page.keyboard.press('Enter');
+assert.equal(await summary.evaluate(n=>n.parentElement.open),false);
+await page.keyboard.press('Enter');assert.equal(await summary.evaluate(n=>n.parentElement.open),true);
+await page.locator('[data-filter="text"]').click();
+assert.ok(await page.locator('.finding-card').count()>=3);
+await page.locator('[data-filter="manual"]').click();
+assert.ok((await page.locator('.finding-card').allTextContents()).some(t=>/роли|роль/.test(t)));
+await page.locator('[data-filter="all"]').click();
+const downloadPromise=page.waitForEvent('download');await page.locator('#downloadButton').click();
+const download=await downloadPromise;await download.saveAs('/tmp/dockcheck-report.txt');
+const {readFile}=await import('node:fs/promises');const exported=await readFile('/tmp/dockcheck-report.txt','utf8');
+for(const text of ['"unit":"utf16"','Цитата: "Одинаковая цитата"','Страница ≈ 2','fragmentId','Источник:'])assert.ok(exported.includes(text),text);
+await page.setViewportSize({width:390,height:844});
+await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+await page.waitForFunction(()=>document.documentElement.scrollWidth<=innerWidth,{},{timeout:2000});
+await page.screenshot({path:'/tmp/dockcheck-search-mobile.png',fullPage:true});
+await page.locator('#settingsButton').click();
+await page.locator('[name="textRole"][value="table"]').check();
+const save=page.locator('#requirementsForm button[type="submit"]');await save.focus();await page.keyboard.press('Tab');
+assert.equal(await page.locator('#closeSettings').evaluate(n=>n===document.activeElement),true);
+await page.keyboard.press('Shift+Tab');assert.equal(await save.evaluate(n=>n===document.activeElement),true);
+const a4=page.locator('[name="requireA4"]');const initial=await a4.isChecked();await a4.focus();await page.keyboard.press('Space');assert.equal(await a4.isChecked(),!initial);await page.keyboard.press('Space');
+await page.locator('#requirementsForm button[type="submit"]').click();
+await load('search');
+assert.ok((await page.locator('.finding-card').allTextContents()).some(t=>t.includes('Ошибка в таблице')));
+console.log('PASS: upload 4 fixtures, exact highlighting, full context, clipboard, keyboard grouping, page hints, filters, text export, 390px viewport, profile role setting.');
+await load('textbox');
+await page.locator('[data-filter="manual"]').click();
+assert.ok((await page.locator('.finding-card').allTextContents()).some(t=>t.includes('Текстовый блок')));
+assert.ok(requests.every(r=>new URL(r.url).hostname==='localhost' && r.method==='GET'));
+console.log('PASS: VML text box, no document upload/network requests.');
+console.log('errors',errors);assert.equal(errors.length,0);
+await browser.close();

@@ -2,6 +2,7 @@ export type Severity = 'error' | 'warning';
 export type Category = 'page' | 'text' | 'structure' | 'heading' | 'table' | 'figure' | 'references';
 
 export interface Requirements {
+  textRoles?: import("./analyzer/model").Paragraph["role"][];
   fontFamily: string;
   fontSizePt: number;
   allowedLineSpacing: number[];
@@ -24,6 +25,10 @@ export interface Finding {
   expected: string;
   clause: string;
   excerpt?: string;
+  at?: import("./analyzer/model").DocumentLocation;
+  paragraphText?: string;
+  explanation?: string;
+  unit?: string;
   source?: import("./analyzer/model").Source | null;
   recommendation?: string;
 }
@@ -53,6 +58,8 @@ export interface CheckReport {
 
 export type CheckStatus = 'pass' | 'fail' | 'unknown' | 'not_applicable';
 export interface CheckResult {
+  scope?: string; tolerance?: number; property?: string;
+  at?: import("./analyzer/model").DocumentLocation; paragraphText?: string; unit?: string;
   ruleId: string; status: CheckStatus; severity: Severity; category: Category;
   location: string; title: string; actual: unknown; expected: unknown;
   source: import('./analyzer/model').Source | null; clause: string;
