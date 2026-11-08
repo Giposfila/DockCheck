@@ -48,8 +48,9 @@ export function checks(model: DocumentModel, req: Requirements): CheckResult[] {
    test('section.height','Высота A4',location,s.properties.height,landscape?210:297,v=>Math.abs(v-(landscape?210:297))<=TOLERANCE.mm,'page');
   }
   for(const [key,prop] of Object.entries({top:'top',bottom:'bottom',left:'marginLeft',right:'marginRight'})) {
-   const property=s.properties.orientation?.value==='landscape'?unknown('Профиль задаёт поля вертикальной страницы; для альбомной страницы требование не установлено'):['left','right'].includes(key)&&s.properties.mirrorMargins.value===true?unknown('При зеркальных полях нужны отдельные требования к внутреннему и внешнему полю'):s.properties[prop];
-   test(`section.margin.${key}`,`Поле ${{top:'сверху',bottom:'снизу',left:'слева',right:'справа'}[key]}`,location,property,req.portraitMarginsMm[key as keyof Requirements['portraitMarginsMm']],v=>Math.abs(v-req.portraitMarginsMm[key as keyof Requirements['portraitMarginsMm']])<=.7,'page');
+   const margins=s.properties.orientation?.value==='landscape'?(req.landscapeMarginsMm??{top:30,bottom:10,left:20,right:20}):req.portraitMarginsMm;
+   const property=['left','right'].includes(key)&&s.properties.mirrorMargins?.value===true?unknown('При зеркальных полях нужны отдельные требования к внутреннему и внешнему полю'):s.properties[prop];
+   test(`section.margin.${key}`,`Поле ${{top:'сверху',bottom:'снизу',left:'слева',right:'справа'}[key]}`,location,property,margins[key as keyof Requirements['portraitMarginsMm']],v=>Math.abs(v-margins[key as keyof Requirements['portraitMarginsMm']])<=TOLERANCE.mm,'page');
   }
  });
  at=undefined;
@@ -57,17 +58,17 @@ export function checks(model: DocumentModel, req: Requirements): CheckResult[] {
   at=obj.at;
   if(!['tbl','drawing'].includes(obj.kind)) continue;
   const table=obj.kind==='tbl';
-  const pattern=table?/^Таблица\s+[А-Я]?\d+(?:\.\d+)?\s+[–—-]\s+\S/u:/^Рисунок\s+[А-Я]?\d+(?:\.\d+)?\s+[–—-]\s+\S/u;
+  const pattern=table?/^Таблица\s+(?:[А-Я]\.)?\d+(?:\.\d+)?\s+[–—-]\s+\S/u:/^Рисунок\s+(?:[А-Я]\.)?\d+(?:\.\d+)?\s+[–—-]\s+\S/u;
   const caption=obj.caption ?? '';
   const plausible=(table?/^Таблица\s+\S/u:/^Рисунок\s+\S/u).test(caption);
   const captionParagraph=plausible?model.paragraphs.find(p=>p.id===obj.captionParagraphId):undefined;
   paragraphText=captionParagraph?.text;at=captionParagraph?.at ?? obj.at;
-  test(table?'table.caption':'figure.caption',table?'Подпись таблицы':'Подпись рисунка',captionParagraph?.location ?? obj.location,plausible?{value:caption,status:'resolved',source:null}:unknown('Подпись не найдена рядом с объектом; проверьте вручную'),table?'Таблица N – Наименование':'Рисунок N – Наименование',v=>pattern.test(v)&&!/[.]$/u.test(v),table?'table':'figure');
+  test(table?'table.caption':'figure.caption',table?'Подпись таблицы':'Подпись рисунка',captionParagraph?.location ?? obj.location,plausible?{value:caption,status:'resolved',source:null}:unknown('Подпись не найдена рядом с объектом; проверьте вручную'),table?'Таблица N – Наименование':'Рисунок N – Наименование',v=>pattern.test(v)&&(!table||!/[.]$/u.test(v)),table?'table':'figure');
  }
  at=undefined;paragraphText=undefined;
  for(const region of model.unsupported) {at=region.at;test('document.region','Непроверенная область',locationLabel(region.at),unknown(region.reason),'Ручная проверка',()=>false,'structure');}
  at=undefined;
  for(const limitation of model.limitations) test('document.support','Ограничение анализа','Документ',unknown(limitation),'Ручная проверка',()=>false,'structure');
- test('document.pagination','Фактическая пагинация','Документ',unknown('Без движка вёрстки число страниц и необходимость содержания не определены'),'Ручная проверка',()=>false,'page');
+ test('document.pagination','Фактическая пагинация','Документ',unknown('Без движка вёрстки число страниц и положения объектов не определены'),'Ручная проверка',()=>false,'page');
  return results;
 }

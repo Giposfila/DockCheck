@@ -1,5 +1,5 @@
 import type { Requirements } from '../types';
-// Inherited configurable profile; clauses have not been independently verified.
+// Compatibility defaults; immutable normative rules are in requirements/catalog.ts.
 export const DEFAULT_REQUIREMENTS: Requirements = {
   textRoles: ['body'],
   fontFamily: 'Times New Roman',
@@ -10,7 +10,7 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   requireA4: true,
   requireJustified: true,
   requirePageNumbers: true,
-  requireContentsOverPages: 24,
-  requiredSections: ['ВВЕДЕНИЕ', 'ЗАКЛЮЧЕНИЕ', 'СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ'],
+  requiredSections: [],
+  landscapeMarginsMm: {top:30,bottom:10,left:20,right:20},
 };
 

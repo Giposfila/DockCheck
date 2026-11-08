@@ -117,3 +117,7 @@ button:focus-visible, summary:focus-visible { outline: 3px solid #986b1b; outlin
  .filters { width: 100%; max-width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
  .filter { flex-shrink: 0; }
 }
+.drawer select { width:100%; padding:10px; border:1px solid #d8d9d8; border-radius:8px; background:white; color:inherit; font:inherit; }
+.drawer p, .drawer small { overflow-wrap:anywhere; }
+.profile-tools { display:flex; gap:8px; flex-wrap:wrap; padding:16px 0; }
+#profileReport { max-width:900px; line-height:1.5; }

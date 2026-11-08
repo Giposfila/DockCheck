@@ -12,6 +12,13 @@ async function load(kind) {
  await page.locator('#reportSection').waitFor({state:'visible'});
  console.log(kind,await page.locator('#reportMeta').textContent());
 }
+// Keep comparison UX coverage while the standard default conservatively preserves ambiguous roles.
+await page.goto(process.env.DOCKCHECK_URL ?? 'http://localhost:4173');
+await page.locator('#settingsButton').click();
+await page.locator('[name=useLocalFormatting]').check();
+await page.locator('[name=localSource]').fill('Браузерный тест локального шаблона');
+await page.locator('[name=documentMode]').selectOption('unframed');
+await page.locator('#requirementsForm button[type=submit]').click();
 for(const kind of ['correct','incorrect','partial']) {
  await load(kind);
  if(kind==='correct')assert.equal(await page.locator('.finding-card').count(),0);
@@ -66,5 +73,34 @@ await page.locator('[data-filter="manual"]').click();
 assert.ok((await page.locator('.finding-card').allTextContents()).some(t=>t.includes('Текстовый блок')));
 assert.ok(requests.every(r=>new URL(r.url).hostname==='localhost' && r.method==='GET'));
 console.log('PASS: VML text box, no document upload/network requests.');
+await page.setViewportSize({width:1280,height:900});
+await page.goto(process.env.DOCKCHECK_URL ?? 'http://localhost:4173');
+await page.evaluate(()=>localStorage.clear());
+await load('incorrect');
+assert.equal(await page.locator('.finding-card').count(),0);
+await page.locator('[data-filter=manual]').click();
+assert.ok((await page.locator('.finding-card').allTextContents()).some(t=>t.includes('ambiguous_role')));
+await page.locator('#settingsButton').click();
+await page.locator('[name=workKind]').selectOption('bachelor');
+await page.locator('[name=approvalVariant]').selectOption('combined');
+await page.locator('[name=consultants]').fill('3');
+await page.locator('#requirementsForm button[type=submit]').click();
+await page.locator('#processing').waitFor({state:'hidden'});
+await page.locator('#reportSection').waitFor({state:'visible'});
+assert.ok((await page.locator('.finding-card').allTextContents()).some(t=>t.includes('консультантов')));
+assert.match(await page.locator('#profileReport').textContent(),/work@2/);
+await page.locator('#settingsButton').click();
+const before=await page.evaluate(()=>localStorage.getItem('dockcheck-work-profile-v2'));
+await page.locator('#importProfile').setInputFiles({name:'bad.json',mimeType:'application/json',buffer:Buffer.from('{"schemaVersion":999}')});
+await page.waitForFunction(()=>document.querySelector('#toast').textContent.includes('версия'));
+assert.equal(await page.evaluate(()=>localStorage.getItem('dockcheck-work-profile-v2')),before);
+const downloadProfile=page.waitForEvent('download');await page.locator('#exportProfile').click();
+const profileDownload=await downloadProfile;await profileDownload.saveAs('/tmp/dockcheck-profile.json');
+const profileData=JSON.parse(await readFile('/tmp/dockcheck-profile.json','utf8'));assert.equal(profileData.schemaVersion,2);
+await page.locator('#closeSettings').click();
+const jsonDownloadPromise=page.waitForEvent('download');await page.locator('#downloadJson').click();
+const jsonDownload=await jsonDownloadPromise;await jsonDownload.saveAs('/tmp/dockcheck-report.json');
+const json=JSON.parse(await readFile('/tmp/dockcheck-report.json','utf8'));assert.equal(json.schemaVersion,1);assert.ok(json.report.results.some(r=>r.normSource&&r.reasonCode));
+console.log('PASS: conservative standard default, context, profile version, automatic recalculation, rejected corrupt import, profile and report exports.');
 console.log('errors',errors);assert.equal(errors.length,0);
 await browser.close();

@@ -1,0 +1,3616 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "edition": "СТУ 7.5–07–2021",
+    "pages": 61,
+    "sha256": "12c0b94ee68a1233600f59ab44f84b418e2e93c2516af121ccf9e7026f85c27c"
+  },
+  "fragments": [
+    {
+      "id": "pdf.1.1",
+      "pdfPage": 1,
+      "clause": "front-matter",
+      "firstLine": 1,
+      "lastLine": 1,
+      "sha256": "f9c5cebfb0cb50a8c16967c8e7053514ae616556e0849b8220c6738c91c637a1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.1.3",
+      "pdfPage": 1,
+      "clause": "front-matter",
+      "firstLine": 3,
+      "lastLine": 6,
+      "sha256": "971c024a860a5f6260a5244037beb6b45b5ecaf2318d8c9638209d588c45f425",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.1.8",
+      "pdfPage": 1,
+      "clause": "front-matter",
+      "firstLine": 8,
+      "lastLine": 8,
+      "sha256": "5865b96c2e95c4394fbbdd0234e44a6669391b2e3f448e7ce970672cb4c67c1c",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.1.13",
+      "pdfPage": 1,
+      "clause": "front-matter",
+      "firstLine": 13,
+      "lastLine": 14,
+      "sha256": "20bb4695c26373f4adc6549b503c1225025a25fabd72ee5ccda9b15c26e3396b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.2.7",
+      "pdfPage": 2,
+      "clause": "front-matter",
+      "firstLine": 7,
+      "lastLine": 7,
+      "sha256": "e7a8e2224e1ba2b916e0215a0dff28e4435a4c12122bfc82caf5b547caffa235",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.2.10",
+      "pdfPage": 2,
+      "clause": "front-matter",
+      "firstLine": 10,
+      "lastLine": 46,
+      "sha256": "a3999d1d42f7dcf3f1535f20d090324c0391a1c0444cbf78ccb9bfb811a1e07b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.3.7",
+      "pdfPage": 3,
+      "clause": "front-matter",
+      "firstLine": 7,
+      "lastLine": 40,
+      "sha256": "d6273a3361ada1c6b77885c4f26d6145dd89a1ccfadc24f679874d509b1c8a25",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.4.8",
+      "pdfPage": 4,
+      "clause": "front-matter",
+      "firstLine": 8,
+      "lastLine": 11,
+      "sha256": "c1b5648b1763274bd787d83ce2671512fb5d3280dcf0c29fb1241d84d6ce02e1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.4.14",
+      "pdfPage": 4,
+      "clause": "front-matter",
+      "firstLine": 14,
+      "lastLine": 18,
+      "sha256": "8a580375c0f0b005f0047dbb8e9629703287644202747f3c0ac8f54497a24af4",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.4.20",
+      "pdfPage": 4,
+      "clause": "front-matter",
+      "firstLine": 20,
+      "lastLine": 21,
+      "sha256": "8ff47821e7b91b89d7fefd34252b31addf40b705b0dbd36952f64abc92990eca",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.4.23",
+      "pdfPage": 4,
+      "clause": "1",
+      "firstLine": 23,
+      "lastLine": 23,
+      "sha256": "924395bca6a61d7fc0f50500b615e6acd342cdaa2a79619050899db8c3123034",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.4.25",
+      "pdfPage": 4,
+      "clause": "1.1",
+      "firstLine": 25,
+      "lastLine": 27,
+      "sha256": "b97b34409ae36f28c7dd3577caf720496ac9feb962dbd1a7b69c7d4d2460ce23",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.4.28",
+      "pdfPage": 4,
+      "clause": "1.2",
+      "firstLine": 28,
+      "lastLine": 38,
+      "sha256": "001ba2bc27fbc28ecd19ba4e8547e5860fd1e4182a206f539ab2062f02346c7e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.4.39",
+      "pdfPage": 4,
+      "clause": "1.3",
+      "firstLine": 39,
+      "lastLine": 41,
+      "sha256": "990e589e0dce12b2f13c54b5e45068583b3c9f13366c431b7e847d621c7233cd",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.4.42",
+      "pdfPage": 4,
+      "clause": "1.4",
+      "firstLine": 42,
+      "lastLine": 44,
+      "sha256": "e23692d96577360feef8bb3b1ac4cb73c09a7689a02bfe59f7f84a781da1e978",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.5.7",
+      "pdfPage": 5,
+      "clause": "2",
+      "firstLine": 7,
+      "lastLine": 7,
+      "sha256": "0bc046d7f61e87400690527889f0f7f2e6c12dc9a2a7ad2d01c74cbfa677c8a0",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.5.9",
+      "pdfPage": 5,
+      "clause": "2",
+      "firstLine": 9,
+      "lastLine": 46,
+      "sha256": "bf51e728b0ba134fd089e393334fc650e5570b7db8c44189e3266cf31287514e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.6.7",
+      "pdfPage": 6,
+      "clause": "2",
+      "firstLine": 7,
+      "lastLine": 20,
+      "sha256": "8f4250a8eaaa5b1875639aedd486d389756c9fcf45076f6bf09bafb7475b6b05",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.6.22",
+      "pdfPage": 6,
+      "clause": "3",
+      "firstLine": 22,
+      "lastLine": 22,
+      "sha256": "87e60aecebbc101e62f43b7cf6296bcd48d8ff4b7ec2aa6f6a12cfab90c35eb5",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.6.24",
+      "pdfPage": 6,
+      "clause": "3",
+      "firstLine": 24,
+      "lastLine": 25,
+      "sha256": "e4edd477c64a9e08ca09304b70935d2ebd2e8a5f2b2e6da97f860f5204a9cc30",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.6.26",
+      "pdfPage": 6,
+      "clause": "3.1",
+      "firstLine": 26,
+      "lastLine": 27,
+      "sha256": "5acaf31520b418258e179da7d5ee52d886e325c3b5a2bec94a39706004351b7a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.6.28",
+      "pdfPage": 6,
+      "clause": "3.2",
+      "firstLine": 28,
+      "lastLine": 32,
+      "sha256": "b1ff7ae39fb3efcc289c517b8086fede1a4a6599a32342a53fd0559d10ba90e7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.6.33",
+      "pdfPage": 6,
+      "clause": "3.3",
+      "firstLine": 33,
+      "lastLine": 36,
+      "sha256": "b26d0ea0cf4f41000264f740454be47a00c2afe3f6e4eb8365b5cade817a0bdd",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.6.37",
+      "pdfPage": 6,
+      "clause": "3.4",
+      "firstLine": 37,
+      "lastLine": 40,
+      "sha256": "56392db7829da72437b45e3d3ffcd16d6229c2b516074d7a4fe52f13f011d682",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.6.41",
+      "pdfPage": 6,
+      "clause": "3.5",
+      "firstLine": 41,
+      "lastLine": 43,
+      "sha256": "513a5f839f317e7c23e99473a1b3a2ffc09161b0415910a6f98a5f0020777e57",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.6.44",
+      "pdfPage": 6,
+      "clause": "3.6",
+      "firstLine": 44,
+      "lastLine": 46,
+      "sha256": "da80ce16c291becafe29f88f03fde4b373d466dfa50e604fa5b70107a4401f46",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.7.7",
+      "pdfPage": 7,
+      "clause": "3.7",
+      "firstLine": 7,
+      "lastLine": 9,
+      "sha256": "b95c2936b5e5cf66d00485c9c98fa55f8b808c93e2895f6a8d68cab02b7c64cd",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.7.10",
+      "pdfPage": 7,
+      "clause": "3.8",
+      "firstLine": 10,
+      "lastLine": 12,
+      "sha256": "d3621bb23af7b0316618627c41fb689c74d331b82c8ec15c8eac9a35e4210dba",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.7.13",
+      "pdfPage": 7,
+      "clause": "3.9",
+      "firstLine": 13,
+      "lastLine": 16,
+      "sha256": "37b460af079ce7e9b6139ebd40226ca4008c2dda53b0e2d7a6264f7169153ac1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.7.17",
+      "pdfPage": 7,
+      "clause": "3.10",
+      "firstLine": 17,
+      "lastLine": 18,
+      "sha256": "15bab2ccaededc7707b6ca4b5c6804d34e34b8c0e907203eb9a7c156e2b2e9b1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.7.19",
+      "pdfPage": 7,
+      "clause": "3.11",
+      "firstLine": 19,
+      "lastLine": 22,
+      "sha256": "ca6bfd636a361966d34e44f5805db6f0131ca895eb0135212e7f3024dce21484",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.7.23",
+      "pdfPage": 7,
+      "clause": "3.12",
+      "firstLine": 23,
+      "lastLine": 26,
+      "sha256": "be31dc6997d8949d510eba42971dc3c58dcb67507d1966d6b1a1b066c100ae74",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.7.27",
+      "pdfPage": 7,
+      "clause": "3.12",
+      "firstLine": 27,
+      "lastLine": 29,
+      "sha256": "76b79427d4cd9df2787f09d4afc775da8e5d9fe85ac4c6c32b761328cc8dc973",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.7.30",
+      "pdfPage": 7,
+      "clause": "3.13",
+      "firstLine": 30,
+      "lastLine": 35,
+      "sha256": "47feb96c9e92a027c8f7f68b7a337549de4bd8fe14fbe92e9f69b106297b94d9",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.7.36",
+      "pdfPage": 7,
+      "clause": "3.14",
+      "firstLine": 36,
+      "lastLine": 37,
+      "sha256": "051dd37c61540cf983a8bdeac8eda81a73f24c8a23055aba42d12a844c12a6c0",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.7.38",
+      "pdfPage": 7,
+      "clause": "3.15",
+      "firstLine": 38,
+      "lastLine": 42,
+      "sha256": "53578861dec25b3f34ecd5673d0ab54899057a346a9d292e7dfcfa9bf6099848",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.7.43",
+      "pdfPage": 7,
+      "clause": "3.16",
+      "firstLine": 43,
+      "lastLine": 45,
+      "sha256": "3d273493355d50141d792692fb96a1bac1b46b970e6af4af9b129b60df5dfdef",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.8.7",
+      "pdfPage": 8,
+      "clause": "3.17",
+      "firstLine": 7,
+      "lastLine": 9,
+      "sha256": "013ed606979cbec0a8c58f08d218ce4490c71c232cb27c84fd0dd2543406523f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.8.10",
+      "pdfPage": 8,
+      "clause": "3.18",
+      "firstLine": 10,
+      "lastLine": 12,
+      "sha256": "fef51e1f160afff7450a4de2d53f3ee2f0f88f288649290fd1898be2a3be4007",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.8.13",
+      "pdfPage": 8,
+      "clause": "3.19",
+      "firstLine": 13,
+      "lastLine": 16,
+      "sha256": "ea0af2e967bdeb4ba11ba8632e0eb6eb4961377366c9d5f0c27b5b15fdbc681e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.8.17",
+      "pdfPage": 8,
+      "clause": "3.20",
+      "firstLine": 17,
+      "lastLine": 19,
+      "sha256": "64a45c79dd007526044172c3135027416035d55c13c6d6f973adf21a2471c75d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.8.20",
+      "pdfPage": 8,
+      "clause": "3.21",
+      "firstLine": 20,
+      "lastLine": 23,
+      "sha256": "e0998456fe4eef0ac1adcf4729dc6c4a3a598d1b20fec966caa200cfa9566724",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.8.24",
+      "pdfPage": 8,
+      "clause": "3.22",
+      "firstLine": 24,
+      "lastLine": 26,
+      "sha256": "69ef7015ec9b262abe793526f264bccd8d68b6ef5a20694c076927fa3dfd03e4",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.8.27",
+      "pdfPage": 8,
+      "clause": "3.23",
+      "firstLine": 27,
+      "lastLine": 28,
+      "sha256": "27023b412bf6cb7fa4b56e8b8dfe4e742478836b20999d4335260cc6f3f823e6",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.8.29",
+      "pdfPage": 8,
+      "clause": "3.24",
+      "firstLine": 29,
+      "lastLine": 30,
+      "sha256": "f3f07577047bbd6907d5655db8df01a115c824f78c2c02f3cb2527b4262932ea",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.8.31",
+      "pdfPage": 8,
+      "clause": "3.25",
+      "firstLine": 31,
+      "lastLine": 32,
+      "sha256": "a2b0cbdfc9939efd17543e74c5a45a1e11d9a356c526c673cb265cd5c4a56adc",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.8.34",
+      "pdfPage": 8,
+      "clause": "4",
+      "firstLine": 34,
+      "lastLine": 34,
+      "sha256": "e3fef64d11f213a53457478335d3d3ea1c87e309c1e931ec17cd01d73e6a6de7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.8.36",
+      "pdfPage": 8,
+      "clause": "4",
+      "firstLine": 36,
+      "lastLine": 46,
+      "sha256": "901281ab2a8864b311c5b6aaaeffb447f55f8edc7535ee72ed2aa7a2b47dfa11",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.7",
+      "pdfPage": 9,
+      "clause": "5",
+      "firstLine": 7,
+      "lastLine": 7,
+      "sha256": "f3f9b7859a93236e21a437c2d06c711bf328a6074e9d94db4f15caf58c0b4d9b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.9",
+      "pdfPage": 9,
+      "clause": "5.1",
+      "firstLine": 9,
+      "lastLine": 14,
+      "sha256": "ca753afd45cb87fa48ebc32d3e679f3eb14e024d032e3ee549dbcba9998e235c",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.15",
+      "pdfPage": 9,
+      "clause": "5.2",
+      "firstLine": 15,
+      "lastLine": 16,
+      "sha256": "ea9c0d34fe42e494e3504418c8e7abd60b1360d1d731064561bb37456e430abf",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.17",
+      "pdfPage": 9,
+      "clause": "5.3",
+      "firstLine": 17,
+      "lastLine": 18,
+      "sha256": "b76148124f3e765749fa1a668610a6821733bbc9bba4b869705927504e92d328",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.19",
+      "pdfPage": 9,
+      "clause": "5.4",
+      "firstLine": 19,
+      "lastLine": 20,
+      "sha256": "47496bf2b71c6b1c497ac8e68a5f561a02d4077d0eaf267b1774f246ffdf4774",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.21",
+      "pdfPage": 9,
+      "clause": "5.5",
+      "firstLine": 21,
+      "lastLine": 24,
+      "sha256": "93fc54d8176c9e8db4d62f51b02c28d1165f46bb1feccb52a3a5c62d6f4b7201",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.25",
+      "pdfPage": 9,
+      "clause": "5.6",
+      "firstLine": 25,
+      "lastLine": 29,
+      "sha256": "57828f0285bfd065f0d8f9abd9626a8c23190ec7db24cb87abc57b7dfb256391",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.30",
+      "pdfPage": 9,
+      "clause": "5.7",
+      "firstLine": 30,
+      "lastLine": 31,
+      "sha256": "c2f45de5fdd0752bff09242f8e08569bb07603d72dcbff63eab6304971e27257",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.32",
+      "pdfPage": 9,
+      "clause": "5.8",
+      "firstLine": 32,
+      "lastLine": 34,
+      "sha256": "7a0ce67e21215148cc15cdcac2280cd12f1b49b181b88d4ec4a21d8753953c4f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.36",
+      "pdfPage": 9,
+      "clause": "6",
+      "firstLine": 36,
+      "lastLine": 36,
+      "sha256": "7eba7201536b2b48cf88d2362eaf89a3b048bf3f124eed4d7eeac7955c9c6a15",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.38",
+      "pdfPage": 9,
+      "clause": "6.1",
+      "firstLine": 38,
+      "lastLine": 38,
+      "sha256": "05407739ddb8511b7ffa956cf280b8dae8da8459691894ff27cb829c1767fad3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.9.40",
+      "pdfPage": 9,
+      "clause": "6.1",
+      "firstLine": 40,
+      "lastLine": 48,
+      "sha256": "e1c938144324ac2b26575f7ec670fa27cc147eca831cbb478c2d18784c309478",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.10.7",
+      "pdfPage": 10,
+      "clause": "6.1",
+      "firstLine": 7,
+      "lastLine": 23,
+      "sha256": "74617ae97a4064a32b9eaa94ce9553fd43a63318be5aa882a22ad5e1d1e4362e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.10.25",
+      "pdfPage": 10,
+      "clause": "6.2",
+      "firstLine": 25,
+      "lastLine": 25,
+      "sha256": "ca76bed7604b2e2f0928219af33a48605ede22331be7624a2c1fff2853c3a87a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.10.27",
+      "pdfPage": 10,
+      "clause": "6.2.1",
+      "firstLine": 27,
+      "lastLine": 30,
+      "sha256": "84134eff7d550f2de2e4ab863145c9932626d0b1d3cce20b91ceeb4c6154a4e7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.10.31",
+      "pdfPage": 10,
+      "clause": "6.2.2",
+      "firstLine": 31,
+      "lastLine": 48,
+      "sha256": "fcf4b15cd97d27fb96b5fa5ab1e677c76f578eaad7c4d0347892e7eed7b215f4",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.11.7",
+      "pdfPage": 11,
+      "clause": "6.2.3",
+      "firstLine": 7,
+      "lastLine": 9,
+      "sha256": "582f9427c13b69ee167d30d1be6189cd94614b7017bf402568ae422d50754ada",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.11.11",
+      "pdfPage": 11,
+      "clause": "6.3",
+      "firstLine": 11,
+      "lastLine": 11,
+      "sha256": "be92ba2a5f17356b65808c605943eac56eaf551757f85de5c91f2047f76e0d42",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.11.13",
+      "pdfPage": 11,
+      "clause": "6.3.1",
+      "firstLine": 13,
+      "lastLine": 22,
+      "sha256": "9c7c48bb0286f01b9c83012be0d58220e584dc053304b37b49ed85576034296e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.11.23",
+      "pdfPage": 11,
+      "clause": "6.3.2",
+      "firstLine": 23,
+      "lastLine": 29,
+      "sha256": "a9adb4cceb2eab21bff8bc180edaaa3af4648d1c52d9a340997ed383f6fd1970",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.11.30",
+      "pdfPage": 11,
+      "clause": "6.3.3",
+      "firstLine": 30,
+      "lastLine": 31,
+      "sha256": "ffdf3b15c6ad49be6168a6e1243b285f3b6ae3a0bb341f570c58d5d6e6d2e056",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.11.33",
+      "pdfPage": 11,
+      "clause": "6.4",
+      "firstLine": 33,
+      "lastLine": 33,
+      "sha256": "1a3c8aac2cb302d2d633e9f9a07c76991f87312547fbf8da6039b17bbab7d890",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.11.35",
+      "pdfPage": 11,
+      "clause": "6.4.1",
+      "firstLine": 35,
+      "lastLine": 36,
+      "sha256": "aeb5e28256e9e6a3a2cc069fa6294d8e22226c39b00b5332b6386d24401def33",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.11.37",
+      "pdfPage": 11,
+      "clause": "6.4.2",
+      "firstLine": 37,
+      "lastLine": 42,
+      "sha256": "5a039b92caad56946c377e5b142da9adf02fa89ddcc014ac94fa4a73a985eab3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.11.43",
+      "pdfPage": 11,
+      "clause": "6.4.3",
+      "firstLine": 43,
+      "lastLine": 45,
+      "sha256": "773dc1b8a671888e856788fe079b905599ae7547dddc94c5042990bdbd8e1387",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.11.46",
+      "pdfPage": 11,
+      "clause": "6.4.4",
+      "firstLine": 46,
+      "lastLine": 47,
+      "sha256": "5a588927e5008d13bdebf8b8de3f69b7aee2e5427f3a97c0651bafea3a716584",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.12.7",
+      "pdfPage": 12,
+      "clause": "6.4.4",
+      "firstLine": 7,
+      "lastLine": 16,
+      "sha256": "8fda69356ed774ce091cc4034cfe9c7285db6e6c2af8873f563535bd8d998ee7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.12.17",
+      "pdfPage": 12,
+      "clause": "6.4.5",
+      "firstLine": 17,
+      "lastLine": 20,
+      "sha256": "ebf7015f5369b33a1548ca9aae8a0de35f18961a48adb1c952e71facee5f77f4",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.12.22",
+      "pdfPage": 12,
+      "clause": "6.5",
+      "firstLine": 22,
+      "lastLine": 22,
+      "sha256": "56604523a6b08b28deb6122499000eaa7c5070fa188104834815e98afd68df03",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.12.24",
+      "pdfPage": 12,
+      "clause": "6.5",
+      "firstLine": 24,
+      "lastLine": 27,
+      "sha256": "98c9ab67a4be6b3b1e89fdae11a28ba4f3cdcaae14ce6d4b039c4e716a398ae5",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.12.29",
+      "pdfPage": 12,
+      "clause": "6.6",
+      "firstLine": 29,
+      "lastLine": 29,
+      "sha256": "39c4d47cd952b838c6a06bf6f3d374eab570ef3463cd12b0465f5d6cfbaf59e8",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.12.31",
+      "pdfPage": 12,
+      "clause": "6.6",
+      "firstLine": 31,
+      "lastLine": 36,
+      "sha256": "e1e2c9bae5f0da8373b202d4cd2fed24175beac89a8d5a38baa8773fc5ea029c",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.12.38",
+      "pdfPage": 12,
+      "clause": "6.7",
+      "firstLine": 38,
+      "lastLine": 38,
+      "sha256": "7b761930c85ef3ecf90c8a3ab531ba01e88e3e4dfd3bc1eb81625bd693398b12",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.12.40",
+      "pdfPage": 12,
+      "clause": "6.7",
+      "firstLine": 40,
+      "lastLine": 47,
+      "sha256": "ac6458559fe59be9b9a156f5f5d53094ee66e1c84d3ba9ca8b213965964b402e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.13.7",
+      "pdfPage": 13,
+      "clause": "6.8",
+      "firstLine": 7,
+      "lastLine": 7,
+      "sha256": "698f54a3eca580c108793c1766fc571e8e4f673311df51527d2698a7b516907d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.13.9",
+      "pdfPage": 13,
+      "clause": "6.8",
+      "firstLine": 9,
+      "lastLine": 14,
+      "sha256": "bc1c702a8a32bf7f7a440079db4842211efe9979a769d5a9a03f48a47d67d471",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.13.16",
+      "pdfPage": 13,
+      "clause": "6.9",
+      "firstLine": 16,
+      "lastLine": 16,
+      "sha256": "0918aa1ef116c17bd87a5a017f9a8a776d126eb7e1162c376042627871c1dd86",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.13.18",
+      "pdfPage": 13,
+      "clause": "6.9",
+      "firstLine": 18,
+      "lastLine": 19,
+      "sha256": "765571670548ef00c70e1e72090b0f0f9f47b0050a45c6ab50bf3cc5c28e69be",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.13.21",
+      "pdfPage": 13,
+      "clause": "6.10",
+      "firstLine": 21,
+      "lastLine": 21,
+      "sha256": "4bb7c39c95445cc08fb0aa235421a75fb17fa9ff5d9400295fb4113fffeace87",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.13.23",
+      "pdfPage": 13,
+      "clause": "6.10.1",
+      "firstLine": 23,
+      "lastLine": 24,
+      "sha256": "bc11b8be3cd3242ea286b5124439e4702da36d5a4d9482a77400f60f0ba3b415",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.13.25",
+      "pdfPage": 13,
+      "clause": "6.10.2",
+      "firstLine": 25,
+      "lastLine": 42,
+      "sha256": "a31ae3cbbbd60c393900550056dfa85ce4c03fb27dea140828fcda52967b7641",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.14.7",
+      "pdfPage": 14,
+      "clause": "7",
+      "firstLine": 7,
+      "lastLine": 7,
+      "sha256": "a04333d9fbb9e0c00c822b0664553bae12a86a915c91e23a630cd6b387682c28",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.14.8",
+      "pdfPage": 14,
+      "clause": "7.1",
+      "firstLine": 8,
+      "lastLine": 8,
+      "sha256": "fb48b0267143d226a92c97368c857cbdae8b25d5ee196d3e613f9c55e49e29fe",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.14.9",
+      "pdfPage": 14,
+      "clause": "7.1.1",
+      "firstLine": 9,
+      "lastLine": 19,
+      "sha256": "15277de13e5b433b84198099ca9d4f7cb5c28b956d8bf9c3bb866133899804e5",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.14.20",
+      "pdfPage": 14,
+      "clause": "7.1.2",
+      "firstLine": 20,
+      "lastLine": 31,
+      "sha256": "dda8845ed0d95893b426dee72e7d100ebf44134f6ee0327020e3fac4f1e69a7b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.14.32",
+      "pdfPage": 14,
+      "clause": "7.1.3",
+      "firstLine": 32,
+      "lastLine": 39,
+      "sha256": "7fd1d97206e51d81a91d4051295004114bf1f5cc76f874c5ce57c9c7d07727d1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.14.41",
+      "pdfPage": 14,
+      "clause": "7.2",
+      "firstLine": 41,
+      "lastLine": 41,
+      "sha256": "d067ef607a786bef9223535f0d4ff0071807e1a24258e81061135ab7cd9945ca",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.14.42",
+      "pdfPage": 14,
+      "clause": "7.2.1",
+      "firstLine": 42,
+      "lastLine": 45,
+      "sha256": "a53bed59bb3c26494ac00f8d9a5c035a62a959c1dc365b4133f6b8f5eeb1796e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.15.7",
+      "pdfPage": 15,
+      "clause": "7.2.1",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "961757a5c21f980835396f8e031a2352155c5edfb6b932015bbeaca06989e382",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.15.9",
+      "pdfPage": 15,
+      "clause": "7.2.2",
+      "firstLine": 9,
+      "lastLine": 10,
+      "sha256": "2a276036528c560b6382536e0fa58c516c80ce1f365e5fa5b0f5af86a2b048ed",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.15.12",
+      "pdfPage": 15,
+      "clause": "7.3",
+      "firstLine": 12,
+      "lastLine": 12,
+      "sha256": "18b25c17716ffab1b6c639401214e2e9ac1ffb9a785b690a90695c72b444ad9f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.15.14",
+      "pdfPage": 15,
+      "clause": "7.3.1",
+      "firstLine": 14,
+      "lastLine": 16,
+      "sha256": "ffabf52546c8cf20a8b2f009d6bf9019ba2376ad539511ba5492ff3e8a2e7b4d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.15.17",
+      "pdfPage": 15,
+      "clause": "7.3.2",
+      "firstLine": 17,
+      "lastLine": 19,
+      "sha256": "45e48770785ebaf52531afc74749e299b11694c307e0613af2794a7b94462ba4",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.15.20",
+      "pdfPage": 15,
+      "clause": "7.3.3",
+      "firstLine": 20,
+      "lastLine": 30,
+      "sha256": "9fdf01c637d60fde182c341dc31c131e8c5879dbf4a99c87e85522db0ebd6509",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.15.31",
+      "pdfPage": 15,
+      "clause": "7.3.4",
+      "firstLine": 31,
+      "lastLine": 35,
+      "sha256": "73168fda6e6c37e68f7ccfd7e1c448a7503a94c06468a17ecbe9f5fa9cf5824c",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.15.36",
+      "pdfPage": 15,
+      "clause": "7.3.5",
+      "firstLine": 36,
+      "lastLine": 40,
+      "sha256": "47b89a050a65af64f41668f744e045fa0119efcbec17bf31755d326a89e42c7d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.15.42",
+      "pdfPage": 15,
+      "clause": "7.4",
+      "firstLine": 42,
+      "lastLine": 42,
+      "sha256": "e528e70e44d7e82d93bb2fc67f2233a6dfebc4261ade2a927cddc075f5455db5",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.15.44",
+      "pdfPage": 15,
+      "clause": "7.4.1",
+      "firstLine": 44,
+      "lastLine": 47,
+      "sha256": "4e402deb2ef9a3dfbe68088f4d0da36bc31c923160772d50af0c8b6c61c0324f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.16.7",
+      "pdfPage": 16,
+      "clause": "7.4.2",
+      "firstLine": 7,
+      "lastLine": 9,
+      "sha256": "2ea022b7ca53c145b8b5db87b54b10d8b646ff274f450725ebbfe74f6175d54f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.16.11",
+      "pdfPage": 16,
+      "clause": "7.4.2",
+      "firstLine": 11,
+      "lastLine": 11,
+      "sha256": "1e9ae1c1bce7e4499bce0f759a00466a47dab779d0b0f506809a9ae6de343ba6",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.16.13",
+      "pdfPage": 16,
+      "clause": "7.4.2",
+      "firstLine": 13,
+      "lastLine": 14,
+      "sha256": "1411a009ea736725566f961b47b4359943fb532add6c622c5dca5039c853faf3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.16.16",
+      "pdfPage": 16,
+      "clause": "7.4.2",
+      "firstLine": 16,
+      "lastLine": 16,
+      "sha256": "46cf21f25fca51f9c77019661bde210d51cf1304031e6751df3e401eb960b387",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.16.18",
+      "pdfPage": 16,
+      "clause": "7.4.2",
+      "firstLine": 18,
+      "lastLine": 21,
+      "sha256": "ca50214cea21f72925eb6fd3466b273dbb780dcf1825b25dcbfdcb5f43bd6d9d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.16.23",
+      "pdfPage": 16,
+      "clause": "7.4.2",
+      "firstLine": 23,
+      "lastLine": 23,
+      "sha256": "b81e89e99f60af31785d279ed46b6996f4b0863f8767c2fb48ec31d018f0d441",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.16.25",
+      "pdfPage": 16,
+      "clause": "7.4.2",
+      "firstLine": 25,
+      "lastLine": 26,
+      "sha256": "f9991fad5611ebcc7f09a10512d3c3e8079044c9e92c65a2d65ded680274f9b6",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.16.28",
+      "pdfPage": 16,
+      "clause": "7.4.2",
+      "firstLine": 28,
+      "lastLine": 28,
+      "sha256": "4d73656ddcce53520a2a4b86deb5c4b0b2e1ff55c73538f2189a825b2a3eede9",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.16.30",
+      "pdfPage": 16,
+      "clause": "7.4.3",
+      "firstLine": 30,
+      "lastLine": 32,
+      "sha256": "9ee2c79d95078666134073af868118decada00fde430dbaeda80d3764ae0789b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.16.34",
+      "pdfPage": 16,
+      "clause": "7.4.3",
+      "firstLine": 34,
+      "lastLine": 38,
+      "sha256": "a648d0f73a4c9321c9a875aa84903b6143f7cc39af9974961327688d31bc5b7b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.16.40",
+      "pdfPage": 16,
+      "clause": "7.4.3",
+      "firstLine": 40,
+      "lastLine": 45,
+      "sha256": "8efd6c00486a83852462676d979efcd6b627b3bd7aecf0b60ba1e97d90b66ea1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.17.7",
+      "pdfPage": 17,
+      "clause": "7.4.3",
+      "firstLine": 7,
+      "lastLine": 15,
+      "sha256": "27b95e81e588336436c8cf43c0ab34f4b5a705fb08fc7b76a5a97f1207b9b8af",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.17.17",
+      "pdfPage": 17,
+      "clause": "7.5",
+      "firstLine": 17,
+      "lastLine": 17,
+      "sha256": "277a3cb1cafbe16c9767375bb6c7f5d22e7fe7df988baac10e32620f9aaf3dae",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.17.19",
+      "pdfPage": 17,
+      "clause": "7.5.1",
+      "firstLine": 19,
+      "lastLine": 23,
+      "sha256": "a97a041545278ffca2bbdd635b2c98e6cdd01ba3137537d064247e4bd3b8b067",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.17.24",
+      "pdfPage": 17,
+      "clause": "7.5.2",
+      "firstLine": 24,
+      "lastLine": 25,
+      "sha256": "88d561e5c73834359effaf49c1b59160c5f3a9e640de32285a40b040afead9c3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.17.26",
+      "pdfPage": 17,
+      "clause": "7.5.3",
+      "firstLine": 26,
+      "lastLine": 30,
+      "sha256": "50231d0409063f53bdf1dcecfa387e0c04a02cee1c99a2051f3949b208c5d89f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.17.32",
+      "pdfPage": 17,
+      "clause": "7.6",
+      "firstLine": 32,
+      "lastLine": 32,
+      "sha256": "508deff3e47855ef6710c47a6100de7a0cb863b9078401f7b8d6734c2f50aa41",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.17.34",
+      "pdfPage": 17,
+      "clause": "7.6.1",
+      "firstLine": 34,
+      "lastLine": 38,
+      "sha256": "e29a718b0d837982b1411491dd73d8a125c98d7b9cd8639caf5628bcb4844e7a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.17.39",
+      "pdfPage": 17,
+      "clause": "7.6.2",
+      "firstLine": 39,
+      "lastLine": 44,
+      "sha256": "6faf428f8719eb65a4dce5db10bca5f1dbf3c212f5e86b2331653314ec533d43",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.17.46",
+      "pdfPage": 17,
+      "clause": "7.6.2",
+      "firstLine": 46,
+      "lastLine": 51,
+      "sha256": "7b1f24649ae5146a1de789f9f6738d825d3ba37dfee14ab9165653b1c0171184",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.18.8",
+      "pdfPage": 18,
+      "clause": "7.6.3",
+      "firstLine": 8,
+      "lastLine": 9,
+      "sha256": "760ffaa6388b87f1c8b0130acbd67e10bf5cfab9be2206cfbbe9ee37d5c6af80",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.18.10",
+      "pdfPage": 18,
+      "clause": "7.6.4",
+      "firstLine": 10,
+      "lastLine": 12,
+      "sha256": "e2cbc9ff3be8e3f61e530351e39ec96e06316fbcd702e4b224b77937771283e0",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.18.14",
+      "pdfPage": 18,
+      "clause": "7.6.4",
+      "firstLine": 14,
+      "lastLine": 15,
+      "sha256": "7b2957e8084dcfede1be9244d818e2a21db42fec78cb23ff24f5cab03a93cd11",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.18.17",
+      "pdfPage": 18,
+      "clause": "7.6.5",
+      "firstLine": 17,
+      "lastLine": 23,
+      "sha256": "b8570492b2509a2b15cb8f35a28b9c9d2e096a706f4be3d4c1a5ba33f1f46429",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.18.25",
+      "pdfPage": 18,
+      "clause": "7.6.5",
+      "firstLine": 25,
+      "lastLine": 31,
+      "sha256": "2190fec6daefddef4031053d0301cd7af1cb8dc70c8c8153b368ac1d0efa0f98",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.18.33",
+      "pdfPage": 18,
+      "clause": "7.6.6",
+      "firstLine": 33,
+      "lastLine": 36,
+      "sha256": "710ab954d85e52e3b518276e435e529586cc11634755aeee4af046043cd42f9f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.18.37",
+      "pdfPage": 18,
+      "clause": "7.6.7",
+      "firstLine": 37,
+      "lastLine": 38,
+      "sha256": "3d8891369b9483da790c761d79af5fe81ec216d5fb405f38de80538a159634ba",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.18.39",
+      "pdfPage": 18,
+      "clause": "7.6.8",
+      "firstLine": 39,
+      "lastLine": 41,
+      "sha256": "81ffa32c718a5fd3f872d2aae5d16a2fc413624cb1f45f4c1ebea3c8614a148f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.18.42",
+      "pdfPage": 18,
+      "clause": "7.6.9",
+      "firstLine": 42,
+      "lastLine": 44,
+      "sha256": "4aa0c06aa18afe601986beaef433829df71cb5816a2da33480b1d968f6055593",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.19.8",
+      "pdfPage": 19,
+      "clause": "7.7",
+      "firstLine": 8,
+      "lastLine": 8,
+      "sha256": "b4e5c9e717484dd10565d2086c627be2b70e6f1a64fa650af44d3bc46d91a933",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.19.10",
+      "pdfPage": 19,
+      "clause": "7.7.1",
+      "firstLine": 10,
+      "lastLine": 11,
+      "sha256": "0354691ec96dce98410937101c6fd6a04f7c26db71b44b84dde9be0537ad1f81",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.19.12",
+      "pdfPage": 19,
+      "clause": "7.7.2",
+      "firstLine": 12,
+      "lastLine": 16,
+      "sha256": "57451cda86f00755ad354851ed22beeecf8766a4995d714a65941e3e6706550e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.19.17",
+      "pdfPage": 19,
+      "clause": "7.7.3",
+      "firstLine": 17,
+      "lastLine": 22,
+      "sha256": "f54670fbcfac813cf8447913770a2c0e51cebabe7be97840d0b0aa76da6e13f1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.19.23",
+      "pdfPage": 19,
+      "clause": "7.7.4",
+      "firstLine": 23,
+      "lastLine": 26,
+      "sha256": "301971825903287f87c71d0c8b9ae0fc57a106dfa7c4626322825c34413f12c7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.19.28",
+      "pdfPage": 19,
+      "clause": "7.7.4",
+      "firstLine": 28,
+      "lastLine": 29,
+      "sha256": "fa8bfd25f0a336dca41173855d9140c75e829b71765da6b9982e63d5b62ea2ac",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.19.31",
+      "pdfPage": 19,
+      "clause": "7.7.4",
+      "firstLine": 31,
+      "lastLine": 37,
+      "sha256": "fa90cea18bc730254c5dfd92a5493e1234e9d23d0c9aac40af80f1f6dd299480",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.19.39",
+      "pdfPage": 19,
+      "clause": "7.7.4",
+      "firstLine": 39,
+      "lastLine": 40,
+      "sha256": "6b503989d53159bfe9f28b7f35893973466070652191f5962aa39f08d9aebeb7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.19.42",
+      "pdfPage": 19,
+      "clause": "7.7.4",
+      "firstLine": 42,
+      "lastLine": 42,
+      "sha256": "4782e7be73c384f0256198eab6fcbceec2865a3918beb98c00e4f9fca9672a01",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.19.43",
+      "pdfPage": 19,
+      "clause": "7.7.5",
+      "firstLine": 43,
+      "lastLine": 48,
+      "sha256": "906baf44cbd01282e2692b7d540324f89adc541ffade844269bb3058620caa82",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.20.7",
+      "pdfPage": 20,
+      "clause": "7.7.5",
+      "firstLine": 7,
+      "lastLine": 10,
+      "sha256": "20bc13096366451f6c509969b211fbbbc6cc01ccaa4611d1bc5f4549269073a1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.20.11",
+      "pdfPage": 20,
+      "clause": "7.7.6",
+      "firstLine": 11,
+      "lastLine": 13,
+      "sha256": "64f0ed89944c8ce0a3c397c415826bdbe0da4d7e2588c54d6615b370ce196b8d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.20.14",
+      "pdfPage": 20,
+      "clause": "7.7.7",
+      "firstLine": 14,
+      "lastLine": 25,
+      "sha256": "cf6c2e110a7a9b79268958c0c4a568a4ec5f9d56b1073ba1e41b09aa5d5e9564",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.20.27",
+      "pdfPage": 20,
+      "clause": "7.7.7",
+      "firstLine": 27,
+      "lastLine": 28,
+      "sha256": "14fbd75adcbfef22fb4c5805840de5093b8db488bc6dc570779302ef151fa65c",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.20.30",
+      "pdfPage": 20,
+      "clause": "7.7.7",
+      "firstLine": 30,
+      "lastLine": 32,
+      "sha256": "d6660d4214832161f3dbf65c0a98b79cd6cb3e833789c3673393ac677c2e0ee4",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.20.34",
+      "pdfPage": 20,
+      "clause": "7.7.8",
+      "firstLine": 34,
+      "lastLine": 46,
+      "sha256": "0a60cc4f0a57801281ec26afa23c597b51e19f6dfbd2aebf1f124888d5b77918",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.21.7",
+      "pdfPage": 21,
+      "clause": "7.7.8",
+      "firstLine": 7,
+      "lastLine": 13,
+      "sha256": "b36b7d4ae2527e7be20b9a9caeb8ec1b2395dbf658369469ffe1d4501510056a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.21.15",
+      "pdfPage": 21,
+      "clause": "7.7.8",
+      "firstLine": 15,
+      "lastLine": 15,
+      "sha256": "a2c81ce1cbf13b56f5b95af54e461be9e41e74e71ed5f6a1369fbeaf50f51f8a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.21.17",
+      "pdfPage": 21,
+      "clause": "7.7.8",
+      "firstLine": 17,
+      "lastLine": 21,
+      "sha256": "13f5d423fec404e76fb9677155b6233ce8ef498ad8d9ce709a665953c6865eed",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.21.23",
+      "pdfPage": 21,
+      "clause": "7.7.9",
+      "firstLine": 23,
+      "lastLine": 34,
+      "sha256": "5ce5cf4e3373eb724381e9ee6b073bd0fc0aef0325e8ca5d3ee468a0fa266f55",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.21.35",
+      "pdfPage": 21,
+      "clause": "7.7.10",
+      "firstLine": 35,
+      "lastLine": 39,
+      "sha256": "9a027b58ad5825ba04e7f1fe9eaf3775c79ff78600ff1909f95b86a4d177b7d2",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.21.40",
+      "pdfPage": 21,
+      "clause": "7.7.11",
+      "firstLine": 40,
+      "lastLine": 47,
+      "sha256": "be8d4ea9284273b96601aaa2e3e4a1d98e113e99b0c507c94addd8243c7dfa91",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.22.8",
+      "pdfPage": 22,
+      "clause": "7.7.11",
+      "firstLine": 8,
+      "lastLine": 8,
+      "sha256": "a2c81ce1cbf13b56f5b95af54e461be9e41e74e71ed5f6a1369fbeaf50f51f8a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.22.10",
+      "pdfPage": 22,
+      "clause": "7.7.11",
+      "firstLine": 10,
+      "lastLine": 20,
+      "sha256": "d4759a6d4acc2a438fb2934827441582dd2944dc3a212e74b5e8718f8f79aef7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.22.23",
+      "pdfPage": 22,
+      "clause": "7.7.12",
+      "firstLine": 23,
+      "lastLine": 29,
+      "sha256": "90b7bccafa5ee86145c39af0e9556a037ca38a1964f7277934d6e6e12e9fce60",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.22.31",
+      "pdfPage": 22,
+      "clause": "7.7.13",
+      "firstLine": 31,
+      "lastLine": 32,
+      "sha256": "73e2293291ed4c88bfa52a30108bc111591f54e83972624aaa92fb29114c732b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.22.34",
+      "pdfPage": 22,
+      "clause": "7.8",
+      "firstLine": 34,
+      "lastLine": 34,
+      "sha256": "83b2c7647241bec8f088f154433f7a7ca2888c5612051b90ea15b1108492f243",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.22.36",
+      "pdfPage": 22,
+      "clause": "7.8.1",
+      "firstLine": 36,
+      "lastLine": 44,
+      "sha256": "b792f62f82019f80ad113e2bbdb38889131739d39cb5f667b7b62a0e735ea7a7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.22.45",
+      "pdfPage": 22,
+      "clause": "7.8.2",
+      "firstLine": 45,
+      "lastLine": 50,
+      "sha256": "2d216cc00a518e78ec7b8c1d3569f17a307a371bf2debbdbb6193973623789de",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.23.7",
+      "pdfPage": 23,
+      "clause": "7.8.3",
+      "firstLine": 7,
+      "lastLine": 13,
+      "sha256": "787ccb2cbcc616e652b6d4286bee18794164cf3b4827fe873ff13fb48a4fa70a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.23.18",
+      "pdfPage": 23,
+      "clause": "7.8.3",
+      "firstLine": 18,
+      "lastLine": 21,
+      "sha256": "14e46fad23a04555ebf883b1ddd066ed4e74a48504bed23b89c4e67ca4eb50cf",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.23.23",
+      "pdfPage": 23,
+      "clause": "7.8.3",
+      "firstLine": 23,
+      "lastLine": 23,
+      "sha256": "a2a480c269556ac382514a587b4b5a8be5aadba6ad2ad0e9edb1b3a683d29834",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.23.25",
+      "pdfPage": 23,
+      "clause": "7.8.4",
+      "firstLine": 25,
+      "lastLine": 28,
+      "sha256": "1fd4e40b1d2e6e3d05d17d3ee1c6c289789be9bfeec6f89729a4869c5d823f2c",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.23.30",
+      "pdfPage": 23,
+      "clause": "7.8.4",
+      "firstLine": 30,
+      "lastLine": 33,
+      "sha256": "4bd15432410f02d26f92046602219d474ebcc0963e8df47f56b0114c6be345f4",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.23.35",
+      "pdfPage": 23,
+      "clause": "7.8.4",
+      "firstLine": 35,
+      "lastLine": 37,
+      "sha256": "a345b393dac9ea7863e415eca7a4f701715c96088e3e3a8b055dbcc9836c7caf",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.23.38",
+      "pdfPage": 23,
+      "clause": "7.8.5",
+      "firstLine": 38,
+      "lastLine": 39,
+      "sha256": "9635f1e827df10671df4947c270a77d56d220c0a5316416e6f5131cd242c6195",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.24.7",
+      "pdfPage": 24,
+      "clause": "7.8.5",
+      "firstLine": 7,
+      "lastLine": 9,
+      "sha256": "3ea5ab0ba05c0acd1b49bc870c62f265cff4a6015ff51f93a6e86130728b7d77",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.24.10",
+      "pdfPage": 24,
+      "clause": "7.8.6",
+      "firstLine": 10,
+      "lastLine": 12,
+      "sha256": "6e892699e55582a972c71f2b7be338083de36bc75e843af4a9236b2a5dad1480",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.24.14",
+      "pdfPage": 24,
+      "clause": "7.8.6",
+      "firstLine": 14,
+      "lastLine": 14,
+      "sha256": "97b2da4651cfd157a88629f69fa5165fcf094aadc87ca477a0aa666980e1df0e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.24.16",
+      "pdfPage": 24,
+      "clause": "7.8.7",
+      "firstLine": 16,
+      "lastLine": 17,
+      "sha256": "a8907108658a6465873de4701c0d6bb4d5d027a778317d1e24f0d21aea42343c",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.24.19",
+      "pdfPage": 24,
+      "clause": "7.9",
+      "firstLine": 19,
+      "lastLine": 19,
+      "sha256": "7ac6d8aba3bbd91c6fdca9824a5d148893689bd94d4fe34885bff2a821c99310",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.24.21",
+      "pdfPage": 24,
+      "clause": "7.9.1",
+      "firstLine": 21,
+      "lastLine": 26,
+      "sha256": "10ebf27aa2aec7bf1858a3518e1958410e2d94efeaec56baacda734b56cc8bc2",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.24.27",
+      "pdfPage": 24,
+      "clause": "7.9.2",
+      "firstLine": 27,
+      "lastLine": 31,
+      "sha256": "7b371bb222ecaad7b76da5db34e9f3994b2912962e359c7fd772795c4dbf37ed",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.24.33",
+      "pdfPage": 24,
+      "clause": "7.9.2",
+      "firstLine": 33,
+      "lastLine": 37,
+      "sha256": "6b4004b7c06fa988183ba3fe96efa4563361f556d820a05450c707674ec97d2b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.24.39",
+      "pdfPage": 24,
+      "clause": "7.9.3",
+      "firstLine": 39,
+      "lastLine": 46,
+      "sha256": "51fca81f176ef03e28d27075597ab0ec1f2f2c680929b6dfd02b9dd7e2c2cd84",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.25.7",
+      "pdfPage": 25,
+      "clause": "7.9.3",
+      "firstLine": 7,
+      "lastLine": 13,
+      "sha256": "4d5725a1a8b4b08eca23bf13f30773cd3afcfc7e9b00301de08020ba072a11b3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.25.15",
+      "pdfPage": 25,
+      "clause": "7.9.3",
+      "firstLine": 15,
+      "lastLine": 16,
+      "sha256": "6934a1bcc5914081eb2320ad00f35fe250a0701417bd4bd8160c643765c8bf4d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.25.18",
+      "pdfPage": 25,
+      "clause": "7.9.3",
+      "firstLine": 18,
+      "lastLine": 24,
+      "sha256": "23a1845499b911ac72bdbd543e6955132024d5b28e55c0d294ba3bc22b219cba",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.25.26",
+      "pdfPage": 25,
+      "clause": "7.9.4",
+      "firstLine": 26,
+      "lastLine": 29,
+      "sha256": "ebc5ea79eb16e78fcd818e96597987126b5a26a15f0a50b927dd56b1e8c754cd",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.25.31",
+      "pdfPage": 25,
+      "clause": "7.9.4",
+      "firstLine": 31,
+      "lastLine": 37,
+      "sha256": "4bbe8045809ec922ae6f7ec66c2f0f02a1ca5b4e7afbec087a0b46456667df5a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.25.39",
+      "pdfPage": 25,
+      "clause": "7.9.4",
+      "firstLine": 39,
+      "lastLine": 39,
+      "sha256": "2eb3fe1568c6a2436fd2537168dee8fff3225c0c24102727b08d0e2be13e8f06",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.25.41",
+      "pdfPage": 25,
+      "clause": "7.9.4",
+      "firstLine": 41,
+      "lastLine": 42,
+      "sha256": "cf61b7469bf8f524cf2b697aa1f343fdea63b83b80d0ebdfe204d1f59710fe63",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.25.44",
+      "pdfPage": 25,
+      "clause": "7.9.4",
+      "firstLine": 44,
+      "lastLine": 46,
+      "sha256": "b8fc565bfd0dfd71fe576ea43888fe1fda035f9a91018f6576e98a3f58eaafb1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.25.48",
+      "pdfPage": 25,
+      "clause": "7.9.4",
+      "firstLine": 48,
+      "lastLine": 48,
+      "sha256": "7c60997288fd2e27991f1b127bb8628f7344e26b65b7a4a0238eb2d6032ef6ab",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.26.7",
+      "pdfPage": 26,
+      "clause": "7.10",
+      "firstLine": 7,
+      "lastLine": 7,
+      "sha256": "295469686277dedcf35f5e8d6da512bda0eddeeab30315bb3f2d42aec3878f63",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.26.9",
+      "pdfPage": 26,
+      "clause": "7.10.1",
+      "firstLine": 9,
+      "lastLine": 10,
+      "sha256": "1e7c0db85830ac6e2b2fcebcabe44510178d16c4f4a1d3d635fd52b9885b8ea4",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.26.11",
+      "pdfPage": 26,
+      "clause": "7.10.2",
+      "firstLine": 11,
+      "lastLine": 17,
+      "sha256": "38e09878f37fca5b269e7211ef73faa6ef4a3387dd0ce543b56322890919ed2b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.26.18",
+      "pdfPage": 26,
+      "clause": "7.10.3",
+      "firstLine": 18,
+      "lastLine": 39,
+      "sha256": "ad1ccc92b25fc307b4d355817cd4ab12582090abbcd6b1bde72954264fee4d21",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.26.40",
+      "pdfPage": 26,
+      "clause": "7.10.4",
+      "firstLine": 40,
+      "lastLine": 42,
+      "sha256": "2cf591ac6224f871b6c1f08604ff311e5554ffdf0fbe99f5cc0494fe92fcde41",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.26.43",
+      "pdfPage": 26,
+      "clause": "7.10.5",
+      "firstLine": 43,
+      "lastLine": 44,
+      "sha256": "95dae4c48b59d859e675dc0bf5cfeb1f5a27870498eb8cffccc062a84105a782",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.27.7",
+      "pdfPage": 27,
+      "clause": "7.11",
+      "firstLine": 7,
+      "lastLine": 7,
+      "sha256": "4a0fb0d57bfdab7aa31cd18bc3bc585005331a0717ab4762d988cb525b423abc",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.27.9",
+      "pdfPage": 27,
+      "clause": "7.11.1",
+      "firstLine": 9,
+      "lastLine": 9,
+      "sha256": "3658d12bfd71f6b912728189865d754b4db40c7fda833e68f663e1515d27435a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.27.10",
+      "pdfPage": 27,
+      "clause": "7.11.2",
+      "firstLine": 10,
+      "lastLine": 13,
+      "sha256": "5e01e63f62b41c9300a73ef90b98df354b42775135eb47f110bb72498f1807c4",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.27.14",
+      "pdfPage": 27,
+      "clause": "7.11.3",
+      "firstLine": 14,
+      "lastLine": 17,
+      "sha256": "a04299285fd209760fec32798deb8e5758873d3a1f43426648950164b9f83e88",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.27.18",
+      "pdfPage": 27,
+      "clause": "7.11.4",
+      "firstLine": 18,
+      "lastLine": 20,
+      "sha256": "142c18681025fc7b2b6c98481ce2049e10d85a3244c576051c2406e4deba3871",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.27.21",
+      "pdfPage": 27,
+      "clause": "7.11.5",
+      "firstLine": 21,
+      "lastLine": 29,
+      "sha256": "36c58a53eaf6cfb74167f1a286bc975ee6398139f4f4c116eadd2132448cc95f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.27.30",
+      "pdfPage": 27,
+      "clause": "7.11.6",
+      "firstLine": 30,
+      "lastLine": 33,
+      "sha256": "62e55de95d35104bfdc9634a33bd3c95fafc96ddb5736c1d0cb783db9b47ec6f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.27.34",
+      "pdfPage": 27,
+      "clause": "7.11.7",
+      "firstLine": 34,
+      "lastLine": 43,
+      "sha256": "892347f755ec3d38b358f45099ca810174695682380b5f86650754aad4d4db2c",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.28.7",
+      "pdfPage": 28,
+      "clause": "8",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "8ac8e75ec7ed0345c8db520d4659683a46305bd8bd3a26968cb459a2b575c4b9",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.28.10",
+      "pdfPage": 28,
+      "clause": "8.1",
+      "firstLine": 10,
+      "lastLine": 23,
+      "sha256": "5bb80e538ff18334745d2ac774c1086dae25e95f12f791551a88dedb7e12babe",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.28.24",
+      "pdfPage": 28,
+      "clause": "8.2",
+      "firstLine": 24,
+      "lastLine": 31,
+      "sha256": "b24013cea400b3100ea7cdc1aba6624d165e8a149e4ee458c911d2683e95007d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.28.32",
+      "pdfPage": 28,
+      "clause": "8.3",
+      "firstLine": 32,
+      "lastLine": 47,
+      "sha256": "cfe2d6c9c182a9e386520416d6d9f50b406a6eb08c9c43e85c08492740a793b3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.29.7",
+      "pdfPage": 29,
+      "clause": "9",
+      "firstLine": 7,
+      "lastLine": 7,
+      "sha256": "1ec25b34e0e7d4ecd77206604013261c7736eeeb5401d9b2f65c9734c9651078",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.29.9",
+      "pdfPage": 29,
+      "clause": "9.1",
+      "firstLine": 9,
+      "lastLine": 15,
+      "sha256": "d85492fb2330e235cd42c6809a7a3d52b1b4270488582e13924d19fb5afdbd79",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.29.16",
+      "pdfPage": 29,
+      "clause": "9.2",
+      "firstLine": 16,
+      "lastLine": 40,
+      "sha256": "da706799f4b50cced2c53821ac0366337ae687983ac4ea3776c5cc163424e725",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.30.7",
+      "pdfPage": 30,
+      "clause": "9.2",
+      "firstLine": 7,
+      "lastLine": 10,
+      "sha256": "e820b5a233c5e83e4a1e5d2b8adbd2aa9cd6fcb6c70f2d9c6673e8712ba830cf",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.30.12",
+      "pdfPage": 30,
+      "clause": "9.3",
+      "firstLine": 12,
+      "lastLine": 14,
+      "sha256": "c9d7f0f34a58a1f7eb57a28a99018525c33deda163b91da2fd29ebb271f0abd1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.30.16",
+      "pdfPage": 30,
+      "clause": "9.3",
+      "firstLine": 16,
+      "lastLine": 18,
+      "sha256": "82b451bd175d16bff65fcdc51b4cc3d84c8e3ef781877de7294d295378dab678",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.30.22",
+      "pdfPage": 30,
+      "clause": "9.3",
+      "firstLine": 22,
+      "lastLine": 22,
+      "sha256": "08f693550d3dff7e0d58d2502be608cbe485bfd6ad31a8fee3e2f7740e8ce9b8",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.30.24",
+      "pdfPage": 30,
+      "clause": "9.3",
+      "firstLine": 24,
+      "lastLine": 24,
+      "sha256": "8fc85bb8ec9d75902c6c8cf98b6bd22eb3dc3c68e531446f3cab8c2a1f97f67b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.30.26",
+      "pdfPage": 30,
+      "clause": "9.3",
+      "firstLine": 26,
+      "lastLine": 26,
+      "sha256": "dad8365db4684a4f0afc57d43a6b5e2780c3911062b42ae165cf98c6c77bab24",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.30.28",
+      "pdfPage": 30,
+      "clause": "9.3",
+      "firstLine": 28,
+      "lastLine": 28,
+      "sha256": "8a780690f9de897ca606daec281602c8017ec26f0d6c3663f7797f5b49f502b8",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.30.30",
+      "pdfPage": 30,
+      "clause": "9.3",
+      "firstLine": 30,
+      "lastLine": 30,
+      "sha256": "323dbd0540a4221ba7a9159edbfd832ebb3fc561f9796717c7d75f7a1eedcaf7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.30.32",
+      "pdfPage": 30,
+      "clause": "9.3",
+      "firstLine": 32,
+      "lastLine": 32,
+      "sha256": "7978d9cea28c9cdb24ffbc73ef1e26e239dd77e472d7b6f65733bd1da8874a1c",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.30.34",
+      "pdfPage": 30,
+      "clause": "9.3",
+      "firstLine": 34,
+      "lastLine": 34,
+      "sha256": "284ed04c58990edf062fd9043844fff4f292d91207c26fe85a45ddad959a5603",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.30.38",
+      "pdfPage": 30,
+      "clause": "9.3",
+      "firstLine": 38,
+      "lastLine": 38,
+      "sha256": "f537bf663f4baf593191f66f659f7a6ac5fa5d2c178ae4b56c62390e25670276",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.31.7",
+      "pdfPage": 31,
+      "clause": "Приложение А",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "a5cbae741eae65b850861ee871b9e1989015f4c3cdac8f33dbf55159c2c0d45e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.31.10",
+      "pdfPage": 31,
+      "clause": "Приложение А",
+      "firstLine": 10,
+      "lastLine": 11,
+      "sha256": "a3b7e61006ddce7c41ec62da270939db5d7a27b04188a4f00fdc25ba3cddb2db",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.31.15",
+      "pdfPage": 31,
+      "clause": "Приложение А",
+      "firstLine": 15,
+      "lastLine": 22,
+      "sha256": "b7179bbb8967455fce7953b2b6ad15da2e6d526f7c9a17ae02e02837d6f5f015",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.31.24",
+      "pdfPage": 31,
+      "clause": "Приложение А",
+      "firstLine": 24,
+      "lastLine": 28,
+      "sha256": "0bc13bd54efed83c1f5bca5e99b2fc0018d77e8613d6a0b3ec870b5326daed2b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.31.32",
+      "pdfPage": 31,
+      "clause": "Приложение А",
+      "firstLine": 32,
+      "lastLine": 35,
+      "sha256": "cc4ac57682dc79e44940de8ccb341d871cbf881f49f864cced748855f238d949",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.31.40",
+      "pdfPage": 31,
+      "clause": "Приложение А",
+      "firstLine": 40,
+      "lastLine": 40,
+      "sha256": "dfe2ce14cc91568f7a99814758298701a3d3e311599ee2e8026787577c70d6d0",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.32.7",
+      "pdfPage": 32,
+      "clause": "Приложение А",
+      "firstLine": 7,
+      "lastLine": 7,
+      "sha256": "84e5813f0bde22d0640f21b6d826e4afdbbef1c126bc95940299ac9ba555783a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.32.12",
+      "pdfPage": 32,
+      "clause": "Приложение А",
+      "firstLine": 12,
+      "lastLine": 34,
+      "sha256": "550b50e278c39e1c6345b6e47a1fb71f8c06a788f9b7025a83b64284976bfa1d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.32.38",
+      "pdfPage": 32,
+      "clause": "Приложение А",
+      "firstLine": 38,
+      "lastLine": 39,
+      "sha256": "701ddb5ecc63ce0ebf012526ee12c6bc37a6936e9ebbd9e9589feb2c53cff9f5",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.32.42",
+      "pdfPage": 32,
+      "clause": "Приложение А",
+      "firstLine": 42,
+      "lastLine": 43,
+      "sha256": "0c19319250a9720a00212a00091c25df6208a3d328937259d4c90df48c84618e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.32.45",
+      "pdfPage": 32,
+      "clause": "Приложение А",
+      "firstLine": 45,
+      "lastLine": 45,
+      "sha256": "acb1d741d8d2c9fab6a385949a0d9500fdcb22cf82969c9cbfcbc97574596df2",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.33.7",
+      "pdfPage": 33,
+      "clause": "Приложение Б",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "956c0f57a02c3dcedfb17f0f6382f8eb761af1e1e87d54f55e601241a9b09447",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.33.10",
+      "pdfPage": 33,
+      "clause": "Приложение Б",
+      "firstLine": 10,
+      "lastLine": 10,
+      "sha256": "f357bdee13d824c918c5b24b20cf35d2ae4bcd4994f7e1ad0d0b26da946791a2",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.33.12",
+      "pdfPage": 33,
+      "clause": "Приложение Б",
+      "firstLine": 12,
+      "lastLine": 19,
+      "sha256": "21de6032d471d254a760c95c53f89702731293550786d51840dcd860d4128eec",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.33.22",
+      "pdfPage": 33,
+      "clause": "Приложение Б",
+      "firstLine": 22,
+      "lastLine": 26,
+      "sha256": "64445ce176d424ae8a9c3ff311c8d0cdf7b736f2e015c2743c505a63717a1c4d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.33.29",
+      "pdfPage": 33,
+      "clause": "Приложение Б",
+      "firstLine": 29,
+      "lastLine": 36,
+      "sha256": "cd1342b88c89ec60c09470b3ec64f20f1963a14dea45cea21394e395975ba369",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.33.41",
+      "pdfPage": 33,
+      "clause": "Приложение Б",
+      "firstLine": 41,
+      "lastLine": 46,
+      "sha256": "2475b6681e56a3a0d846ad83b1a724e2ca0ee32b9ddf3f3d7c3ec80c078331ad",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.33.51",
+      "pdfPage": 33,
+      "clause": "Приложение Б",
+      "firstLine": 51,
+      "lastLine": 51,
+      "sha256": "31890543595d8b57e8b5a486cccaa1d4db6ea10cafeff640ff1ea23804b6287d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.34.7",
+      "pdfPage": 34,
+      "clause": "Приложение В",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "82fedef04e3fddefeac0f22a456d9369f855c2a0d198233249a370b00ec2cad7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.34.10",
+      "pdfPage": 34,
+      "clause": "Приложение В",
+      "firstLine": 10,
+      "lastLine": 11,
+      "sha256": "bb8e4c5f0d3ef88e3f0925de20c48f7f173145c422338dff1af31697e4c043ef",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.34.13",
+      "pdfPage": 34,
+      "clause": "Приложение В",
+      "firstLine": 13,
+      "lastLine": 20,
+      "sha256": "a1a3d1a3c0b83aa59ef48e16aecf26bcf69929ed9e6f0889e8ca8e280f41bc04",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.34.22",
+      "pdfPage": 34,
+      "clause": "Приложение В",
+      "firstLine": 22,
+      "lastLine": 26,
+      "sha256": "8afdce827b08144f3868f8b941b0150e38bd1db46429ed25e94aed2de30a45ce",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.34.29",
+      "pdfPage": 34,
+      "clause": "Приложение В",
+      "firstLine": 29,
+      "lastLine": 36,
+      "sha256": "7a9da4746e002cf417f81b52615cc72fe3b7a656e0b7f3e4604ab8f1453e8622",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.34.40",
+      "pdfPage": 34,
+      "clause": "Приложение В",
+      "firstLine": 40,
+      "lastLine": 43,
+      "sha256": "981c781508953e9dfd5c0d0592b91725b85d8a2f0e28930c75bc71052d4507d1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.34.48",
+      "pdfPage": 34,
+      "clause": "Приложение В",
+      "firstLine": 48,
+      "lastLine": 48,
+      "sha256": "c1489b58c6b3c149736652f165e41a8943efac3c32955d827caaf7b9758c6872",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.35.7",
+      "pdfPage": 35,
+      "clause": "Приложение Г",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "e1acf89fcd02b6ac83fb4a22172d38c7fdcfa50bd1fdf98037a6ea8318a2ba5f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.35.10",
+      "pdfPage": 35,
+      "clause": "Приложение Г",
+      "firstLine": 10,
+      "lastLine": 11,
+      "sha256": "f2a9ddd22a595b540ddf1566ca2cede419c4e95ef2d13c1d0ad9c8254b9afaa7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.35.13",
+      "pdfPage": 35,
+      "clause": "Приложение Г",
+      "firstLine": 13,
+      "lastLine": 20,
+      "sha256": "2cbb214b0bffe0547dd3dcf3616abd5b1174a899bfcc7b62f9bf1b093e0536f3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.35.22",
+      "pdfPage": 35,
+      "clause": "Приложение Г",
+      "firstLine": 22,
+      "lastLine": 26,
+      "sha256": "4e98aab010c721d817bead2f68886ccd014af777122c367273dd7c8229fd2923",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.35.30",
+      "pdfPage": 35,
+      "clause": "Приложение Г",
+      "firstLine": 30,
+      "lastLine": 35,
+      "sha256": "5c0865224125a839fad7507d94cc8865347c3cfd0b1e3bc476e7a93b5c8ad0f1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.35.39",
+      "pdfPage": 35,
+      "clause": "Приложение Г",
+      "firstLine": 39,
+      "lastLine": 40,
+      "sha256": "9745136bcf416500ea5633987fdb0a6af793b34cf092b3a1bb662eaf1a6f91d6",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.35.42",
+      "pdfPage": 35,
+      "clause": "Приложение Г",
+      "firstLine": 42,
+      "lastLine": 43,
+      "sha256": "bc989f16991a0e6b2fa0991b738657eaa3c8a7e8a75e81c746d73564a8c3ef4f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.35.45",
+      "pdfPage": 35,
+      "clause": "Приложение Г",
+      "firstLine": 45,
+      "lastLine": 46,
+      "sha256": "d42f7232448d5e640133356d41fa031e936ec285710d01659c61de23664dcf35",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.35.51",
+      "pdfPage": 35,
+      "clause": "Приложение Г",
+      "firstLine": 51,
+      "lastLine": 51,
+      "sha256": "31890543595d8b57e8b5a486cccaa1d4db6ea10cafeff640ff1ea23804b6287d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.36.7",
+      "pdfPage": 36,
+      "clause": "Приложение Д",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "83026cb7f2f7b3f421da1d373da6fe20b2e50a3f999a3045a4b42fb18d34b9b7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.36.10",
+      "pdfPage": 36,
+      "clause": "Приложение Д",
+      "firstLine": 10,
+      "lastLine": 10,
+      "sha256": "fd4683e1e60870b992e9d4c85f94a5c434465796f1d40393e1b3b365aa8460a9",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.36.12",
+      "pdfPage": 36,
+      "clause": "Приложение Д",
+      "firstLine": 12,
+      "lastLine": 19,
+      "sha256": "bab22dd3527a7cfb592600373212510fb5fc2fabf3226d694ee0ac3407a7cb99",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.36.21",
+      "pdfPage": 36,
+      "clause": "Приложение Д",
+      "firstLine": 21,
+      "lastLine": 25,
+      "sha256": "ff9f05a608dc7c218520ab1807c3eda9fb3a3eaccf765f4d410cfb7baff75225",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.36.28",
+      "pdfPage": 36,
+      "clause": "Приложение Д",
+      "firstLine": 28,
+      "lastLine": 28,
+      "sha256": "d12e8d97d3010ba76253a1a6b065165ab05943560e83690f075d2f0866dc9e7d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.36.30",
+      "pdfPage": 36,
+      "clause": "Приложение Д",
+      "firstLine": 30,
+      "lastLine": 31,
+      "sha256": "ef15965bb4de78b0a8bea07cc476549ae83c99c26ad861aa6c5806763879e19b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.36.33",
+      "pdfPage": 36,
+      "clause": "Приложение Д",
+      "firstLine": 33,
+      "lastLine": 36,
+      "sha256": "f13d8eee549a118861ea89db97d267e325c35af2574b152d10783019cc232266",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.36.39",
+      "pdfPage": 36,
+      "clause": "Приложение Д",
+      "firstLine": 39,
+      "lastLine": 40,
+      "sha256": "2f4e75cf79131d3c7994355a6e482378d3bcd5987211e29222ab04e90c5c5da3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.36.42",
+      "pdfPage": 36,
+      "clause": "Приложение Д",
+      "firstLine": 42,
+      "lastLine": 43,
+      "sha256": "77d2112aff946a82a7954b694d5af3fc61c2621f61330ea1bd56d2bcdbdc7334",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.36.48",
+      "pdfPage": 36,
+      "clause": "Приложение Д",
+      "firstLine": 48,
+      "lastLine": 48,
+      "sha256": "054294df5faf5202c1b66eb3d223ca598d3097849fc2ac4424bbd0d3302dce81",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.37.7",
+      "pdfPage": 37,
+      "clause": "Приложение Е",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "b6746cf7e205010bc169ec73af16901c7ea5b5e511be9cb2e62cb17e0ab58ca1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.37.10",
+      "pdfPage": 37,
+      "clause": "Приложение Е",
+      "firstLine": 10,
+      "lastLine": 10,
+      "sha256": "f854cd5a52d7b5039f54dfbd933e420bec010afc9ea3a34f1adcc7bd29ebee4c",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.37.13",
+      "pdfPage": 37,
+      "clause": "Приложение Е",
+      "firstLine": 13,
+      "lastLine": 15,
+      "sha256": "705cde4baf9f17f1c29338f099bd9e55cf77871da02f2e08b1fcd21a7d896148",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.37.19",
+      "pdfPage": 37,
+      "clause": "Приложение Е",
+      "firstLine": 19,
+      "lastLine": 20,
+      "sha256": "b63b717b938a510b8f2f2a406d4b7cd5e423afce7f40422b032b7d5de12103d9",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.37.22",
+      "pdfPage": 37,
+      "clause": "Приложение Е",
+      "firstLine": 22,
+      "lastLine": 23,
+      "sha256": "1158d8e493fdab00dc85921e1135490e779254d0db8f77c21b25e306031deea6",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.37.25",
+      "pdfPage": 37,
+      "clause": "Приложение Е",
+      "firstLine": 25,
+      "lastLine": 26,
+      "sha256": "9907533ee6597d70c99ba77d25b878da3e055bc0de5b4548f49454455a7f42ff",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.37.28",
+      "pdfPage": 37,
+      "clause": "Приложение Е",
+      "firstLine": 28,
+      "lastLine": 29,
+      "sha256": "9a82151ae56cd257a2ccd45a92195ec7b0fc136d81f1b8f971352f9aaebb9d03",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.37.31",
+      "pdfPage": 37,
+      "clause": "Приложение Е",
+      "firstLine": 31,
+      "lastLine": 32,
+      "sha256": "9a82151ae56cd257a2ccd45a92195ec7b0fc136d81f1b8f971352f9aaebb9d03",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.37.34",
+      "pdfPage": 37,
+      "clause": "Приложение Е",
+      "firstLine": 34,
+      "lastLine": 35,
+      "sha256": "9a82151ae56cd257a2ccd45a92195ec7b0fc136d81f1b8f971352f9aaebb9d03",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.37.37",
+      "pdfPage": 37,
+      "clause": "Приложение Е",
+      "firstLine": 37,
+      "lastLine": 38,
+      "sha256": "5e21b68f30b5f35abf21857840decc9bb533218c2728ce25d98c9d116a713b82",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.37.43",
+      "pdfPage": 37,
+      "clause": "Приложение Е",
+      "firstLine": 43,
+      "lastLine": 44,
+      "sha256": "8ac11639fea9ffe4ae471ee596163c82c5e76880d37f2df5045fad8578a9db12",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.38.7",
+      "pdfPage": 38,
+      "clause": "Приложение Ж",
+      "firstLine": 7,
+      "lastLine": 10,
+      "sha256": "6f550bf72b3f6802e4e5ef832401f3839817830174da4f59d99f57a14f78e0ad",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.38.12",
+      "pdfPage": 38,
+      "clause": "Приложение Ж",
+      "firstLine": 12,
+      "lastLine": 19,
+      "sha256": "3ddc742971987ffb74c84b1ad2a1830da46b26fedf012bc47061cddad9cc6f34",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.38.21",
+      "pdfPage": 38,
+      "clause": "Приложение Ж",
+      "firstLine": 21,
+      "lastLine": 25,
+      "sha256": "62e5188ca2c7c854810d8d6883551c10c559a2d7e3459c998c037e2e79c5171a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.38.28",
+      "pdfPage": 38,
+      "clause": "Приложение Ж",
+      "firstLine": 28,
+      "lastLine": 33,
+      "sha256": "a88b43425b5e678ba8c8862cf4a9e002d7e6ec2a2fb4089a933fee67a838d656",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.38.36",
+      "pdfPage": 38,
+      "clause": "Приложение Ж",
+      "firstLine": 36,
+      "lastLine": 38,
+      "sha256": "1f79c3de7ceb02b62a06730db63dd796b3dd0f8ff3f2adea9e95fc71f54ac6a2",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.38.40",
+      "pdfPage": 38,
+      "clause": "Приложение Ж",
+      "firstLine": 40,
+      "lastLine": 43,
+      "sha256": "53e446f1726d4d67d3ef011f1fc4ebdb59b59c8e2ebeab3120e97ba16135add4",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.38.45",
+      "pdfPage": 38,
+      "clause": "Приложение Ж",
+      "firstLine": 45,
+      "lastLine": 49,
+      "sha256": "24fd92d301c00177beb04d225698a1020e56551d0101e295e81a31c66da154bf",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.38.51",
+      "pdfPage": 38,
+      "clause": "Приложение Ж",
+      "firstLine": 51,
+      "lastLine": 52,
+      "sha256": "1fc7365d0900d6eb2ecf40670048e55d2ecfbc9c893b06a6ab50c1160d29a945",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.38.55",
+      "pdfPage": 38,
+      "clause": "Приложение Ж",
+      "firstLine": 55,
+      "lastLine": 55,
+      "sha256": "f84634b38d8756a27d018d27117175a8a490a3dd3a4f634d1be73ce663177338",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.39.7",
+      "pdfPage": 39,
+      "clause": "Приложение И",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "c477222c46af87628144589ebe8f9683c6758deeaa89bb90b8d0d5fcda82921b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.39.10",
+      "pdfPage": 39,
+      "clause": "Приложение И",
+      "firstLine": 10,
+      "lastLine": 11,
+      "sha256": "60d0ba370f592811cf7e67c29a03c3a43881f45f9da49f21f48ed92ab24ab404",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.39.14",
+      "pdfPage": 39,
+      "clause": "Приложение И",
+      "firstLine": 14,
+      "lastLine": 17,
+      "sha256": "b900c00e655029de4d164e71a8e44f25e563341f9519c5009da5c97895d71f3d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.39.19",
+      "pdfPage": 39,
+      "clause": "Приложение И",
+      "firstLine": 19,
+      "lastLine": 22,
+      "sha256": "c8971c8f5531c5f17e61075cb735db8c5279dcd5a2036f05019b50ae8352779f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.39.27",
+      "pdfPage": 39,
+      "clause": "Приложение И",
+      "firstLine": 27,
+      "lastLine": 29,
+      "sha256": "e21bcb0656e6b6f8e8b0a906c288d5ffb04f5b3c4f15133e637432c29784cde1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.39.31",
+      "pdfPage": 39,
+      "clause": "Приложение И",
+      "firstLine": 31,
+      "lastLine": 34,
+      "sha256": "daa9a3797125c42386197ef67c0e22516a0baf92de2c66370d52cdae9ea0b3a1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.39.39",
+      "pdfPage": 39,
+      "clause": "Приложение И",
+      "firstLine": 39,
+      "lastLine": 42,
+      "sha256": "9d155ed9c77e2e5ba806cc66f6309d5e68bb0b251617ec1433496031ec1047ba",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.39.47",
+      "pdfPage": 39,
+      "clause": "Приложение И",
+      "firstLine": 47,
+      "lastLine": 47,
+      "sha256": "a3499a64b9fcff750ad18290f44d330b5478b41f81c67908ebd5c0436303cba3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.40.7",
+      "pdfPage": 40,
+      "clause": "Приложение К",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "b816867da180ab59c391d5cba0eafa5b3898bb36c87a1661c85b423b94ceeff2",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.40.10",
+      "pdfPage": 40,
+      "clause": "Приложение К",
+      "firstLine": 10,
+      "lastLine": 12,
+      "sha256": "c21347ec2f56e7b8612b0ec69f44859c8e01f99a054b0b492a0a1cbe809d4fd3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.40.15",
+      "pdfPage": 40,
+      "clause": "Приложение К",
+      "firstLine": 15,
+      "lastLine": 22,
+      "sha256": "1a4ceefe906f892e6f682ddcd52da12cb7fada060dad6a63a6a021ab4c2c1b2f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.40.27",
+      "pdfPage": 40,
+      "clause": "Приложение К",
+      "firstLine": 27,
+      "lastLine": 37,
+      "sha256": "f2959071f67a83a355ab0fa1193067f09d6a04cf0aa08b7d8bf44f1dc2e34724",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.40.41",
+      "pdfPage": 40,
+      "clause": "Приложение К",
+      "firstLine": 41,
+      "lastLine": 42,
+      "sha256": "29923f8afb4ad2ce89c9e33bf56e116b575555a4520c83ff333d1789c36f8551",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.40.44",
+      "pdfPage": 40,
+      "clause": "Приложение К",
+      "firstLine": 44,
+      "lastLine": 45,
+      "sha256": "f1d44b07aec249e7dff23dc7869d13d7390a21709bfe28fc233e0cbde0718667",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.40.47",
+      "pdfPage": 40,
+      "clause": "Приложение К",
+      "firstLine": 47,
+      "lastLine": 48,
+      "sha256": "6088ab3bb357167a47686272bd744bd0b2423ade50d5a825e60cb3292594932a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.40.51",
+      "pdfPage": 40,
+      "clause": "Приложение К",
+      "firstLine": 51,
+      "lastLine": 51,
+      "sha256": "8e67281c8c98f752633a9f3ed7181e3ead4e163ac00c173c5288029845b9d8e8",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.41.7",
+      "pdfPage": 41,
+      "clause": "Приложение Л",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "93c8cdc41dc8a325a104a96d963c16af698ba6b7713effb5e2adb3ca2609ede7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.41.10",
+      "pdfPage": 41,
+      "clause": "Приложение Л",
+      "firstLine": 10,
+      "lastLine": 11,
+      "sha256": "8731432ec68709d9ed33d5cd7e08bcffccb11168046bff5127cea3b6c672e85d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.41.14",
+      "pdfPage": 41,
+      "clause": "Приложение Л",
+      "firstLine": 14,
+      "lastLine": 21,
+      "sha256": "143897d7d7ec96e80967bf7785ee14da32ff1d2d0ec05c7ad9a4b95eda404cc5",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.41.24",
+      "pdfPage": 41,
+      "clause": "Приложение Л",
+      "firstLine": 24,
+      "lastLine": 29,
+      "sha256": "c28c8410f2b161a61fb084fdc4454cf2be7df0363e0fdbb081757acd8574c415",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.41.32",
+      "pdfPage": 41,
+      "clause": "Приложение Л",
+      "firstLine": 32,
+      "lastLine": 36,
+      "sha256": "ab39491635c0d6df4c06d6d69c37025961fba8b5081d9933189db5ce4ff19ccf",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.41.41",
+      "pdfPage": 41,
+      "clause": "Приложение Л",
+      "firstLine": 41,
+      "lastLine": 44,
+      "sha256": "78ccffe6786e03cbf8b3f0dbae5fb074b1cd56ac9426cca3a103cf26c8ace8d3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.41.49",
+      "pdfPage": 41,
+      "clause": "Приложение Л",
+      "firstLine": 49,
+      "lastLine": 49,
+      "sha256": "31890543595d8b57e8b5a486cccaa1d4db6ea10cafeff640ff1ea23804b6287d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.42.7",
+      "pdfPage": 42,
+      "clause": "Приложение М",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "03149c1f30b11ede506b39756f9df536e4441be9627c5578277fa8e2aef6d2e0",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.42.10",
+      "pdfPage": 42,
+      "clause": "Приложение М",
+      "firstLine": 10,
+      "lastLine": 11,
+      "sha256": "1d4b73c65dad78678a0ff4909d3a8c6661d3b64c52c3ebf5676f47e0eb7dda9f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.42.13",
+      "pdfPage": 42,
+      "clause": "Приложение М",
+      "firstLine": 13,
+      "lastLine": 20,
+      "sha256": "23e86d048dde77a836b241ac0f63916c44776024d2101fd8d101ac448efc573f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.42.25",
+      "pdfPage": 42,
+      "clause": "Приложение М",
+      "firstLine": 25,
+      "lastLine": 33,
+      "sha256": "7499c2f76ef99436f53624f5539022a16141de156e0d80225f7e77e17df83b73",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.42.37",
+      "pdfPage": 42,
+      "clause": "Приложение М",
+      "firstLine": 37,
+      "lastLine": 38,
+      "sha256": "32f4a39e20b4666a787ff08e5a1a777dbb8b269ac0d4e8d13165898d94bda23a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.42.40",
+      "pdfPage": 42,
+      "clause": "Приложение М",
+      "firstLine": 40,
+      "lastLine": 41,
+      "sha256": "b05ad42485cfcf9b34e4e24b0784938ec97d7e4fb92ed17fc1b300917230fdd5",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.42.46",
+      "pdfPage": 42,
+      "clause": "Приложение М",
+      "firstLine": 46,
+      "lastLine": 46,
+      "sha256": "8e67281c8c98f752633a9f3ed7181e3ead4e163ac00c173c5288029845b9d8e8",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.43.7",
+      "pdfPage": 43,
+      "clause": "Приложение Н",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "c4e2f77a8a1d00c4c966dc3128b16d351d0de9e2bcded3d1f73f3b582761191d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.43.10",
+      "pdfPage": 43,
+      "clause": "Приложение Н",
+      "firstLine": 10,
+      "lastLine": 12,
+      "sha256": "282ca87a623448ead803b26f989360f68ecce92c3de79cdc847d8c49eef1c7d8",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.43.15",
+      "pdfPage": 43,
+      "clause": "Приложение Н",
+      "firstLine": 15,
+      "lastLine": 18,
+      "sha256": "ce5e38abe9ae7b1a5bb74838d5e9b465d9f5ccf739542d17992bbf4f2681a49e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.43.20",
+      "pdfPage": 43,
+      "clause": "Приложение Н",
+      "firstLine": 20,
+      "lastLine": 23,
+      "sha256": "dc2405e58edb75e81f55ce0c0ca81b7f763d23ba62aa35652d7f7130a3fe2a47",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.43.26",
+      "pdfPage": 43,
+      "clause": "Приложение Н",
+      "firstLine": 26,
+      "lastLine": 39,
+      "sha256": "59c077e79fe1558ae5d5e5a0d6eb5ea74bf0cae6c7b7ffaa08b421b042be0075",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.43.43",
+      "pdfPage": 43,
+      "clause": "Приложение Н",
+      "firstLine": 43,
+      "lastLine": 44,
+      "sha256": "2a8d5d31b919707130a906d317fc2b83b68bb2a5825b7b0f10f85e4cc95066c8",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.43.46",
+      "pdfPage": 43,
+      "clause": "Приложение Н",
+      "firstLine": 46,
+      "lastLine": 47,
+      "sha256": "1b81b6ef2888ccfdb8fb4b96d58340b007f13ec41df9077c0ca9b6b02e198910",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.43.51",
+      "pdfPage": 43,
+      "clause": "Приложение Н",
+      "firstLine": 51,
+      "lastLine": 51,
+      "sha256": "8e67281c8c98f752633a9f3ed7181e3ead4e163ac00c173c5288029845b9d8e8",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.44.7",
+      "pdfPage": 44,
+      "clause": "Приложение П",
+      "firstLine": 7,
+      "lastLine": 9,
+      "sha256": "1185260f170a6dd68a682398eb891b10f16a09c695c82567f2cf0cb62fc0579a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.44.11",
+      "pdfPage": 44,
+      "clause": "Приложение П",
+      "firstLine": 11,
+      "lastLine": 11,
+      "sha256": "8d69aa2b455b09ce4d435ef6fdcfe70f2488cf7c623acb3eb61dccaf148bcb0e",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.44.14",
+      "pdfPage": 44,
+      "clause": "Приложение П",
+      "firstLine": 14,
+      "lastLine": 39,
+      "sha256": "2b6b6f008a0b5e4679de3abd11eff34b4c24b7e8a64ae3f57312c19e77c66293",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.45.8",
+      "pdfPage": 45,
+      "clause": "Приложение Р",
+      "firstLine": 8,
+      "lastLine": 9,
+      "sha256": "f1b2a36b5a630324847e3c7ecb0aba59f2845233ddb3e4c42df2becc163e16e7",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.45.11",
+      "pdfPage": 45,
+      "clause": "Приложение Р",
+      "firstLine": 11,
+      "lastLine": 12,
+      "sha256": "8d66dcb437ba6cb274eb8b74556cb88396632ce8afa516b1efd29a669c8ddafe",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.45.diagram",
+      "pdfPage": 45,
+      "clause": "Приложение Р",
+      "firstLine": null,
+      "lastLine": null,
+      "sha256": null,
+      "kind": "diagram",
+      "review": "Dimensions and fold order require image inspection; extraction alone is insufficient."
+    },
+    {
+      "id": "pdf.46.7",
+      "pdfPage": 46,
+      "clause": "Приложение С",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "115cbe66035f27d9e3840864f2de2774345e0a22750acd2395fea63044aac44a",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.46.10",
+      "pdfPage": 46,
+      "clause": "Приложение С",
+      "firstLine": 10,
+      "lastLine": 12,
+      "sha256": "e6c5f3e929a7813d3ebd4b318582c7ad60e860a30ee21eef08f7bb75d919c71e",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.46.17",
+      "pdfPage": 46,
+      "clause": "Приложение С",
+      "firstLine": 17,
+      "lastLine": 18,
+      "sha256": "95a41d661d52ec094f53b2920a7f10b714907736a6942997057236d3f5c42796",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.46.diagram",
+      "pdfPage": 46,
+      "clause": "Приложение С",
+      "firstLine": null,
+      "lastLine": null,
+      "sha256": null,
+      "kind": "diagram",
+      "review": "Dimensions and fold order require image inspection; extraction alone is insufficient."
+    },
+    {
+      "id": "pdf.47.7",
+      "pdfPage": 47,
+      "clause": "Приложение С",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "0d1f0f9417ca523bb6ad02c85cc51282e2de2c02462d587d3ffe3b64c5588a9f",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.47.13",
+      "pdfPage": 47,
+      "clause": "Приложение С",
+      "firstLine": 13,
+      "lastLine": 14,
+      "sha256": "8e7c13460cc1eecc274962de3d36749be9b0f2fdec9a18b3514b88455096760e",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.47.diagram",
+      "pdfPage": 47,
+      "clause": "Приложение С",
+      "firstLine": null,
+      "lastLine": null,
+      "sha256": null,
+      "kind": "diagram",
+      "review": "Dimensions and fold order require image inspection; extraction alone is insufficient."
+    },
+    {
+      "id": "pdf.48.7",
+      "pdfPage": 48,
+      "clause": "Приложение С",
+      "firstLine": 7,
+      "lastLine": 9,
+      "sha256": "5208abeeb444d8f7a14f9fdfae7240f268c4099cadcc05200daf28e6db4ac941",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.48.14",
+      "pdfPage": 48,
+      "clause": "Приложение С",
+      "firstLine": 14,
+      "lastLine": 15,
+      "sha256": "8a79d13e51bb60e6d5d11930bd5089641038257ad38b69a18bc0dafeb7ab60af",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.48.20",
+      "pdfPage": 48,
+      "clause": "Приложение С",
+      "firstLine": 20,
+      "lastLine": 25,
+      "sha256": "3123cc494c8a0c04dd5398fff8507ce7b790e2e10762a6e05959beb23522cbc8",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.48.diagram",
+      "pdfPage": 48,
+      "clause": "Приложение С",
+      "firstLine": null,
+      "lastLine": null,
+      "sha256": null,
+      "kind": "diagram",
+      "review": "Dimensions and fold order require image inspection; extraction alone is insufficient."
+    },
+    {
+      "id": "pdf.49.7",
+      "pdfPage": 49,
+      "clause": "Приложение С",
+      "firstLine": 7,
+      "lastLine": 36,
+      "sha256": "775a7ba47f07c2ceb5d4e5e57870c0c4a1fa1e8ae50fd80e0e283469ae48e8a7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.50.7",
+      "pdfPage": 50,
+      "clause": "Приложение Т",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "35720edda7f86e9c398e40f66ea7b8c6c4730969099da4e027cbbe0482be7b19",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.50.10",
+      "pdfPage": 50,
+      "clause": "Приложение Т",
+      "firstLine": 10,
+      "lastLine": 10,
+      "sha256": "b209dbf2bfd3acf7efcc516aa43b3aaeccf1b0c49dc40f4c27267ab7ec39fa4a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.50.12",
+      "pdfPage": 50,
+      "clause": "Приложение Т",
+      "firstLine": 12,
+      "lastLine": 12,
+      "sha256": "d65171f22e98d1ce8a0082de571862d2b8b3685d491fc32cb71f58906a5e57cb",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.50.15",
+      "pdfPage": 50,
+      "clause": "Приложение Т",
+      "firstLine": 15,
+      "lastLine": 28,
+      "sha256": "6c33b50a2ebf109d9cac39b506778305cb77ad4ec0c0246f5b85f771c37cf1b6",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.51.7",
+      "pdfPage": 51,
+      "clause": "Приложение У",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "ddf4205d2fdc218234fbcfef404294d42f34c5212283b534f5cef29a0fa2310b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.51.10",
+      "pdfPage": 51,
+      "clause": "Приложение У",
+      "firstLine": 10,
+      "lastLine": 11,
+      "sha256": "d46c7896ed260294ae4cbcfd136174d6c7652b0a9d93dacd0f3e7d7a28fdef8c",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.51.13",
+      "pdfPage": 51,
+      "clause": "Приложение У",
+      "firstLine": 13,
+      "lastLine": 13,
+      "sha256": "d68fa4f7b2332c5851896c2f8886750ee7d6dfb26bdcc331129bfcf808bd78ae",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.51.15",
+      "pdfPage": 51,
+      "clause": "Приложение У",
+      "firstLine": 15,
+      "lastLine": 24,
+      "sha256": "0d2d789b30a538fa39c575a0a2b32eebd5d32d7075eb5a20b515616bf15a18ae",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.51.26",
+      "pdfPage": 51,
+      "clause": "Приложение У",
+      "firstLine": 26,
+      "lastLine": 26,
+      "sha256": "ae954f216d6c594b5e32b287c9c0c1f60d91105e8b444b34d40ff56d8e2039bb",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.51.28",
+      "pdfPage": 51,
+      "clause": "Приложение У",
+      "firstLine": 28,
+      "lastLine": 47,
+      "sha256": "d7137d1b230a10706d0220cb98f6d42508662431ce074dc1b26e2d05c1b3a217",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.52.7",
+      "pdfPage": 52,
+      "clause": "Приложение У",
+      "firstLine": 7,
+      "lastLine": 11,
+      "sha256": "c66f1dbc5b58674a84de36e2bcc9fa8009fa7bdedee3f1caf68364310dfb6fe5",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.52.13",
+      "pdfPage": 52,
+      "clause": "Приложение У",
+      "firstLine": 13,
+      "lastLine": 13,
+      "sha256": "8f9fa49d25bd14738734af87430cf6c65f3e9adcaf27a56aae5f78768a3c1552",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.52.15",
+      "pdfPage": 52,
+      "clause": "Приложение У",
+      "firstLine": 15,
+      "lastLine": 22,
+      "sha256": "2d2c968d14cb84ef91c4d1379d0aae8504739decc1391a729175701d06120dc2",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.52.24",
+      "pdfPage": 52,
+      "clause": "Приложение У",
+      "firstLine": 24,
+      "lastLine": 24,
+      "sha256": "1d04a1f829893f5a4544ba32cb6e89c26bf156451198105be1fa8088653f90a5",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.52.26",
+      "pdfPage": 52,
+      "clause": "Приложение У",
+      "firstLine": 26,
+      "lastLine": 39,
+      "sha256": "d89d5a81cf95761d6b6b2c7d225121983e27ec9ebed69670a8cc727905636486",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.52.41",
+      "pdfPage": 52,
+      "clause": "Приложение У",
+      "firstLine": 41,
+      "lastLine": 41,
+      "sha256": "471fadf988d4502bfbc69c6802bccdb1292234758c53141b7f48d520ed871870",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.52.43",
+      "pdfPage": 52,
+      "clause": "Приложение У",
+      "firstLine": 43,
+      "lastLine": 46,
+      "sha256": "1ba8840c152da835dd91f222355bca19594e520670d5aeacd64461e87cc2dd6a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.53.7",
+      "pdfPage": 53,
+      "clause": "Приложение У",
+      "firstLine": 7,
+      "lastLine": 13,
+      "sha256": "61fb4c50ae8402c82dcc740c66bd08cb350fe75dafe8f86a7cde0e593fe3de36",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.53.15",
+      "pdfPage": 53,
+      "clause": "Приложение У",
+      "firstLine": 15,
+      "lastLine": 15,
+      "sha256": "b76c0e155e704823b33002c6f3eb23f1f15116be157d0922bf93259054ddd472",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.53.17",
+      "pdfPage": 53,
+      "clause": "Приложение У",
+      "firstLine": 17,
+      "lastLine": 24,
+      "sha256": "c42e826b1f4ffd46723111ab53a1db0702fcb13dfb73b659c12546de3c3b81c4",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.53.26",
+      "pdfPage": 53,
+      "clause": "Приложение У",
+      "firstLine": 26,
+      "lastLine": 26,
+      "sha256": "aef577da1d5c3eea3f13df04062791088309e17cbd628d890a0b83ede1fab717",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.53.28",
+      "pdfPage": 53,
+      "clause": "Приложение У",
+      "firstLine": 28,
+      "lastLine": 42,
+      "sha256": "58dcf23eb87566dc1cce13e7bb07682accb74b26f637dd86d7734778669dcada",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.54.8",
+      "pdfPage": 54,
+      "clause": "Приложение У",
+      "firstLine": 8,
+      "lastLine": 8,
+      "sha256": "9c24d8301e06c1996f076682eb31810a589189bd89c26aa640ba158d9df73ebe",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.54.10",
+      "pdfPage": 54,
+      "clause": "Приложение У",
+      "firstLine": 10,
+      "lastLine": 13,
+      "sha256": "5a8e2bcbaa08366454f2568a21c48b708d9768a61e0bf8db4a8374c521588dfe",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.54.15",
+      "pdfPage": 54,
+      "clause": "Приложение У",
+      "firstLine": 15,
+      "lastLine": 15,
+      "sha256": "8b09c33f60a9e9398041b2713ece8eeb2164cad9dd0a6812af2b4f9651c9c6a9",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.54.17",
+      "pdfPage": 54,
+      "clause": "Приложение У",
+      "firstLine": 17,
+      "lastLine": 39,
+      "sha256": "92f9d7cff6f8e703459f61bd6dc7317f249f15a98ac6b3e6efd063b387634c9a",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.54.41",
+      "pdfPage": 54,
+      "clause": "Приложение У",
+      "firstLine": 41,
+      "lastLine": 41,
+      "sha256": "370c26de99060d404c1606b26f1976ccd95b503f13be1947c9e772fae619dbf7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.54.43",
+      "pdfPage": 54,
+      "clause": "Приложение У",
+      "firstLine": 43,
+      "lastLine": 46,
+      "sha256": "4514473059336cbe5c1d3ef39efb86817c1cbd710bdaad8bcb172cbd7ecd13c5",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.55.7",
+      "pdfPage": 55,
+      "clause": "Приложение У",
+      "firstLine": 7,
+      "lastLine": 31,
+      "sha256": "2a100099ee9bcbcb88ae1aedca8031f2f84d748ddf38682c6bbc6cf37c4b8bb3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.55.33",
+      "pdfPage": 55,
+      "clause": "Приложение У",
+      "firstLine": 33,
+      "lastLine": 33,
+      "sha256": "ba4c5d6055ba367986f7837993c81f659a044570a759cc170ea539946a5e0099",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.55.35",
+      "pdfPage": 55,
+      "clause": "Приложение У",
+      "firstLine": 35,
+      "lastLine": 47,
+      "sha256": "bf68a3d8c4a57514eb48215e2c63b85aad32d4ab765e655c94199558c4d5cf09",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.56.7",
+      "pdfPage": 56,
+      "clause": "Приложение У",
+      "firstLine": 7,
+      "lastLine": 14,
+      "sha256": "188e0b8ac81ce1ba25082c7f7e3800a547910c6e2de637e89d680db264d1b533",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.56.16",
+      "pdfPage": 56,
+      "clause": "Приложение У",
+      "firstLine": 16,
+      "lastLine": 16,
+      "sha256": "0d211400fe8483274c6d7560e793f6f0f94f36fd400ac502fdcab8dc13694a9d",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.56.18",
+      "pdfPage": 56,
+      "clause": "Приложение У",
+      "firstLine": 18,
+      "lastLine": 19,
+      "sha256": "1666c5aecf9c1d469dc6833c36ef11438dd3b5d57d388c071e1d9f63b62bc407",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.56.21",
+      "pdfPage": 56,
+      "clause": "Приложение У",
+      "firstLine": 21,
+      "lastLine": 21,
+      "sha256": "557d0f833c26515f748713defb03092662e0aa71d9fe44c8094d515627483bf3",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.56.23",
+      "pdfPage": 56,
+      "clause": "Приложение У",
+      "firstLine": 23,
+      "lastLine": 25,
+      "sha256": "3e82f2e631948380b057cbfee3472d2598d0cc6cd65d5d7d7c69104bc03434d5",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.56.27",
+      "pdfPage": 56,
+      "clause": "Приложение У",
+      "firstLine": 27,
+      "lastLine": 27,
+      "sha256": "202f5cc48c47306f4752d5509ff178615ff881dba056dd4f947b2835b774d116",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.56.29",
+      "pdfPage": 56,
+      "clause": "Приложение У",
+      "firstLine": 29,
+      "lastLine": 32,
+      "sha256": "4d7909a501dc1f0988f1cae7396be3efb565818ff8a545a92a8be04870f16d1f",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.56.34",
+      "pdfPage": 56,
+      "clause": "Приложение У",
+      "firstLine": 34,
+      "lastLine": 34,
+      "sha256": "4506f8921c292b9324bb87ec3c771bbc56f8ab93f25599503ad7e4d50b207bd1",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.56.36",
+      "pdfPage": 56,
+      "clause": "Приложение У",
+      "firstLine": 36,
+      "lastLine": 41,
+      "sha256": "df6f741fd0f7e033140dc661651bc297c46c59fceb0deb53bafe5de8f339d7be",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.56.43",
+      "pdfPage": 56,
+      "clause": "Приложение У",
+      "firstLine": 43,
+      "lastLine": 43,
+      "sha256": "2ec08f0362fb247b66d5d4f5070af199605160f7a7f699e1793844ec6dd9cf33",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.56.45",
+      "pdfPage": 56,
+      "clause": "Приложение У",
+      "firstLine": 45,
+      "lastLine": 47,
+      "sha256": "63cfd22681222d2984bdc686e9f95271198f287a3c563370ca786e859084e4b7",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.57.7",
+      "pdfPage": 57,
+      "clause": "Приложение Ф",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "e876b0ab1b9727161f4a355e0a8bb12daacac3faf50678af74bb195aefdb0973",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.57.10",
+      "pdfPage": 57,
+      "clause": "Приложение Ф",
+      "firstLine": 10,
+      "lastLine": 10,
+      "sha256": "16a18528f1944771b6cb5a07c6490d68a7da9039e501344308c8847173facbd3",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.57.12",
+      "pdfPage": 57,
+      "clause": "Приложение Ф",
+      "firstLine": 12,
+      "lastLine": 14,
+      "sha256": "47f71ecf5e7e7982142cad89f1410aec95b65f810d4e76e3f9166ac128ac8e19",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.57.16",
+      "pdfPage": 57,
+      "clause": "Приложение Ф",
+      "firstLine": 16,
+      "lastLine": 16,
+      "sha256": "a72b16eff96223653eba399368ced9168ce2301b7bb01bd4413397b81428cf50",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.57.21",
+      "pdfPage": 57,
+      "clause": "Приложение Ф",
+      "firstLine": 21,
+      "lastLine": 21,
+      "sha256": "3824327d390e0adb008d26db974111216dd3754ad9bd07cecd494640847d2bde",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.57.diagram",
+      "pdfPage": 57,
+      "clause": "Приложение Ф",
+      "firstLine": null,
+      "lastLine": null,
+      "sha256": null,
+      "kind": "diagram",
+      "review": "Dimensions and fold order require image inspection; extraction alone is insufficient."
+    },
+    {
+      "id": "pdf.58.7",
+      "pdfPage": 58,
+      "clause": "Приложение Ф",
+      "firstLine": 7,
+      "lastLine": 10,
+      "sha256": "59fb2124f13522d094c15aee82911b16d0cf69e26057ec6542527a2451f46164",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.58.12",
+      "pdfPage": 58,
+      "clause": "Приложение Ф",
+      "firstLine": 12,
+      "lastLine": 12,
+      "sha256": "0d1f2b4fc0c644f9613341c044b291ad1ee55afa0c9d376fccd1c9446df571b5",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.58.17",
+      "pdfPage": 58,
+      "clause": "Приложение Ф",
+      "firstLine": 17,
+      "lastLine": 18,
+      "sha256": "7bf7d88274646701aecdf03fec7ca04e9abcbd847cf88987fca9e95d0eb6f44a",
+      "kind": "image-and-text"
+    },
+    {
+      "id": "pdf.58.diagram",
+      "pdfPage": 58,
+      "clause": "Приложение Ф",
+      "firstLine": null,
+      "lastLine": null,
+      "sha256": null,
+      "kind": "diagram",
+      "review": "Dimensions and fold order require image inspection; extraction alone is insufficient."
+    },
+    {
+      "id": "pdf.59.7",
+      "pdfPage": 59,
+      "clause": "Приложение Х",
+      "firstLine": 7,
+      "lastLine": 8,
+      "sha256": "3089312034b3c541cc40eba5931d8c5680b6d3e59ff06427d7e3eba0cf9f8e5b",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.59.10",
+      "pdfPage": 59,
+      "clause": "Приложение Х",
+      "firstLine": 10,
+      "lastLine": 10,
+      "sha256": "8130256c3b4eab573c8537b17ac846a3b0b347a5567bf1586a22fd82805abd95",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.59.12",
+      "pdfPage": 59,
+      "clause": "Приложение Х",
+      "firstLine": 12,
+      "lastLine": 53,
+      "sha256": "8ef0a9dd08c2ae8a364d2e5c8f2670e3d33e5898fee7271661950032f579f2a0",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.60.7",
+      "pdfPage": 60,
+      "clause": "Приложение Х",
+      "firstLine": 7,
+      "lastLine": 7,
+      "sha256": "5869982a33bde6c8f78efad364190163927adf15ab8b03c6f4b03df08a27e1bb",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.60.9",
+      "pdfPage": 60,
+      "clause": "Приложение Х",
+      "firstLine": 9,
+      "lastLine": 35,
+      "sha256": "4e41d340a2929021bb035373802a6d615c07eb9e4dd95acb9f94ccfcf4cfcc07",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.61.8",
+      "pdfPage": 61,
+      "clause": "Библиография",
+      "firstLine": 8,
+      "lastLine": 8,
+      "sha256": "8d73c2fc35c03212baccd976fdcc8df35534f8890faa9279392d9677568e6fca",
+      "kind": "text"
+    },
+    {
+      "id": "pdf.61.10",
+      "pdfPage": 61,
+      "clause": "Библиография",
+      "firstLine": 10,
+      "lastLine": 13,
+      "sha256": "79f59ed4f75e7eee4f5a0515b543e2f4d4e00a44fbc601d9923e200ed5ff6171",
+      "kind": "text"
+    }
+  ]
+}

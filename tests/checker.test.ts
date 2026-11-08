@@ -1,7 +1,9 @@
 import { completePackage } from './helpers';
 import { describe, expect, it } from 'vitest';
 import JSZip from 'jszip';
-import { checkDocx, DEFAULT_REQUIREMENTS } from '../src/checker';
+import { checkDocx as checkWithProfile, DEFAULT_REQUIREMENTS } from '../src/checker';
+// Existing analyzer tests explicitly exercise the compatibility comparison profile.
+const checkDocx=(data:ArrayBuffer|Uint8Array, requirements=DEFAULT_REQUIREMENTS)=>checkWithProfile(data,requirements);
 const W='http://schemas.openxmlformats.org/wordprocessingml/2006/main';
 const R='http://schemas.openxmlformats.org/officeDocument/2006/relationships';
 const wrap=(name:string,text:string)=>`<w:${name} xmlns:w="${W}" xmlns:r="${R}">${text}</w:${name}>`;

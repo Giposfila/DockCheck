@@ -1,3 +1,4 @@
+import { describeStructure, resolveVisibleNumbers } from './structure';
 import { all, attr, child, children, W, REL, type Package } from './package';
 import { extract } from './extract';
 import { tableStyle, tableGeometry } from './tables';
@@ -93,6 +94,7 @@ export async function analyze(pkg: Package): Promise<DocumentModel> {
    function runs(n: Element) {
     if (n!==node && ['p','txbxContent'].includes(n.localName)) return;
     if (['del','ins','moveFrom','moveTo'].includes(n.localName)) { unsupportedAt('Исправления не приняты: их содержимое не проверяется',n,part,{...at,range:undefined}); return; }
+    if(n.namespaceURI==='http://schemas.openxmlformats.org/officeDocument/2006/math' && ['oMath','oMathPara'].includes(n.localName)){const formulas=n.localName==='oMath'?[n]:Array.from(n.getElementsByTagNameNS(n.namespaceURI,'oMath'));for(const formula of formulas)addObject({at:{...at,range:undefined},location:paragraph.location,kind:'formula',properties:{representation:{value:'OMML',status:'resolved',source:{part,property:'m:oMath'}},text:{value:formula.textContent??'',status:'resolved',source:{part,property:'m:t'}}}});unsupportedAt('OMML извлечён как объект; геометрия и семантика формулы не разрешены',n,part,{...at,range:undefined});return;}
     if (n.namespaceURI!==W) {unsupportedAt(`Неподдерживаемая конструкция ${n.namespaceURI} ${n.localName}`,n,part,{...at,range:undefined});return;}
     if (n.localName==='r') {
      const rp=child(n,'rPr'); const rs=style.chain(attr(child(rp,'rStyle'),'val') ?? style.defaults.character,new Set(),'character');
@@ -204,5 +206,7 @@ export async function analyze(pkg: Package): Promise<DocumentModel> {
  const fixSource=(props:Properties)=>{for(const p of Object.values(props))if(p.source && sourcePaths[p.source.part])p.source={...p.source,part:sourcePaths[p.source.part]!};};
  for(const p of paragraphs){fixSource(p.properties);fixSource(p.explicit);for(const r of p.runs){fixSource(r.properties);fixSource(r.explicit);for(const span of r.fontRanges)if(span.property.source && sourcePaths[span.property.source.part])span.property={...span.property,source:{...span.property.source,part:sourcePaths[span.property.source.part]!}};}}
  for(const region of unsupported)limitations.add(region.reason);
- return {objects,paragraphs,sections,unsupported,limitations:[...limitations],tables,images};
+ const model:DocumentModel={objects,paragraphs,sections,unsupported,limitations:[...limitations],tables,images};
+ resolveVisibleNumbers(paragraphs);model.structure=describeStructure(model);
+ return model;
 }

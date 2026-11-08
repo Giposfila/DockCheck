@@ -7,15 +7,20 @@ export interface Requirements {
   fontSizePt: number;
   allowedLineSpacing: number[];
   firstLineIndentMm: number;
+  landscapeMarginsMm?: { top: number; right: number; bottom: number; left: number };
   portraitMarginsMm: { top: number; right: number; bottom: number; left: number };
   requireA4: boolean;
   requireJustified: boolean;
   requirePageNumbers: boolean;
-  requireContentsOverPages: number;
   requiredSections: string[];
 }
 
 export interface Finding {
+  normSource?: import("./requirements/schema").NormSource;
+  modality?: import("./requirements/schema").Modality;
+  origin?: CheckResult["origin"];
+  reasonCode?: CheckResult["reasonCode"];
+  evidence?: CheckResult["evidence"];
   id: string;
   severity: Severity;
   category: Category;
@@ -41,6 +46,10 @@ export interface ManualCheck {
 
 export interface CheckReport {
   fileName?: string;
+  profile?: import("./requirements/profile").WorkProfile;
+  profileConflicts?: string[];
+  stale?: boolean;
+  catalogCoverage?: {total:number;implemented:number;unknown:number;notApplicable:number};
   results: CheckResult[];
   coverage: Record<CheckStatus, number>;
   document: import("./analyzer/model").DocumentModel;
@@ -59,6 +68,12 @@ export interface CheckReport {
 export type CheckStatus = 'pass' | 'fail' | 'unknown' | 'not_applicable';
 export interface CheckResult {
   scope?: string; tolerance?: number; property?: string;
+  normSource?: import("./requirements/schema").NormSource;
+  profileVersion?: string; modality?: import("./requirements/schema").Modality;
+  origin?: "standard"|"local"|"analysis";
+  applicability?: import("./requirements/schema").Truth;
+  reasonCode?: "unknown_context"|"ambiguous_role"|"missing_fact"|"unsupported"|"needs_layout"|"external_standard"|"external_artifact"|"unimplemented";
+  evidence?: {kind:string;detail:string;source?:import("./analyzer/model").Source|null}[];
   at?: import("./analyzer/model").DocumentLocation; paragraphText?: string; unit?: string;
   ruleId: string; status: CheckStatus; severity: Severity; category: Category;
   location: string; title: string; actual: unknown; expected: unknown;
