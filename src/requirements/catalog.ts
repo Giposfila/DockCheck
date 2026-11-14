@@ -1,3 +1,4 @@
+import { refineCatalog } from './refinements';
 import { always, CATALOG_VERSION, deepFreeze, EDITION, eq, validateCatalog } from './schema';
 import type { Assertion, Capability, Condition, CoverageRow, Modality, Rule } from './schema';
 export const EXTERNAL_DEPENDENCIES = deepFreeze([
@@ -202,6 +203,7 @@ for(const [id,clause,page,summary] of [
 const styleIndex=rules.findIndex(r=>r.id==='stu.slide.style');rules.splice(styleIndex,1);matrix.splice(matrix.findIndex(r=>r.ruleIds.includes('stu.slide.style')),1);
 context('front-matter','Титул, содержание и согласование стандарта',1,'Выходные данные, содержание стр. 2–3, разработчики и согласование стр. 30');
 for(const [base,alternative] of [['stu.table-number.sequence','stu.table.section-numbering'],['stu.figure-number.sequence','stu.figure.section-numbering'],['stu.formula-number.sequence','stu.formula.section-numbering'],['stu.title.approval-page','stu.title.combined']] as const)rules.find(r=>r.id===base)!.alternatives.push(alternative);
+refineCatalog(rules,matrix);
 export const RULE_SUPPORT:Record<string,'automatic'|'partial'|'unimplemented'>=Object.fromEntries(rules.map(r=>[r.id,r.id==='stu.title.combined-eligibility'||r.id.startsWith('stu.document.')?'automatic':['stu.text.font','stu.text.size','stu.paragraph.indent','stu.paragraph.spacing','stu.paragraph.align','stu.page.a4','stu.table.text-size','stu.table.text-font'].includes(r.id)||r.id.startsWith('stu.margin.')?'partial':'unimplemented']));
 for(const row of matrix)if(row.decision==='included')row.implementation=row.ruleIds.some(id=>RULE_SUPPORT[id]==='automatic')?'automatic':row.ruleIds.some(id=>RULE_SUPPORT[id]==='partial')?'partial':'unimplemented';
 validateCatalog(rules,matrix);

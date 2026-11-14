@@ -110,7 +110,7 @@ describe('new report and analytical evidence',()=>{
   const data=await readFile(new URL('./fixtures/incorrect.docx',import.meta.url));
   const report=await checkDocx(data);expect(report.profile?.id).toBe('work');expect(report.results.find(r=>r.ruleId==='stu.text.font')).toMatchObject({status:'unknown',reasonCode:'ambiguous_role',origin:'standard',normSource:{clause:'7.1.1',pdfPage:14}});
   const local=await checkDocx(data,DEFAULT_REQUIREMENTS);expect(local.findings.some(f=>f.origin==='local')).toBe(true);
-  const text=exportReport(report);for(const expected of ['Нормативный источник','Доказательства','ambiguous_role','stu-2021.1'])expect(text).toContain(expected);
+  const text=exportReport(report);for(const expected of ['Нормативный источник','Доказательства','ambiguous_role','stu-2021.2'])expect(text).toContain(expected);
   expect(JSON.parse(exportReportJson(report))).toMatchObject({schemaVersion:1,report:{profile:{schemaVersion:2}}});
   expect(report.stats.estimatedPages).toBeUndefined();
  });

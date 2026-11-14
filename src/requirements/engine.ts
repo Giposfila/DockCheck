@@ -10,11 +10,16 @@ export interface RuleImplementation {ruleId:string;capabilities:string[];state:'
 const bridges:Record<string,string>={'text.font':'stu.text.font','text.size':'stu.text.size','paragraph.indent':'stu.paragraph.indent','paragraph.spacing':'stu.paragraph.spacing','paragraph.align':'stu.paragraph.align'};
 export const IMPLEMENTATIONS:RuleImplementation[]=CATALOG.rules.map(r=>({ruleId:r.id,capabilities:r.evidence,state:RULE_SUPPORT[r.id]}));
 export function profileFacts(profile:WorkProfile,model:DocumentModel):Record<string,unknown>{
- const facts:Record<string,unknown>={...profile,titleForm:profile.workKind?TITLE_FORMS[profile.workKind]:undefined};
+ const facts:Record<string,unknown>={...profile,execution:profile.execution??(profile.medium==='handwritten'?'handwritten':undefined),medium:profile.medium==='handwritten'?undefined:profile.medium,titleForm:profile.workKind?TITLE_FORMS[profile.workKind]:undefined};
+ for(const [key,value] of Object.entries(profile.numbering))facts[`numbering.${key}`]=value;
  for(const [key,value] of Object.entries(profile.artifacts))facts[`has.${key}`]=value;
  for(const [key,count] of [['tables',model.tables],['images',model.images],['formulas',model.objects.filter(o=>o.kind==='formula').length],['lists',model.paragraphs.filter(p=>p.role==='list').length],['headings',model.paragraphs.filter(p=>p.role==='heading').length]] as const)facts[`has.${key}`]=count>0?true:model.unsupported.length?undefined:false;
- if(profile.workKind&&['master','diploma-project','diploma-work','bachelor'].includes(profile.workKind)&&profile.approvalVariant==='combined'&&profile.consultants!==undefined)facts.titleForm='Ж';
+ if(profile.workKind&&['master','diploma-project','diploma-work','bachelor'].includes(profile.workKind)&&profile.approvalVariant==='combined')facts.titleForm='Ж';
  if(profile.approvalVariant==='separate')facts.approvalForm='Е';
+ // Candidate structure is deliberately not a confirmed presence or absence.
+ for(const kind of ['contents','abbreviations','bibliography','appendices','citations','citation-inline','citation-footnote','citation-list','handwritten-formulas','embedded-drawings'])facts[`has.${kind}`]=undefined;
+ for(const [kind,artifactKind] of [['drawings','drawing'],['posters','poster'],['slides','slides'],['separateAppendices','appendix']] as const)if(profile.artifactManifest?.some(a=>a.kind===artifactKind))facts[`has.${kind}`]=true;
+ if(profile.artifactManifest?.some(a=>a.kind==='appendix'))facts['has.appendices']=true;
  return facts;
 }
 export function applicability(rule:Rule,facts:Record<string,unknown>):Truth {
@@ -42,6 +47,13 @@ export function evaluateRequirements(model:DocumentModel,profile:WorkProfile,for
  const facts=profileFacts(profile,model),results:CheckResult[]=[];
  for(const rule of CATALOG.rules){
   const base=result(rule,profile,facts);
+  if(rule.target==='artifact'){
+   const sheetRules=rule.id.startsWith('stu.stamp.')||rule.id.startsWith('stu.fold.')||rule.id==='stu.appendix.format-eligibility';
+   if(sheetRules){
+    const contexts=(profile.artifactManifest??[]).flatMap(a=>a.sheets?.length?a.sheets.map(sheet=>({artifact:a,sheet})):[]);
+    if(contexts.length){for(const {artifact,sheet} of contexts){const objectFacts={...facts,...sheet,artifactKind:artifact.kind,medium:sheet.medium??artifact.medium,execution:sheet.execution??artifact.execution};const candidate=result({...rule,when:{op:'all',args:[rule.when,rule.selector]}},profile,objectFacts);candidate.location=`${artifact.name} → лист ${sheet.id}`;candidate.evidence=[{kind:'user-context',detail:`Артефакт ${artifact.id}, лист ${sheet.id}; источник: ${artifact.source}`}];results.push(candidate);}continue;}
+   }
+  }
   const legacyId=Object.keys(bridges).find(k=>bridges[k]===rule.id);
   if(legacyId){
    const matches=formatting.filter(r=>r.ruleId===legacyId);
@@ -95,8 +107,11 @@ export function evaluateRequirements(model:DocumentModel,profile:WorkProfile,for
   }
   results.push(base);
  }
+ // Resolve dependencies conservatively; a dependent claim needs its prerequisite.
+ for(const rule of CATALOG.rules.filter(r=>r.dependsOn.length)){const dependent=results.filter(r=>r.ruleId===rule.id);const prerequisites=results.filter(r=>rule.dependsOn.includes(r.ruleId));for(const r of dependent)if(r.status!=='not_applicable'&&(prerequisites.length<rule.dependsOn.length||prerequisites.some(p=>p.status!=='pass'))){r.status='unknown';r.reasonCode='missing_fact';r.explanation='Не подтверждены предварительные требования: '+rule.dependsOn.join(', ');}}
  for(const r of results){const external=profile.externalEvidence?.filter(e=>e.ruleId===r.ruleId)??[];r.evidence??=[];r.evidence.push(...external.map(e=>({kind:e.kind,detail:`${e.source}: ${e.statement}${e.artifactId?`; артефакт ${e.artifactId}`:''}`})));if(external.length&&r.status==='unknown')r.explanation+='; пользовательские сведения сохранены отдельно, их наличие не заменяет проверку нормативного предиката';}
  // Evaluate local additions alongside the original standard; no mutation/overrides of catalog rules.
  for(const local of profile.localRequirements){const rule=CATALOG.rules.find(r=>r.id===local.ruleId)!;const originals=results.filter(r=>r.ruleId===rule.id);for(const original of originals){const verdict=original.status==='unknown'||original.status==='not_applicable'?'unknown':predicate(local.assertion,original.actual,original.tolerance);results.push({...original,ruleId:local.id,origin:'local',expected:local.assertion.value,status:original.status==='not_applicable'?'not_applicable':verdict==='unknown'?'unknown':verdict?'pass':'fail',clause:local.source,explanation:`${local.explanation}. Локальное требование; исходная норма ${rule.id} сохранена отдельно`});}}
+ for(const local of profile.localAdditions??[]){const r=result({...local.rule,when:{op:'all',args:[local.rule.when,local.rule.selector]},source:CATALOG.rules[0].source},profile,facts);r.origin='local';r.normSource=undefined;r.clause=local.source;r.explanation=local.explanation+'; '+r.explanation;results.push(r);}
  return results;
 }

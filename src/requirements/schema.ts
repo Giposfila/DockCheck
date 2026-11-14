@@ -1,11 +1,14 @@
 import type { Category } from '../types';
 export type Truth = true | false | 'unknown';
 export type Scalar = string | number | boolean;
-export type Condition = {op:'always'} | {op:'eq'|'in';fact:string;value:Scalar|Scalar[]} | {op:'not';arg:Condition} | {op:'all'|'any';args:Condition[]};
+export type Condition = {op:'always'} | {op:'eq'|'in';fact:string;value:Scalar|Scalar[]} | {op:'lt'|'lte'|'gt'|'gte';fact:string;value:number} | {op:'every'|'some';fact:string;where:Condition} | {op:'not';arg:Condition} | {op:'all'|'any';args:Condition[]};
 export type Modality = 'mandatory'|'prohibition'|'recommendation'|'permission';
 export type Capability = 'ooxml'|'structure'|'counters'|'layout'|'geometry'|'language'|'external-standard'|'external-artifact'|'manual';
-export interface NormSource { edition:'СТУ 7.5–07–2021'; clause:string; pdfPage:number; appendix?:string; form?:string }
-export interface Assertion {op:'eq'|'oneOf'|'range'|'min'|'max'|'pattern'|'relation';value:Scalar|Scalar[];unit?:'mm'|'pt'|'multiplier'|'count'|'percent'|'characters'|'line'}
+export interface SourceLocator {documentSha256:string; firstLine:number; lastLine:number; sha256:string; atomId:string}
+export interface ObjectReference {collection:string; link:'self'|'owner'|'target'|'members'; property:string; scope:'document'|'section'|'appendix'|'artifact'|'sheet'}
+export interface RelationSpec {validator:'same-property'|'ordered'|'sequence'|'membership'|'placement'|'form'|'expert'; left:ObjectReference; right?:ObjectReference; parameters:Record<string,Scalar|Scalar[]>}
+export interface NormSource { edition:'СТУ 7.5–07–2021'; clause:string; pdfPage:number; appendix?:string; form?:string; locators?:SourceLocator[]; appendixStatus?:'mandatory'|'recommended'|'informative'; contentKind?:'norm'|'example'|'definition'|'reference' }
+export interface Assertion {relation?:RelationSpec; op:'eq'|'oneOf'|'range'|'min'|'max'|'pattern'|'relation';value:Scalar|Scalar[];unit?:'mm'|'pt'|'multiplier'|'count'|'percent'|'characters'|'line'}
 export interface Rule {
  id:string;title:string;description:string;source:NormSource;modality:Modality;when:Condition;
  target:'document'|'paragraph'|'run'|'section'|'object'|'artifact';selector:Condition;property:string;assertion:Assertion;
@@ -14,13 +17,15 @@ export interface Rule {
 }
 export interface CoverageRow {id:string;source:NormSource;summary:string;type:'formal'|'recommendation'|'permission'|'example'|'definition'|'subjective';ruleIds:string[];decision:'included'|'excluded'|'external-dependency'|'context';reason:string;evidence:Capability[];implementation:'automatic'|'partial'|'unimplemented'|'not-applicable';questions:string[]}
 export const EDITION = 'СТУ 7.5–07–2021' as const;
-export const CATALOG_VERSION = 'stu-2021.1';
+export const CATALOG_VERSION = 'stu-2021.2';
 export const always:Condition={op:'always'};
 export const eq=(fact:string,value:Scalar):Condition=>({op:'eq',fact,value});
 export function evaluate(c:Condition,facts:Record<string,unknown>):Truth {
  switch(c.op){
  case 'always':return true;
  case 'eq':case 'in': {const v=Object.hasOwn(facts,c.fact)?facts[c.fact]:undefined;return v===undefined||v===null?'unknown':c.op==='eq'?v===c.value:(c.value as Scalar[]).includes(v as Scalar);}
+ case 'lt':case 'lte':case 'gt':case 'gte': {const v=Object.hasOwn(facts,c.fact)?facts[c.fact]:undefined;if(typeof v!=='number'||!Number.isFinite(v))return 'unknown';return c.op==='lt'?v<c.value:c.op==='lte'?v<=c.value:c.op==='gt'?v>c.value:v>=c.value;}
+ case 'every':case 'some': {const values=Object.hasOwn(facts,c.fact)?facts[c.fact]:undefined;if(!Array.isArray(values))return 'unknown';const results=values.map(v=>object(v)?evaluate(c.where,v):'unknown');return c.op==='every'?results.includes(false)?false:results.includes('unknown')?'unknown':true:results.includes(true)?true:results.includes('unknown')?'unknown':false;}
  case 'not':{const v=evaluate(c.arg,facts);return v==='unknown'?v:!v;}
  case 'all':case 'any':{const values=c.args.map(a=>evaluate(a,facts));return c.op==='all'?values.includes(false)?false:values.includes('unknown')?'unknown':true:values.includes(true)?true:values.includes('unknown')?'unknown':false;}
  }
@@ -29,9 +34,9 @@ function object(v:unknown):v is Record<string,any>{return !!v&&typeof v==='objec
 function scalar(v:unknown):v is Scalar{return typeof v==='string'||typeof v==='boolean'||typeof v==='number'&&Number.isFinite(v);}
 export function validateCondition(v:unknown,depth=0):asserts v is Condition {
  if(depth>24||!object(v))throw Error('Неверное условие или превышена глубина');
- const allowed=v.op==='always'?['op']:v.op==='eq'||v.op==='in'?['op','fact','value']:v.op==='not'?['op','arg']:['op','args'];
+ const allowed=v.op==='always'?['op']:['eq','in','lt','lte','gt','gte'].includes(v.op)?['op','fact','value']:['every','some'].includes(v.op)?['op','fact','where']:v.op==='not'?['op','arg']:['op','args'];
  if(Object.keys(v).some(k=>!allowed.includes(k)))throw Error('Неизвестное поле условия');
- switch(v.op){case 'always':return;case 'eq':case 'in':if(typeof v.fact!=='string'||!v.fact||['__proto__','constructor','prototype'].includes(v.fact)||!(v.op==='eq'?scalar(v.value):Array.isArray(v.value)&&v.value.length>0&&v.value.every(scalar)))throw Error('Неверное сравнение');return;case 'not':validateCondition(v.arg,depth+1);return;case 'all':case 'any':if(!Array.isArray(v.args)||!v.args.length)throw Error('Пустое условие');v.args.forEach(a=>validateCondition(a,depth+1));return;default:throw Error('Неизвестная операция условия');}
+ switch(v.op){case 'always':return;case 'every':case 'some':if(typeof v.fact!=='string'||!v.fact||['__proto__','constructor','prototype'].includes(v.fact))throw Error('Неверная коллекция');validateCondition(v.where,depth+1);return;case 'lt':case 'lte':case 'gt':case 'gte':if(typeof v.fact!=='string'||!v.fact||['__proto__','constructor','prototype'].includes(v.fact)||!scalar(v.value)||typeof v.value!=='number')throw Error('Неверное числовое условие');return;case 'eq':case 'in':if(typeof v.fact!=='string'||!v.fact||['__proto__','constructor','prototype'].includes(v.fact)||!(v.op==='eq'?scalar(v.value):Array.isArray(v.value)&&v.value.length>0&&v.value.every(scalar)))throw Error('Неверное сравнение');return;case 'not':validateCondition(v.arg,depth+1);return;case 'all':case 'any':if(!Array.isArray(v.args)||!v.args.length)throw Error('Пустое условие');v.args.forEach(a=>validateCondition(a,depth+1));return;default:throw Error('Неизвестная операция условия');}
 }
 export function validateCatalog(input:unknown,coverage?:CoverageRow[]):asserts input is Rule[] {
  if(!Array.isArray(input))throw Error('Каталог должен быть массивом');
@@ -46,6 +51,8 @@ export function validateCatalog(input:unknown,coverage?:CoverageRow[]):asserts i
   for(const k of ['dependsOn','alternatives','externalDependencies','evidence'])if(!Array.isArray(r[k])||!r[k].every((x:unknown)=>typeof x==='string'))throw Error(`Неверное поле ${k}`);
   if(!r.evidence.length||r.evidence.some((x:string)=>!['ooxml','structure','counters','layout','geometry','language','external-standard','external-artifact','manual'].includes(x)))throw Error('Неизвестная возможность');
   const a=r.assertion;if(!object(a)||!['eq','oneOf','range','min','max','pattern','relation'].includes(a.op)||!(scalar(a.value)||Array.isArray(a.value)&&a.value.length>0&&a.value.every(scalar)))throw Error(`Неверный предикат ${r.id}`);
+  if(a.relation){const q=a.relation;if(a.op!=='relation'||!object(q)||Object.keys(q).some(k=>!['validator','left','right','parameters'].includes(k))||!['same-property','ordered','sequence','membership','placement','form','expert'].includes(q.validator)||!object(q.parameters)||Object.values(q.parameters).some(v=>!(scalar(v)||Array.isArray(v)&&v.every(scalar))))throw Error('Неверная связь');for(const ref of [q.left,q.right].filter(Boolean)){if(!object(ref)||Object.keys(ref).some(k=>!['collection','link','property','scope'].includes(k))||!['self','owner','target','members'].includes(ref.link)||!['document','section','appendix','artifact','sheet'].includes(ref.scope)||!['collection','property'].every(k=>typeof ref[k]==='string'&&ref[k]))throw Error('Неверная ссылка на объект');}}
+  if(r.source.locators){if(!Array.isArray(r.source.locators)||!r.source.locators.length)throw Error('Нет локаторов');for(const l of r.source.locators)if(!object(l)||!l.atomId||!Number.isInteger(l.firstLine)||!Number.isInteger(l.lastLine)||l.firstLine<1||l.lastLine<l.firstLine||!['sha256','documentSha256'].every(k=>typeof l[k]==='string'&&/^[a-f0-9]{64}$/.test(l[k])))throw Error('Неверный локатор');}
   const propertyUnit:Record<string,string>={fontSize:'pt',firstLine:'mm',line:'multiplier',consultants:'count','stamp.width':'mm','stamp.height':'mm'};
   const expectedUnit=propertyUnit[r.property]??(/^(?:margin\.|frame\.(?:edge|gap)\.|stamp\.(?:column|row)\.)/.test(r.property)?'mm':undefined);
   if(expectedUnit&&a.unit!==expectedUnit)throw Error(`Несовместимые единицы свойства ${r.property}`);

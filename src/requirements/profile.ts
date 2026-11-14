@@ -2,15 +2,19 @@ import type { Requirements } from '../types';
 import { DEFAULT_REQUIREMENTS } from '../profiles/default';
 import { CATALOG_VERSION, deepFreeze } from './schema';
 import { CATALOG, TITLE_FORMS } from './catalog';
-import type { Assertion } from './schema';
+import { validateCatalog } from './schema';
+import type { Rule, Assertion } from './schema';
 export const PROFILE_STORAGE_KEY='dockcheck-work-profile-v2';
 export const LEGACY_STORAGE_KEY='dockcheck-sfu-requirements-v1';
 export const WORK_KINDS=Object.keys(TITLE_FORMS) as (keyof typeof TITLE_FORMS)[];
 export interface LocalRequirement {id:string;ruleId:string;assertion:Assertion;source:string;explanation:string}
-export interface ArtifactDescriptor {id:string;kind:'docx'|'assignment'|'appendix'|'drawing'|'poster'|'slides'|'physical';name:string;provided:boolean;source:string}
+export interface LocalAddition {id:string; source:string; explanation:string; rule:Omit<Rule,'source'>}
+export interface SheetContext {id:string;format?:'A4'|'A3'|'A3×4'|'A4×4'|'A2'|'A1';stampForm?:'1'|'2'|'3'|'4'|'5'|'6';drawingKind?:'detail'|'assembly'|'scheme'|'construction';documentationSystem?:'ESKD'|'SPDS'|'ESTD'|'ESPD'|'mining';medium?:'electronic'|'paper';execution?:'printed'|'handwritten';first?:boolean}
+export interface ArtifactDescriptor {id:string;kind:'docx'|'assignment'|'appendix'|'drawing'|'poster'|'slides'|'physical';name:string;provided:boolean;source:string; sheets?:SheetContext[];medium?:'electronic'|'paper';execution?:'printed'|'handwritten';pageCountScope?:string;parentId?:string}
 export interface ExternalEvidence {ruleId:string;artifactId?:string;kind:'user-confirmation'|'external-document';source:string;statement:string}
 export interface WorkProfile {
  schemaVersion:2;id:string;version:string;catalogVersion:string;
+ execution?:'printed'|'handwritten';
  workKind?:keyof typeof TITLE_FORMS;documentMode?:'unframed'|'framed';medium?:'electronic'|'paper'|'handwritten';
  documentationSystem?:'ESKD'|'SPDS'|'ESTD'|'ESPD'|'mining';specialty?:string;directionCode?:string;
  composition?:{elements:string[];source:string};
@@ -19,7 +23,7 @@ export interface WorkProfile {
  numbering:{tables?:'continuous'|'section';figures?:'continuous'|'section';formulas?:'continuous'|'section';appendices:'separate'};
  bibliographyGrouping?:'alphabetical'|'systematic'|'chronological';
  requisites:Record<string,string>;localRequirements:LocalRequirement[];
- artifactManifest?:ArtifactDescriptor[];externalEvidence?:ExternalEvidence[];
+ artifactManifest?:ArtifactDescriptor[];externalEvidence?:ExternalEvidence[];localAdditions?:LocalAddition[];
  // Compatibility settings are explicitly local comparisons, never replacements for the base standard.
  formatting?:Requirements;
 }
@@ -37,11 +41,12 @@ export function validateFormatting(v:unknown):asserts v is Requirements {
  if(!Array.isArray(v.requiredSections)||!v.requiredSections.every(x=>typeof x==='string'))throw Error('Неверный состав');
  if(v.textRoles!==undefined&&(!Array.isArray(v.textRoles)||v.textRoles.some(x=>!['body','heading','table','footer','header','note','list','caption','textbox','unknown'].includes(x))))throw Error('Неверная роль');
 }
-export function parseProfile(value:unknown):WorkProfile {
- if(!record(value))throw Error('Профиль должен быть объектом');
- keys(value,['schemaVersion','id','version','catalogVersion','workKind','documentMode','medium','documentationSystem','specialty','directionCode','composition','artifacts','approvalVariant','consultants','numbering','bibliographyGrouping','requisites','localRequirements','formatting','artifactManifest','externalEvidence']);
+export function parseProfile(input:unknown):WorkProfile {
+ if(!record(input))throw Error('Профиль должен быть объектом');
+ const value=input.catalogVersion==='stu-2021.1'?{...input,catalogVersion:CATALOG_VERSION}:input;
+ keys(value,['schemaVersion','id','version','catalogVersion','workKind','documentMode','medium','documentationSystem','specialty','directionCode','composition','artifacts','approvalVariant','consultants','numbering','bibliographyGrouping','requisites','localRequirements','formatting','artifactManifest','externalEvidence','execution','localAdditions']);
  if(value.schemaVersion!==2||value.catalogVersion!==CATALOG_VERSION||!['id','version'].every(k=>typeof value[k]==='string'&&value[k].trim()))throw Error('Неподдерживаемая версия профиля или каталога');
- enumValue(value.workKind,WORK_KINDS,'вид работы');enumValue(value.documentMode,['unframed','framed'],'рамка');enumValue(value.medium,['electronic','paper','handwritten'],'носитель');enumValue(value.documentationSystem,['ESKD','SPDS','ESTD','ESPD','mining'],'система документации');enumValue(value.approvalVariant,['separate','combined'],'согласование');enumValue(value.bibliographyGrouping,['alphabetical','systematic','chronological'],'группировка');
+ enumValue(value.execution,['printed','handwritten'],'исполнение');enumValue(value.workKind,WORK_KINDS,'вид работы');enumValue(value.documentMode,['unframed','framed'],'рамка');enumValue(value.medium,['electronic','paper','handwritten'],'носитель');enumValue(value.documentationSystem,['ESKD','SPDS','ESTD','ESPD','mining'],'система документации');enumValue(value.approvalVariant,['separate','combined'],'согласование');enumValue(value.bibliographyGrouping,['alphabetical','systematic','chronological'],'группировка');
  for(const k of ['specialty','directionCode'])if(value[k]!==undefined&&typeof value[k]!=='string')throw Error('Неверный код');
  if(value.consultants!==undefined&&(!Number.isInteger(value.consultants)||value.consultants<0))throw Error('Неверное число консультантов');
  if(value.composition!==undefined){if(!record(value.composition)||!Array.isArray(value.composition.elements)||!value.composition.elements.every((x:unknown)=>typeof x==='string')||typeof value.composition.source!=='string'||!value.composition.source.trim())throw Error('Нужен источник состава');keys(value.composition,['elements','source']);}
@@ -56,7 +61,9 @@ export function parseProfile(value:unknown):WorkProfile {
   if(!(scalar(a.value)||Array.isArray(a.value)&&a.value.length>0&&a.value.every(scalar))||a.unit&&!(typeof a.value==='number'||Array.isArray(a.value)&&a.value.every((x:unknown)=>typeof x==='number')))throw Error('Неверное локальное значение');
   if(a.op==='oneOf'&&!Array.isArray(a.value)||a.op==='range'&&(!Array.isArray(a.value)||a.value.length!==2||typeof a.value[0]!=='number'||typeof a.value[1]!=='number'||a.value[0]>a.value[1])||['min','max'].includes(a.op)&&typeof a.value!=='number')throw Error('Неверный локальный диапазон');
  }
- if(value.artifactManifest!==undefined){if(!Array.isArray(value.artifactManifest))throw Error('Неверный комплект артефактов');const artifactIds=new Set<string>();for(const a of value.artifactManifest){if(!record(a))throw Error('Неверный артефакт');keys(a,['id','kind','name','provided','source']);if(!['id','name','source'].every(k=>typeof a[k]==='string'&&a[k].trim())||artifactIds.has(a.id)||typeof a.provided!=='boolean')throw Error('Артефакт требует уникальный id, имя, источник и наличие');enumValue(a.kind,['docx','assignment','appendix','drawing','poster','slides','physical'],'артефакт');if(!a.kind)throw Error('Нет вида артефакта');artifactIds.add(a.id);}}
+ if(value.artifactManifest!==undefined){if(!Array.isArray(value.artifactManifest))throw Error('Неверный комплект артефактов');const artifactIds=new Set<string>();for(const a of value.artifactManifest){if(!record(a))throw Error('Неверный артефакт');keys(a,['id','kind','name','provided','source','sheets','medium','execution','pageCountScope','parentId']);enumValue(a.medium,['electronic','paper'],'носитель');enumValue(a.execution,['printed','handwritten'],'исполнение');for(const key of ['pageCountScope','parentId'])if(a[key]!==undefined&&(typeof a[key]!=='string'||!a[key].trim()))throw Error('Неверная связь артефакта');if(a.sheets!==undefined){if(!Array.isArray(a.sheets))throw Error('Неверные листы');const sheetIds=new Set<string>();for(const sheet of a.sheets){if(!record(sheet))throw Error('Неверный лист');keys(sheet,['id','format','stampForm','drawingKind','documentationSystem','medium','execution','first']);if(typeof sheet.id!=='string'||!sheet.id.trim()||sheetIds.has(sheet.id))throw Error('Неверный id листа');sheetIds.add(sheet.id);enumValue(sheet.format,['A4','A3','A3×4','A4×4','A2','A1'],'формат');enumValue(sheet.stampForm,['1','2','3','4','5','6'],'форма надписи');enumValue(sheet.drawingKind,['detail','assembly','scheme','construction'],'вид чертежа');enumValue(sheet.documentationSystem,['ESKD','SPDS','ESTD','ESPD','mining'],'система');enumValue(sheet.medium,['electronic','paper'],'носитель');enumValue(sheet.execution,['printed','handwritten'],'исполнение');if(sheet.first!==undefined&&typeof sheet.first!=='boolean')throw Error('Неверный порядок листа');}}if(!['id','name','source'].every(k=>typeof a[k]==='string'&&a[k].trim())||artifactIds.has(a.id)||typeof a.provided!=='boolean')throw Error('Артефакт требует уникальный id, имя, источник и наличие');enumValue(a.kind,['docx','assignment','appendix','drawing','poster','slides','physical'],'артефакт');if(!a.kind)throw Error('Нет вида артефакта');artifactIds.add(a.id);}}
+ if(value.artifactManifest){const artifacts=value.artifactManifest as ArtifactDescriptor[];for(const a of artifacts){if(a.parentId!==undefined&&!artifacts.some(p=>p.id===a.parentId&&p.id!==a.id))throw Error('Неизвестный родитель артефакта');const seen=new Set<string>([a.id]);let parent=a.parentId;while(parent){if(seen.has(parent))throw Error('Цикл артефактов');seen.add(parent);parent=artifacts.find(p=>p.id===parent)?.parentId;}}}
+ if(value.localAdditions!==undefined){if(!Array.isArray(value.localAdditions))throw Error('Неверные локальные нормы');for(const a of value.localAdditions){if(!record(a))throw Error('Неверная локальная норма');keys(a,['id','source','explanation','rule']);if(typeof a.id!=='string'||!a.id.startsWith('local.')||ids.has(a.id)||!['source','explanation'].every(k=>typeof a[k]==='string'&&a[k].trim())||!record(a.rule)||a.rule.id!==a.id)throw Error('Локальная норма требует id и источник');ids.add(a.id);if('source' in a.rule)throw Error('Источник локальной нормы задаётся отдельно');validateCatalog([{...a.rule,source:{edition:'СТУ 7.5–07–2021',clause:'validation-only',pdfPage:1}}]);}}
  if(value.externalEvidence!==undefined){if(!Array.isArray(value.externalEvidence))throw Error('Неверные внешние доказательства');for(const e of value.externalEvidence){if(!record(e))throw Error('Неверное доказательство');keys(e,['ruleId','artifactId','kind','source','statement']);if(!CATALOG.rules.some(r=>r.id===e.ruleId)||!['source','statement'].every(k=>typeof e[k]==='string'&&e[k].trim()))throw Error('Доказательство требует правило, источник и описание');if(!['user-confirmation','external-document'].includes(e.kind))throw Error('Неверный вид доказательства');if(e.artifactId!==undefined&&!value.artifactManifest?.some((a:ArtifactDescriptor)=>a.id===e.artifactId))throw Error('Неизвестный артефакт доказательства');}}
  if(value.formatting!==undefined){validateFormatting(value.formatting);if(!value.requisites.localFormattingSource?.trim())throw Error('Нужен источник локального оформления');}
  return structuredClone(value) as WorkProfile;
