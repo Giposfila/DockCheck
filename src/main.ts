@@ -7,7 +7,7 @@ import type { Category, CheckReport, Finding } from './types';
 
 const STANDARD_URL = 'https://iubp.sfu-kras.ru/sites/default/files/page_files/standart-oformleniya_otcheta_po_praktike_compressed.pdf';
 
-const icon = (name: 'lock' | 'file' | 'upload' | 'check' | 'alert' | 'eye' | 'download' | 'arrow' | 'copy' | 'search') => {
+const icon = (name: 'lock' | 'file' | 'upload' | 'check' | 'alert' | 'eye' | 'download' | 'arrow' | 'copy' | 'search' | 'sun' | 'moon') => {
   const paths: Record<typeof name, string> = {
     lock: '<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
     file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/>',
@@ -19,6 +19,8 @@ const icon = (name: 'lock' | 'file' | 'upload' | 'check' | 'alert' | 'eye' | 'do
     arrow: '<path d="M5 12h14m-5-5 5 5-5 5"/>',
     copy: '<rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>',
     search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>',
+    moon: '<path d="M20.9 13.3A9 9 0 0 1 10.7 3.1a9 9 0 1 0 10.2 10.2Z"/>',
   };
   return `<svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name]}</svg>`;
 };
@@ -30,11 +32,14 @@ let currentFileName = '';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <header class="topbar">
-    <a class="brand" href="#" aria-label="ДокЧек — на главную">
-      <span class="brand-mark">Д</span><span>ДокЧек</span>
+    <a class="brand" href="#" aria-label="DockCheck — на главную">
+      <span class="brand-mark">${icon('check')}</span><span>DockCheck</span>
     </a>
     <div class="top-actions">
-      <span class="privacy-pill">${icon('lock')} Файл остаётся в браузере</span>
+      <span class="service-pill">${icon('lock')} Документ остаётся у вас</span>
+      <button class="theme-switch" id="themeSwitch" type="button" role="switch" aria-checked="false" aria-label="Тёмная тема">
+        <span class="theme-switch-sun">${icon('sun')}</span><span class="theme-switch-moon">${icon('moon')}</span><span class="theme-switch-track" aria-hidden="true"></span>
+      </button>
     </div>
   </header>
 
@@ -42,15 +47,16 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <section class="hero" id="uploadSection">
       <div class="hero-copy">
         <div class="eyebrow"><span></span> СТУ СФУ 7.5-07-2021</div>
-        <h1>Проверьте документ<br><em>до нормоконтроля</em></h1>
+        <h1 class="type-heading" aria-label="Проверьте документ до дедлайна"><span class="type-line" aria-hidden="true">Проверьте</span><span class="type-line" aria-hidden="true">документ</span><em class="type-line" aria-hidden="true">до дедлайна</em></h1>
         <p class="hero-lead">Загрузите DOCX — сервис проверит поля, шрифт, интервалы, заголовки, подписи и структуру по СТУ СФУ. Спорные места честно оставит человеку.</p>
         <div class="trust-row">
-          <div><strong>Локально</strong><span>без передачи файла</span></div>
+          <div><strong>Онлайн</strong><span>проверка документов</span></div>
           <div><strong>Понятно</strong><span>с указанием абзацев</span></div>
           <div><strong>По СТУ</strong><span>встроенные требования</span></div>
         </div>
       </div>
       <div class="upload-card-wrap">
+        <div class="upload-label"><span>01 / ЗАГРУЗКА ДОКУМЕНТА</span><span class="format-badge">.DOCX</span></div>
         <div class="upload-card" id="dropzone" tabindex="0" role="button" aria-label="Выбрать документ DOCX">
           <input type="file" id="fileInput" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
           <div class="upload-icon">${icon('upload')}</div>
@@ -59,11 +65,14 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <button class="button button-primary" id="pickButton">Выбрать документ ${icon('arrow')}</button>
           <span class="file-limit">DOCX · до 25 МБ</span>
         </div>
-        <div class="standard-note">
-          ${icon('file')}
-          <div><strong>Основа проверки</strong><span>Каталог СТУ 2021: нормы и возможности проверки показаны отдельно</span></div>
-          <a href="${STANDARD_URL}" target="_blank" rel="noreferrer">Открыть стандарт ↗</a>
-        </div>
+        <section class="supported-standards" aria-labelledby="standardsTitle">
+          <h2 id="standardsTitle">Поддерживаемые стандарты:</h2>
+          <div class="standard-note">
+            ${icon('file')}
+            <div><strong>СТУ 2021</strong><span>Нормы и возможности проверки показаны отдельно</span></div>
+            <a href="${STANDARD_URL}" target="_blank" rel="noreferrer">Открыть стандарт ↗</a>
+          </div>
+        </section>
       </div>
     </section>
 
@@ -95,12 +104,66 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </main>
 
   <footer>
-    <span>ДокЧек · локальная предварительная проверка</span>
+    <span>DockCheck · веб-сервис проверки по СТУ СФУ</span>
     <span>Не заменяет решение нормоконтролёра</span>
   </footer>
 
   <div class="toast hidden" id="toast" role="status"></div>
 `;
+
+const themeSwitch = document.querySelector<HTMLButtonElement>('#themeSwitch')!;
+themeSwitch.setAttribute('aria-checked', String(document.documentElement.dataset.theme === 'dark'));
+themeSwitch.addEventListener('click', () => {
+  const dark = document.documentElement.dataset.theme !== 'dark';
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  themeSwitch.setAttribute('aria-checked', String(dark));
+  document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')!.content = dark ? '#101827' : '#f4f7fc';
+  try { localStorage.setItem('dockcheck-theme', dark ? 'dark' : 'light'); } catch {}
+});
+
+// Reserve the complete heading layout while revealing characters, so the form never moves.
+function animateHeading() {
+  const heading = document.querySelector<HTMLElement>('.type-heading')!;
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (motionPreference.matches) return;
+
+  const characters: HTMLSpanElement[] = [];
+  heading.querySelectorAll<HTMLElement>('.type-line').forEach((line) => {
+    const text = line.textContent ?? '';
+    line.textContent = '';
+    for (const letter of Array.from(text)) {
+      const character = document.createElement('span');
+      character.className = 'type-character';
+      character.textContent = letter;
+      line.append(character);
+      characters.push(character);
+    }
+  });
+
+  let index = 0;
+  let timer = 0;
+  const finish = () => {
+    window.clearTimeout(timer);
+    characters.forEach((character) => {
+      character.classList.add('is-visible');
+      character.classList.remove('has-caret');
+    });
+    motionPreference.removeEventListener('change', finish);
+  };
+  const typeNext = () => {
+    characters[index - 1]?.classList.remove('has-caret');
+    const character = characters[index++];
+    character.classList.add('is-visible', 'has-caret');
+    if (index < characters.length) {
+      timer = window.setTimeout(typeNext, character.textContent === ' ' ? 110 : 48);
+    } else {
+      timer = window.setTimeout(finish, 1400);
+    }
+  };
+  motionPreference.addEventListener('change', finish);
+  timer = window.setTimeout(typeNext, 280);
+}
+animateHeading();
 
 const fileInput = document.querySelector<HTMLInputElement>('#fileInput')!;
 const dropzone = document.querySelector<HTMLElement>('#dropzone')!;
@@ -117,7 +180,7 @@ function showToast(message: string, isError = false) {
 
 document.querySelector('#pickButton')!.addEventListener('click', (event) => { event.stopPropagation(); fileInput.click(); });
 dropzone.addEventListener('click', () => fileInput.click());
-dropzone.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') fileInput.click(); });
+dropzone.addEventListener('keydown', (event) => { if (event.target === dropzone && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); fileInput.click(); } });
 fileInput.addEventListener('change', () => { if (fileInput.files?.[0]) void handleFile(fileInput.files[0]); });
 
 for (const eventName of ['dragenter', 'dragover']) dropzone.addEventListener(eventName, (event) => { event.preventDefault(); dropzone.classList.add('dragging'); });

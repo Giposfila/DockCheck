@@ -3,9 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f4f1e9" />
-    <meta name="description" content="Локальная проверка DOCX по СТУ СФУ 7.5-07-2021" />
-    <title>ДокЧек — проверка по СТУ СФУ</title>
+    <meta name="theme-color" content="#f4f7fc" />
+    <script>
+      (() => {
+        let theme;
+        try { theme = localStorage.getItem('dockcheck-theme'); } catch {}
+        const dark = theme === 'dark' || (theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        document.querySelector('meta[name="theme-color"]').content = dark ? '#101827' : '#f4f7fc';
+      })();
+    </script>
+    <meta name="description" content="DockCheck — веб-сервис проверки DOCX по СТУ СФУ 7.5-07-2021. Загрузите документ и получите отчёт с замечаниями по оформлению." />
+    <title>DockCheck — проверка по СТУ СФУ</title>
   </head>
   <body>
     <div id="app"></div>
