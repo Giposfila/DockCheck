@@ -45,3 +45,15 @@ it('uses the same selection for text and JSON exports without changing diagnosti
  expect(exported.manualChecks).toBeUndefined();
  expect(report.results).toEqual([hidden,violation]);
 });
+it('separates confirmed checks from unknown, subjective and advisory results', async()=>{
+ const { confirmedChecks }=await import('../src/report');
+ const passed={...violation,status:'pass' as const};
+ const subjective={...violation,ruleId:'stu.expert.clarity'};
+ expect(confirmedChecks([violation,passed,subjective,{...violation,status:'unknown'},{...violation,modality:'recommendation'}])).toEqual([violation,passed]);
+ const report=await checkDocx(await readFile(new URL('./fixtures/incorrect.docx',import.meta.url)));
+ report.results=[violation,passed,{...violation,status:'unknown'}];
+ const output=exportReport(report);
+ expect(output.split('1. [')[0]).not.toContain('unknown');expect(output).not.toContain('Не удалось проверить');
+ const exported=JSON.parse(exportReportJson(report)).report;
+ expect(exported.coverage).toEqual({pass:1,fail:1,unknown:0,not_applicable:0});
+});

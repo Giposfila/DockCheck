@@ -33,3 +33,9 @@ describe('common requirements only', () => {
   expect(GENERAL_COVERAGE.every(row => row.ruleIds.every(id => ids.has(id)))).toBe(true);
  });
 });
+it('excludes subjective expert judgments from active checking and manual tasks', async()=>{
+ expect(GENERAL_RULES.some(r=>r.id.startsWith('stu.expert.')||r.assertion.relation?.validator==='expert')).toBe(false);
+ const report=await checkDocx(new Uint8Array(await readFile(new URL('./fixtures/correct.docx',import.meta.url))));
+ expect(report.results.some(r=>r.ruleId.startsWith('stu.expert.'))).toBe(false);
+ expect(report.manualChecks.some(r=>/Логичность, однозначность|Краткость и смысловое соответствие|Содержательная полнота основной части/.test(r.title))).toBe(false);
+});

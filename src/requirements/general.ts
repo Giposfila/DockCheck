@@ -11,7 +11,7 @@ function commonSource(source: Rule['source']): boolean {
  return /^(5\.[1-4](?:$|\D)|6\.(?:1(?:$|\D)|2\.[12](?:$|\D)|[4-9](?:$|\D)|10(?:$|\D))|7\.(?:1\.1(?:$|\D)|[2-9](?:$|\D)|1[01](?:$|\D)))/.test(clause);
 }
 const specific = new Set(['stu.title.form', 'stu.title.specialty', 'stu.title.reviewer', 'stu.title.approval-page', 'stu.title.approval']);
-export const GENERAL_RULES = deepFreeze(CATALOG.rules.filter(rule => commonSource(rule.source) && !specific.has(rule.id)).map(rule => {
+export const GENERAL_RULES = deepFreeze(CATALOG.rules.filter(rule => commonSource(rule.source) && !specific.has(rule.id) && !rule.id.startsWith('stu.expert.') && rule.assertion.relation?.validator!=='expert').map(rule => {
  const common: Rule = structuredClone(rule);
  // These sections are optional; their formatting applies when present.
  if (rule.source.clause === '6.5') common.when = { op: 'eq', fact: 'has.introduction', value: true };

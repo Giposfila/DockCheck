@@ -18,21 +18,24 @@ export function groupResults(results:CheckResult[]):Map<string,CheckResult[]> {
  return groups;
 }
 const generalIds=new Set(GENERAL_RULES.map(r=>r.id));
-export function visibleViolations(results:CheckResult[]):CheckResult[] {
- return results.filter(r=>r.status==='fail'&&r.origin==='standard'&&generalIds.has(r.ruleId)&&r.category!=='structure'&&
+export function confirmedChecks(results:CheckResult[]):CheckResult[] {
+ return results.filter(r=>(r.status==='pass'||r.status==='fail')&&r.origin==='standard'&&generalIds.has(r.ruleId)&&r.category!=='structure'&&
   (r.modality==='mandatory'||r.modality==='prohibition')&&r.applicability===true&&!r.reasonCode&&r.evidence?.some(e=>e.kind==='ooxml'));
 }
+export function visibleViolations(results:CheckResult[]):CheckResult[] {return confirmedChecks(results).filter(r=>r.status==='fail');}
 interface ExportOptions {diagnostics?:boolean}
 function exportView(report:CheckReport,options:ExportOptions) {
  if(options.diagnostics||report.profile?.formatting)return report;
  const results=visibleViolations(report.results);
- const {manualChecks,...rest}=report;
- return {...rest,results,findings:results.map(resultFinding)};
+ const {manualChecks,catalogCoverage,coverage,...rest}=report;
+ const checked=confirmedChecks(report.results);
+ return {...rest,coverage:{pass:checked.filter(r=>r.status==='pass').length,fail:results.length,unknown:0,not_applicable:0},results,findings:results.map(resultFinding)};
 }
 export function exportReportJson(report:CheckReport,options:ExportOptions={}):string {return JSON.stringify({schemaVersion:1,report:exportView(report,options)},null,2);}
 export function exportReport(report:CheckReport,options:ExportOptions={}):string {
  const view=exportView(report,options);
- return `ДОКЧЕК — ${report.profile?.formatting?'СРАВНЕНИЕ С ЛОКАЛЬНЫМ ШАБЛОНОМ':'ПРОВЕРКА ПО СТУ СФУ 7.5–07–2021'}\nФайл: ${report.fileName ?? ''}\nПроверено: ${report.checkedAt}\nПрофиль: ${report.profile?.id??'legacy'}@${report.profile?.version??'1'}; каталог: ${report.profile?.catalogVersion??'не указан'}\nУстаревший отчёт: ${report.stale??false}\nКонфликты: ${JSON.stringify(report.profileConflicts??[])}\nУчёт норм каталога: ${JSON.stringify(report.catalogCoverage??{})}\nСтатусы результатов (не процент соответствия СТУ): ${JSON.stringify(report.coverage)}\nПодтверждённых нарушений: ${visibleViolations(report.results).length}\n\n`+view.results.map((r,i)=>{
+ const summary=options.diagnostics||report.profile?.formatting?`Учёт норм каталога: ${JSON.stringify(report.catalogCoverage??{})}\nСтатусы результатов (не процент соответствия СТУ): ${JSON.stringify(report.coverage)}`:`Подтверждено соответствие: ${view.coverage.pass}\nПроверено свойств: ${view.coverage.pass+view.coverage.fail}`;
+ return `ДОКЧЕК — ${report.profile?.formatting?'СРАВНЕНИЕ С ЛОКАЛЬНЫМ ШАБЛОНОМ':'ПРОВЕРКА ПО СТУ СФУ 7.5–07–2021'}\nФайл: ${report.fileName ?? ''}\nПроверено: ${report.checkedAt}\nПрофиль: ${report.profile?.id??'legacy'}@${report.profile?.version??'1'}; каталог: ${report.profile?.catalogVersion??'не указан'}\nУстаревший отчёт: ${report.stale??false}\nКонфликты: ${JSON.stringify(report.profileConflicts??[])}\n${summary}\nПодтверждённых нарушений: ${visibleViolations(report.results).length}\n\n`+view.results.map((r,i)=>{
   const f=resultFinding(r,i);
   return `${i+1}. [${statusLabels[r.status]}] ${f.title}\n${r.location}\n${pageLabel(r.at?.page ?? unknownPage())}\nРасположение: ${JSON.stringify(r.at ?? {area:'document',page:unknownPage()})}\nЦитата: ${f.excerpt===undefined?'Текстовая цитата неприменима':JSON.stringify(f.excerpt)}\nПолный абзац: ${r.paragraphText===undefined?'неприменим':JSON.stringify(r.paragraphText)}\nФакт: ${f.actual}; требование: ${f.expected}\nИсточник: ${JSON.stringify(r.source)}\nОбласть: ${r.scope ?? r.category}; свойство: ${r.property ?? r.ruleId}; допуск: ${r.tolerance ?? 'не применяется'}\nНормативный источник: ${JSON.stringify(r.normSource??null)}\nПроисхождение: ${r.origin??'local'}; модальность: ${r.modality??'не указана'}; профиль: ${r.profileVersion??'не указан'}\nПрименимость: ${r.applicability??'unknown'}; причина: ${r.reasonCode??'не требуется'}\nДоказательства: ${JSON.stringify(r.evidence??[])}\nПункт: ${r.clause}\n${r.explanation}\n${r.recommendation}`;
  }).join('\n\n')+'\n\nЧастичная проверка оформления не доказывает соответствие документа.';

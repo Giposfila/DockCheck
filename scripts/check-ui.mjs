@@ -36,21 +36,16 @@ try {
   assert.deepEqual(report.profile.localRequirements,[]);
   assert.ok(report.results.every(r=>r.origin!=='local'));
   assert.equal(await page.locator('.finding-card').count(),report.findings.length);
-  await page.locator('[data-filter=manual]').click();
-  assert.ok(await page.locator('.finding-card').count()>0);
-  const copy=page.locator('.copy-quote').first();
-  if(await copy.count()) {
-   await copy.locator('xpath=ancestor::details[1]/summary').click();
-   const excerpt=await copy.locator('xpath=ancestor::article').locator('blockquote').textContent();
-   await copy.click();
-   const copied=await page.evaluate(()=>navigator.clipboard.readText());
-   assert.ok(copied.startsWith(excerpt.replace(/…$/u,'')));
-  }
+  assert.equal(await page.locator('[data-filter=manual], [data-filter=recommendations], #downloadDiagnostics, #groupCoverage').count(),0);
+  assert.doesNotMatch(await page.locator('#reportSection').innerText(),/Проверить вручную|Не удалось проверить|не определено/);
+  assert.ok(report.results.every(r=>r.status==='fail'&&r.origin==='standard'));
+  assert.equal(report.manualChecks,undefined);
+  assert.equal(report.coverage.unknown,0);
   await page.setViewportSize({width:390,height:844});
   await page.waitForFunction(()=>document.documentElement.scrollWidth<=innerWidth);
   await page.screenshot({path:`/tmp/dockcheck-${kind}-builtin-mobile.png`,fullPage:true});
   await page.setViewportSize({width:1440,height:1000});
-  console.log(`PASS: ${kind}, built-in profile, report export, manual results, mobile layout`);
+  console.log(`PASS: ${kind}, built-in profile, report export, confirmed results only, mobile layout`);
  }
  const pending=page.waitForEvent('download');await page.locator('#downloadButton').click();
  const download=await pending;await download.saveAs('/tmp/dockcheck-builtin-report.txt');
@@ -64,24 +59,25 @@ try {
   assert.equal((await page.locator('.finding-card h3').allTextContents()).filter(t=>/12\.7 мм вместо 12\.5 мм/.test(t)).length,count);
   assert.equal(await page.locator('#documentStructure [data-kind=section]').count(),3);
   assert.equal(await page.locator('#documentStructure [data-kind=subsection]').count(),17);
-  for(const [button,path] of [['#downloadJson','/tmp/dockcheck-real-violations.json'],['#downloadDiagnostics','/tmp/dockcheck-real-diagnostics.json']]) {
+  for(const [button,path] of [['#downloadJson','/tmp/dockcheck-real-violations.json']]) {
    const pending=page.waitForEvent('download');await page.locator(button).click();
    await (await pending).saveAs(path);
   }
   const exported=JSON.parse(await readFile('/tmp/dockcheck-real-violations.json','utf8')).report;
-  const full=JSON.parse(await readFile('/tmp/dockcheck-real-diagnostics.json','utf8')).report;
   assert.equal(exported.results.filter(r=>r.ruleId==='stu.paragraph.indent').length,count);
   assert.ok(exported.results.every(r=>r.status==='fail'&&r.paragraphText));
   assert.equal(exported.results.filter(r=>r.ruleId==='stu.structural-heading.indent').length,1);
-  assert.ok(full.results.some(r=>r.status==='unknown'));
-  assert.ok(full.results.filter(r=>r.ruleId==='list.number').every(r=>r.status==='unknown'));
+  assert.equal(exported.manualChecks,undefined);
+  assert.ok(exported.results.every(r=>r.status==='fail'&&!r.ruleId.startsWith('stu.expert.')));
+  assert.equal(await page.locator('[data-filter=manual], #downloadDiagnostics').count(),0);
+  assert.doesNotMatch(await page.locator('#reportSection').innerText(),/Проверить вручную|Не удалось проверить|не определено/);
   const copy=page.locator('.copy-quote').first();await copy.click();
   assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),exported.results[0].paragraphText);
   await page.setViewportSize({width:390,height:844});
   await page.waitForFunction(()=>document.documentElement.scrollWidth<=innerWidth);
   await page.screenshot({path:'/tmp/dockcheck-real-document-mobile.png'});
   await page.setViewportSize({width:1440,height:1000});
-  console.log(`PASS: real document, ${count} indent violations, quote copying, both exports, mobile layout`);
+  console.log(`PASS: real document, ${count} indent violations, quote copying, confirmed-only export, mobile layout`);
  }
  assert.deepEqual(await page.evaluate(values=>Object.fromEntries(Object.keys(values).map(key=>[key,localStorage.getItem(key)])),stored),stored);
  await page.locator('#newFileButton').click();

@@ -1,9 +1,8 @@
 import './styles.css';
-import { exportReport, exportReportJson, groupResults, resultFinding } from './report';
+import { exportReport, exportReportJson, groupResults, resultFinding, confirmedChecks, visibleViolations } from './report';
 import { pageLabel } from './analyzer/location';
 import { checkDocx } from './checker';
 import { DEFAULT_PROFILE } from './requirements/profile';
-import { GENERAL_CATALOG as CATALOG, GENERAL_EXCLUSIONS as EXCLUSIONS } from './requirements/general';
 import type { Category, CheckReport, Finding } from './types';
 
 const STANDARD_URL = 'https://iubp.sfu-kras.ru/sites/default/files/page_files/standart-oformleniya_otcheta_po_praktike_compressed.pdf';
@@ -26,7 +25,7 @@ const icon = (name: 'lock' | 'file' | 'upload' | 'check' | 'alert' | 'eye' | 'do
 
 let analysisEpoch=0;
 let report: CheckReport | null = null;
-let activeFilter: Category | 'all' | 'manual' | 'recommendations' = 'all';
+let activeFilter: Category | 'all' = 'all';
 let currentFileName = '';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
@@ -84,7 +83,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div class="report-actions">
           <button class="button button-ghost" id="newFileButton">Новый файл</button>
           <button class="button button-ghost" id="downloadJson">JSON отчёта</button>
-          <button class="button button-ghost" id="downloadDiagnostics">Полная диагностика JSON</button>
           <button class="button button-dark" id="downloadButton">${icon('download')} Скачать отчёт</button>
         </div>
       </div>
@@ -170,22 +168,17 @@ function escapeHtml(value: string): string {
 }
 
 function renderReport(nextReport: CheckReport) {
-  const violations=nextReport.findings.length;
-  const checked = nextReport.coverage.pass + nextReport.coverage.fail;
-  const score = nextReport.catalogCoverage?.implemented??0;
-  document.querySelector('#reportTitle')!.textContent = currentFileName;
-  document.querySelector('#reportMeta')!.textContent = `${nextReport.coverage.pass} проверок пройдено · ${violations} нарушений и замечаний анализа · ${nextReport.coverage.unknown} не определено · ${nextReport.stats.paragraphs} абзацев · ${nextReport.stats.tables} таблиц · ${nextReport.stats.images} изображений`;
-  document.querySelector('#scoreGrid')!.innerHTML = `
-    <div class="score-card score-main"><div class="score-ring" style="--score:360deg"><span>${score}</span></div><div><span class="score-label">Норм с реализацией</span><strong>${nextReport.coverage.unknown} не определено</strong><small>Реализация частичная; это не процент соответствия СТУ</small></div></div>
-    <div class="score-card"><span class="metric-icon error">${icon('alert')}</span><div><span class="score-label">Нарушения</span><strong>${violations}</strong><small>Требуют исправления</small></div></div>
-    <div class="score-card"><span class="metric-icon warning">${icon('eye')}</span><div><span class="score-label">Не удалось проверить</span><strong>${nextReport.coverage.unknown}</strong><small>Свойство или область неизвестны</small></div></div>
-    <div class="score-card"><span class="metric-icon ok">${icon('check')}</span><div><span class="score-label">Проверено свойств</span><strong>${checked}</strong><small>По структуре DOCX</small></div></div>`;
+  const checked=confirmedChecks(nextReport.results);
+  const violations=visibleViolations(nextReport.results).length;
+  const passed=checked.filter(r=>r.status==='pass').length;
+  document.querySelector('#reportTitle')!.textContent=currentFileName;
+  document.querySelector('#reportMeta')!.textContent=`${checked.length} подтверждённых проверок · ${violations} нарушений · ${nextReport.stats.paragraphs} абзацев · ${nextReport.stats.tables} таблиц · ${nextReport.stats.images} изображений`;
+  document.querySelector('#scoreGrid')!.innerHTML=`
+    <div class="score-card score-main"><div class="score-ring" style="--score:360deg"><span>${violations}</span></div><div><span class="score-label">Подтверждённые нарушения</span><strong>${violations===0?'Нарушений не найдено':'Требуют исправления'}</strong><small>По автоматически проверенным свойствам</small></div></div>
+    <div class="score-card"><span class="metric-icon ok">${icon('check')}</span><div><span class="score-label">Соответствий</span><strong>${passed}</strong><small>Подтверждённых проверок</small></div></div>
+    <div class="score-card"><span class="metric-icon ok">${icon('file')}</span><div><span class="score-label">Проверено свойств</span><strong>${checked.length}</strong><small>По структуре DOCX</small></div></div>`;
   const meta=document.querySelector('#reportMeta')!;
-  const info=document.createElement('p');info.id='profileReport';info.textContent=`Профиль ${nextReport.profile?.id}@${nextReport.profile?.version} · ${nextReport.profile?.catalogVersion}. Встроенные общие требования СТУ. Не указан контекст: ${['documentMode','medium'].filter(k=>!(nextReport.profile as any)?.[k]).join(', ')||'нет'}. Каталог: ${CATALOG.rules.length} норм; ${EXCLUSIONS.length} субъективных фрагментов исключены. Внешние артефакты требуют отдельного подтверждения.`;meta.append(info);
-  if(nextReport.profileConflicts?.length){const conflicts=document.createElement('p');conflicts.textContent=nextReport.profileConflicts.join('; ');meta.append(conflicts);}
-  const groups=document.createElement('details');groups.id='groupCoverage';const heading=document.createElement('summary');heading.textContent='Группы требований и недостающие возможности';groups.append(heading);
-  for(const [key,label] of Object.entries(categoryLabels)){const norms=CATALOG.rules.filter(r=>r.category===key);const pending=new Set(nextReport.results.filter(r=>r.origin==='standard'&&r.category===key&&r.status==='unknown').map(r=>r.ruleId));const external=norms.filter(r=>r.evidence.includes('external-artifact'));const line=document.createElement('p');line.textContent=`${label}: ${norms.length} норм; ${pending.size} не проверены; ${external.length} требуют внешних материалов.`;groups.append(line);}
-  meta.append(groups);
+  const info=document.createElement('p');info.id='profileReport';info.textContent='Встроенные общие требования СТУ. Показаны только подтверждённые результаты автоматической проверки. Проверка частичная.';meta.append(info);
   const recognized=nextReport.document.structure?.elements.filter(e=>e.confidence==='confirmed')??[];
   if(recognized.length){
    const details=document.createElement('details');details.id='documentStructure';
@@ -200,13 +193,13 @@ function renderReport(nextReport: CheckReport) {
 }
 
 function renderFilters(nextReport: CheckReport) {
-  const categories = (Object.keys(categoryLabels) as Category[]).filter((category) => nextReport.findings.some((f) => f.category === category));
+  const violations=visibleViolations(nextReport.results);
+  const categories = (Object.keys(categoryLabels) as Category[]).filter(category=>violations.some(r=>r.category===category));
   document.querySelector('#filters')!.innerHTML = `
     <span class="filter-title">РАЗДЕЛЫ ОТЧЁТА</span>
-    <button class="filter ${activeFilter === 'all' ? 'active' : ''}" data-filter="all"><span>Все замечания</span><b>${nextReport.findings.length}</b></button>
-    ${categories.map((category) => `<button class="filter ${activeFilter === category ? 'active' : ''}" data-filter="${category}"><span>${categoryLabels[category]}</span><b>${nextReport.findings.filter((f) => f.category === category).length}</b></button>`).join('')}
-    <button class="filter ${activeFilter==='recommendations'?'active':''}" data-filter="recommendations"><span>Рекомендации</span><b>${nextReport.results.filter(r=>r.modality==='recommendation'&&r.status==='fail').length}</b></button>
-    <button class="filter manual ${activeFilter === 'manual' ? 'active' : ''}" data-filter="manual"><span>Проверить вручную</span><b>${nextReport.manualChecks.length}</b></button>`;
+    <button class="filter ${activeFilter === 'all' ? 'active' : ''}" data-filter="all"><span>Все замечания</span><b>${violations.length}</b></button>
+    ${categories.map((category) => `<button class="filter ${activeFilter === category ? 'active' : ''}" data-filter="${category}"><span>${categoryLabels[category]}</span><b>${violations.filter(r=>r.category===category).length}</b></button>`).join('')}
+    `;
   document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((button) => button.addEventListener('click', () => {
     activeFilter = button.dataset.filter as typeof activeFilter;
     renderFilters(nextReport);
@@ -246,10 +239,10 @@ function quoteHtml(f:Finding):string {
 }
 function renderFindings(nextReport: CheckReport) {
  const container=document.querySelector('#findings')!;
- const items=nextReport.results.filter(r=>activeFilter==='manual'?r.status==='unknown':activeFilter==='recommendations'?r.modality==='recommendation'&&r.status==='fail':r.status==='fail'&&r.modality!=='recommendation'&&r.modality!=='permission'&&(activeFilter==='all'||r.category===activeFilter));
- container.innerHTML=`<div class="list-head"><h2>${activeFilter==='manual'?'Не удалось проверить':activeFilter==='recommendations'?'Отклонения от рекомендаций':'Замечания'}</h2><span>${items.length} мест</span></div>`+
- [...groupResults(items).values()].map(group=>`<details class="finding-group" ${group[0].origin==='standard'&&group[0].status==='unknown'?'':'open'}><summary>${escapeHtml(group[0].origin==='standard'&&group[0].status==='unknown'?`${group[0].reasonCode}: ${group[0].explanation}`:group[0].title)} — ${group.length} мест</summary>${group.map(r=>findingCard(resultFinding(r,nextReport.results.indexOf(r)))).join('')}</details>`).join('')+
- (!items.length?'<div class="empty-state"><h3>Замечаний не найдено</h3><p>Проверка частичная. Непроверенные свойства доступны в разделе «Проверить вручную».</p></div>':'');
+ const items=visibleViolations(nextReport.results).filter(r=>activeFilter==='all'||r.category===activeFilter);
+ container.innerHTML=`<div class="list-head"><h2>Подтверждённые нарушения</h2><span>${items.length} мест</span></div>`+
+ [...groupResults(items).values()].map(group=>`<details class="finding-group" open><summary>${escapeHtml(group[0].title)} — ${group.length} мест</summary>${group.map(r=>findingCard(resultFinding(r,nextReport.results.indexOf(r)))).join('')}</details>`).join('')+
+ (!items.length?'<div class="empty-state"><h3>Подтверждённых нарушений не найдено</h3><p>Проверка выполнена по доступным автоматическим правилам и не доказывает соответствие всем требованиям СТУ.</p></div>':'');
  container.querySelectorAll<HTMLButtonElement>('.copy-quote').forEach(button=>button.addEventListener('click',async()=>{
   const r=nextReport.results[Number(button.dataset.result)], range=r.at?.range;
   if(!range || r.paragraphText===undefined) return;
@@ -279,5 +272,4 @@ document.querySelector('#downloadButton')!.addEventListener('click', () => {
 });
 
 document.querySelector('#downloadJson')!.addEventListener('click',()=>{if(report)downloadJson('dockcheck-report.json',JSON.parse(exportReportJson(report)));});
-document.querySelector('#downloadDiagnostics')!.addEventListener('click',()=>{if(report)downloadJson('dockcheck-diagnostics.json',JSON.parse(exportReportJson(report,{diagnostics:true})));});
 function downloadJson(name:string,value:unknown){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download=name;link.click();URL.revokeObjectURL(url);}
