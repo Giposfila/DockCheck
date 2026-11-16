@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { CATALOG } from '../src/requirements/catalog';
 import { DEFAULT_PROFILE, parseProfile } from '../src/requirements/profile';
-import { evaluateRequirements, applicability, profileFacts } from '../src/requirements/engine';
+import { evaluateRequirements as evaluateCatalog, applicability, profileFacts } from '../src/requirements/engine';
 import { evaluate, validateCatalog } from '../src/requirements/schema';
 import { evaluateRelation } from '../src/requirements/relations';
 import { FACT_REGISTRY } from '../src/requirements/facts';
@@ -140,3 +140,8 @@ describe('requirements audit regression coverage', () => {
         expect(() => assessTraceability(atoms, [...d, ...d], [r])).toThrow();
     });
 });
+
+// Historical full-catalog tests keep validating the archived normative data.
+function evaluateRequirements(...args: Parameters<typeof evaluateCatalog>) {
+ return evaluateCatalog(args[0], args[1], args[2], CATALOG.rules);
+}

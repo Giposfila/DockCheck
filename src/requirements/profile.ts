@@ -68,7 +68,7 @@ export function parseProfile(input:unknown):WorkProfile {
  if(value.formatting!==undefined){validateFormatting(value.formatting);if(!value.requisites.localFormattingSource?.trim())throw Error('Нужен источник локального оформления');}
  return structuredClone(value) as WorkProfile;
 }
-export function profileConflicts(p:WorkProfile):string[]{const conflicts=p.localRequirements.filter(l=>JSON.stringify(l.assertion)!==JSON.stringify(CATALOG.rules.find(r=>r.id===l.ruleId)!.assertion)).map(l=>`${l.id}: отличается от ${l.ruleId}; источник: ${l.source}`);if(p.formatting)conflicts.push('Локальный шаблон оформления: результаты сравнения отделены от исходного СТУ');if(p.approvalVariant==='combined'&&p.consultants!==undefined&&p.consultants>2)conflicts.push('Форма Ж недопустима при числе консультантов больше двух');if(p.workKind&&p.documentMode&&(['diploma-project','course-project'].includes(p.workKind)!==(p.documentMode==='framed')))conflicts.push('Режим рамки противоречит виду работы (7.1.2–7.1.3)');return conflicts;}
+export function profileConflicts(p:WorkProfile):string[]{const conflicts=p.localRequirements.filter(l=>JSON.stringify(l.assertion)!==JSON.stringify(CATALOG.rules.find(r=>r.id===l.ruleId)!.assertion)).map(l=>`${l.id}: отличается от ${l.ruleId}; источник: ${l.source}`);if(p.formatting)conflicts.push('Локальный шаблон оформления: результаты сравнения отделены от исходного СТУ');return conflicts;}
 export function migrateLegacy(raw:unknown):{profile:WorkProfile;notice:string}{
  const profile=structuredClone(DEFAULT_PROFILE);
  // Only validate known old fields; the obsolete contents threshold is deliberately discarded.

@@ -17,7 +17,7 @@ export async function checkDocx(data: ArrayBuffer | Uint8Array, input: Requireme
  const results=evaluateRequirements(document,profile,checks(document,DEFAULT_REQUIREMENTS));
  if(profile.formatting)results.push(...comparisons.map(r=>({...r,origin:'local' as const,modality:'mandatory' as const,profileVersion:`${profile.id}@${profile.version}`,clause:profile.requisites.localFormattingSource??'Явный локальный шаблон',evidence:[{kind:'local-profile',detail:profile.requisites.localFormattingSource??'Явный локальный шаблон'},{kind:'ooxml',detail:'Разрешённое свойство документа',source:r.source}],explanation:r.explanation+'; сравнение с локальным шаблоном, структурная роль эвристическая'})));
  else results.push(...comparisons.filter(r=>r.ruleId.startsWith('document.')||r.ruleId==='list.number').map(r=>({...r,origin:'analysis' as const})));
- if(requirements.requirePageNumbers) for(const [i,s] of document.sections.entries()) {
+ if(profile.formatting && requirements.requirePageNumbers) for(const [i,s] of document.sections.entries()) {
   for(const variant of new Set(['default',...Object.keys(s.footers)])) {
    const part=s.footers[variant];
    const matches=document.paragraphs.filter(p=>part && p.id.startsWith(part+':') && (p.pageField || p.fieldStatus==='unsupported'));

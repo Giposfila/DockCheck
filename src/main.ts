@@ -4,7 +4,7 @@ import { pageLabel, unknownPage } from './analyzer/location';
 import { checkDocx, DEFAULT_REQUIREMENTS } from './checker';
 import { DEFAULT_PROFILE, PROFILE_STORAGE_KEY, LEGACY_STORAGE_KEY, formattingFor, migrateLegacy, parseProfile, profileConflicts, WORK_KINDS } from './requirements/profile';
 import type { WorkProfile } from './requirements/profile';
-import { CATALOG, COVERAGE, EXCLUSIONS } from './requirements/catalog';
+import { GENERAL_CATALOG as CATALOG, GENERAL_COVERAGE as COVERAGE, GENERAL_EXCLUSIONS as EXCLUSIONS } from './requirements/general';
 import type { Category, CheckReport, Finding, Requirements } from './types';
 
 const STANDARD_URL = 'https://iubp.sfu-kras.ru/sites/default/files/page_files/standart-oformleniya_otcheta_po_praktike_compressed.pdf';
@@ -285,7 +285,7 @@ function renderReport(nextReport: CheckReport) {
     <div class="score-card"><span class="metric-icon warning">${icon('eye')}</span><div><span class="score-label">Не удалось проверить</span><strong>${nextReport.coverage.unknown}</strong><small>Свойство или область неизвестны</small></div></div>
     <div class="score-card"><span class="metric-icon ok">${icon('check')}</span><div><span class="score-label">Проверено свойств</span><strong>${checked}</strong><small>По структуре DOCX</small></div></div>`;
   const meta=document.querySelector('#reportMeta')!;
-  const info=document.createElement('p');info.id='profileReport';info.textContent=`Профиль ${nextReport.profile?.id}@${nextReport.profile?.version} · ${nextReport.profile?.catalogVersion}. ${nextReport.profile?.formatting?'СТУ + локальный шаблон':'Исходный СТУ'}. Не указан контекст: ${['workKind','documentMode','medium'].filter(k=>!(nextReport.profile as any)?.[k]).join(', ')||'нет'}. Каталог: ${CATALOG.rules.length} норм; ${EXCLUSIONS.length} субъективных фрагментов исключены. Внешние артефакты требуют отдельного подтверждения.`;meta.append(info);
+  const info=document.createElement('p');info.id='profileReport';info.textContent=`Профиль ${nextReport.profile?.id}@${nextReport.profile?.version} · ${nextReport.profile?.catalogVersion}. ${nextReport.profile?.formatting?'Общие требования СТУ + локальный шаблон':'Общие требования СТУ'}. Не указан контекст: ${['documentMode','medium'].filter(k=>!(nextReport.profile as any)?.[k]).join(', ')||'нет'}. Каталог: ${CATALOG.rules.length} норм; ${EXCLUSIONS.length} субъективных фрагментов исключены. Внешние артефакты требуют отдельного подтверждения.`;meta.append(info);
   if(nextReport.profileConflicts?.length){const conflicts=document.createElement('p');conflicts.textContent=nextReport.profileConflicts.join('; ');meta.append(conflicts);}
   const groups=document.createElement('details');groups.id='groupCoverage';const heading=document.createElement('summary');heading.textContent='Группы требований и недостающие возможности';groups.append(heading);
   for(const [key,label] of Object.entries(categoryLabels)){const norms=CATALOG.rules.filter(r=>r.category===key);const pending=new Set(nextReport.results.filter(r=>r.origin==='standard'&&r.category===key&&r.status==='unknown').map(r=>r.ruleId));const external=norms.filter(r=>r.evidence.includes('external-artifact'));const line=document.createElement('p');line.textContent=`${label}: ${norms.length} норм; ${pending.size} не проверены; ${external.length} требуют внешних материалов.`;groups.append(line);}
@@ -428,7 +428,7 @@ document.querySelector('#requirementsForm')!.addEventListener('submit', (event) 
 });
 document.querySelector('#downloadJson')!.addEventListener('click',()=>{if(report)downloadJson('dockcheck-report.json',JSON.parse(exportReportJson(report)));});
 function downloadJson(name:string,value:unknown){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download=name;link.click();URL.revokeObjectURL(url);}
-document.querySelector('#exportCatalog')!.addEventListener('click',async()=>{const {SOURCE_INDEX,SOURCE_COVERAGE}=await import('./requirements/sourceCoverage');downloadJson('dockcheck-catalog.json',{schemaVersion:1,catalog:CATALOG,coverage:COVERAGE,exclusions:EXCLUSIONS,sourceIndex:SOURCE_INDEX,sourceCoverage:SOURCE_COVERAGE});});
+document.querySelector('#exportCatalog')!.addEventListener('click',()=>{downloadJson('dockcheck-catalog.json',{schemaVersion:1,scope:'general',catalog:CATALOG,coverage:COVERAGE,exclusions:EXCLUSIONS});});
 document.querySelector('#exportProfile')!.addEventListener('click',()=>downloadJson('dockcheck-profile.json',profile));
 document.querySelector('#importProfile')!.addEventListener('change',async event=>{const input=event.target as HTMLInputElement;try{const file=input.files?.[0];if(!file)return;if(file.size>1024*1024)throw Error('Профиль больше 1 МиБ');const next=parseProfile(JSON.parse(await file.text()));await applyProfile(next);}catch(e){showToast(e instanceof Error?e.message:'Неверный профиль',true);}finally{input.value='';}});
 document.querySelector('#resetSettings')!.addEventListener('click',()=>{localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(LEGACY_STORAGE_KEY);location.reload();});
