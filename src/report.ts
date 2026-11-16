@@ -1,10 +1,12 @@
 import type { CheckReport, CheckResult, Finding } from './types';
 import { pageLabel, unknownPage } from './analyzer/location';
+import { GENERAL_RULES } from './requirements/general';
 export const statusLabels = {pass:'Проверено',fail:'Нарушение',unknown:'Не удалось проверить',not_applicable:'Не применяется'};
 export function displayValue(value: unknown, unit?:string): string {
  const units:Record<string,string>={pt:'пт',mm:'мм',multiplier:'×',count:'шт.'};
  const names:Record<string,string>={both:'по ширине',center:'по центру',left:'слева',right:'справа',true:'да',false:'нет'};
- const v=Array.isArray(value)?value.join(' или '):value===null||value===undefined?'не определено':names[String(value)] ?? String(value);
+ const number=(n:number)=>Number(n.toFixed(3)).toString();
+ const v=Array.isArray(value)?value.map(x=>typeof x==='number'?number(x):x).join(' или '):value===null||value===undefined?'не определено':typeof value==='number'?number(value):names[String(value)] ?? String(value);
  return `${v}${unit ? ` ${units[unit] ?? unit}`:''}`;
 }
 export function resultFinding(r:CheckResult,index:number):Finding {
@@ -15,9 +17,22 @@ export function groupResults(results:CheckResult[]):Map<string,CheckResult[]> {
  for(const r of results) {const key=r.origin==='standard'&&r.status==='unknown'?`unknown:${r.reasonCode}`:`${r.status}:${r.ruleId}`;const group=groups.get(key) ?? [];group.push(r);groups.set(key,group);}
  return groups;
 }
-export function exportReportJson(report:CheckReport):string {return JSON.stringify({schemaVersion:1,report},null,2);}
-export function exportReport(report:CheckReport):string {
- return `ДОКЧЕК — СРАВНЕНИЕ С НАСТРАИВАЕМЫМ ПРОФИЛЕМ\nФайл: ${report.fileName ?? ''}\nПроверено: ${report.checkedAt}\nПрофиль: ${report.profile?.id??'legacy'}@${report.profile?.version??'1'}; каталог: ${report.profile?.catalogVersion??'не указан'}\nУстаревший отчёт: ${report.stale??false}\nКонфликты: ${JSON.stringify(report.profileConflicts??[])}\nУчёт норм каталога: ${JSON.stringify(report.catalogCoverage??{})}\nСтатусы результатов (не процент соответствия СТУ): ${JSON.stringify(report.coverage)}\n\n`+report.results.map((r,i)=>{
+const generalIds=new Set(GENERAL_RULES.map(r=>r.id));
+export function visibleViolations(results:CheckResult[]):CheckResult[] {
+ return results.filter(r=>r.status==='fail'&&r.origin==='standard'&&generalIds.has(r.ruleId)&&r.category!=='structure'&&
+  (r.modality==='mandatory'||r.modality==='prohibition')&&r.applicability===true&&!r.reasonCode&&r.evidence?.some(e=>e.kind==='ooxml'));
+}
+interface ExportOptions {diagnostics?:boolean}
+function exportView(report:CheckReport,options:ExportOptions) {
+ if(options.diagnostics||report.profile?.formatting)return report;
+ const results=visibleViolations(report.results);
+ const {manualChecks,...rest}=report;
+ return {...rest,results,findings:results.map(resultFinding)};
+}
+export function exportReportJson(report:CheckReport,options:ExportOptions={}):string {return JSON.stringify({schemaVersion:1,report:exportView(report,options)},null,2);}
+export function exportReport(report:CheckReport,options:ExportOptions={}):string {
+ const view=exportView(report,options);
+ return `ДОКЧЕК — ${report.profile?.formatting?'СРАВНЕНИЕ С ЛОКАЛЬНЫМ ШАБЛОНОМ':'ПРОВЕРКА ПО СТУ СФУ 7.5–07–2021'}\nФайл: ${report.fileName ?? ''}\nПроверено: ${report.checkedAt}\nПрофиль: ${report.profile?.id??'legacy'}@${report.profile?.version??'1'}; каталог: ${report.profile?.catalogVersion??'не указан'}\nУстаревший отчёт: ${report.stale??false}\nКонфликты: ${JSON.stringify(report.profileConflicts??[])}\nУчёт норм каталога: ${JSON.stringify(report.catalogCoverage??{})}\nСтатусы результатов (не процент соответствия СТУ): ${JSON.stringify(report.coverage)}\nПодтверждённых нарушений: ${visibleViolations(report.results).length}\n\n`+view.results.map((r,i)=>{
   const f=resultFinding(r,i);
   return `${i+1}. [${statusLabels[r.status]}] ${f.title}\n${r.location}\n${pageLabel(r.at?.page ?? unknownPage())}\nРасположение: ${JSON.stringify(r.at ?? {area:'document',page:unknownPage()})}\nЦитата: ${f.excerpt===undefined?'Текстовая цитата неприменима':JSON.stringify(f.excerpt)}\nПолный абзац: ${r.paragraphText===undefined?'неприменим':JSON.stringify(r.paragraphText)}\nФакт: ${f.actual}; требование: ${f.expected}\nИсточник: ${JSON.stringify(r.source)}\nОбласть: ${r.scope ?? r.category}; свойство: ${r.property ?? r.ruleId}; допуск: ${r.tolerance ?? 'не применяется'}\nНормативный источник: ${JSON.stringify(r.normSource??null)}\nПроисхождение: ${r.origin??'local'}; модальность: ${r.modality??'не указана'}; профиль: ${r.profileVersion??'не указан'}\nПрименимость: ${r.applicability??'unknown'}; причина: ${r.reasonCode??'не требуется'}\nДоказательства: ${JSON.stringify(r.evidence??[])}\nПункт: ${r.clause}\n${r.explanation}\n${r.recommendation}`;
  }).join('\n\n')+'\n\nЧастичная проверка оформления не доказывает соответствие документа.';

@@ -76,9 +76,9 @@ describe('declarative applicability and proof',()=>{
   expect(evaluateRequirements(m,{...profile,documentMode:'framed'},[]).find(r=>r.ruleId===`stu.margin.${orientation}.left`)?.status).toBe('not_applicable');
   expect(checks(m,DEFAULT_REQUIREMENTS).find(r=>r.ruleId==='section.margin.left')?.status).toBe('fail');
  });
- it('does not promote a matching heading or saved page into proof',()=>{
+ it('recognizes a standard structural heading without claiming a title or confirmed pages',()=>{
   const m=model();m.paragraphs=[paragraph('СОДЕРЖАНИЕ')];m.structure=describeStructure(m);
-  expect(m.structure.elements[0].confidence).toBe('candidate');
+  expect(m.structure.elements[0]).toMatchObject({kind:'contents',confidence:'confirmed'});
   const results=evaluateRequirements(m,{...structuredClone(DEFAULT_PROFILE),workKind:'bachelor'},[]);
   expect(results.find(r=>r.ruleId==='stu.structure.title')?.status).toBe('unknown');
   expect(results.find(r=>r.ruleId==='stu.abstract.pages')).toMatchObject({status:'unknown',reasonCode:'needs_layout'});
@@ -110,7 +110,7 @@ describe('new report and analytical evidence',()=>{
   const data=await readFile(new URL('./fixtures/incorrect.docx',import.meta.url));
   const report=await checkDocx(data);expect(report.profile?.id).toBe('work');expect(report.results.find(r=>r.ruleId==='stu.text.font')).toMatchObject({status:'unknown',reasonCode:'ambiguous_role',origin:'standard',normSource:{clause:'7.1.1',pdfPage:14}});
   const local=await checkDocx(data,DEFAULT_REQUIREMENTS);expect(local.findings.some(f=>f.origin==='local')).toBe(true);
-  const text=exportReport(report);for(const expected of ['Нормативный источник','Доказательства','ambiguous_role','stu-2021.2'])expect(text).toContain(expected);
+  const text=exportReport(report,{diagnostics:true});for(const expected of ['Нормативный источник','Доказательства','ambiguous_role','stu-2021.2'])expect(text).toContain(expected);
   expect(JSON.parse(exportReportJson(report))).toMatchObject({schemaVersion:1,report:{profile:{schemaVersion:2}}});
   expect(report.stats.estimatedPages).toBeUndefined();
  });

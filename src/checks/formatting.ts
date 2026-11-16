@@ -30,7 +30,11 @@ export function checks(model: DocumentModel, req: Requirements): CheckResult[] {
    if(p.role==='heading') {scopeUnknown=false;test('heading.bold','Полужирное оформление заголовка',p.location,r.properties.bold,true,v=>v===true,'heading');scopeUnknown=!(req.textRoles ?? ['body']).includes(p.role);}
   }
   at=p.at;
-  if(p.role==='list') {scopeUnknown=false;at={...p.at,range:undefined};paragraphText=undefined;test('list.number','Видимый номер и перезапуск списка',p.location,p.properties.visibleNumber,'Ручная проверка',()=>false,'structure');at=p.at;paragraphText=p.text;}
+  if(p.role==='list') {
+   scopeUnknown=false;
+   const number=p.properties.visibleNumber??unknown();
+   test('list.number','Видимый номер и перезапуск списка',p.location,{...number,status:'unknown',reason:`${number.reason??'Номер не определён'}; вычисление номера не доказывает нарушение: нормативная проверка нумерации не реализована`},'Ручная проверка',()=>false,'structure');
+  }
   if(!p.text.trim() || p.role!=='body') continue;
   if(req.requireJustified) test('paragraph.align','Выравнивание по ширине',p.location,p.properties.align,'both',v=>v==='both');
   const indent=p.properties.hanging?.status==='resolved' ? {...p.properties.hanging,value:-Number(p.properties.hanging.value)}:p.properties.firstLine;

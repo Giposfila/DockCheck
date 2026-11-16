@@ -49,7 +49,7 @@ it('applies table bands before edges and corners across inherited styles',async(
 it('uses logical gridSpan columns and cnfStyle overrides',async()=>{
  const styles=defaults+'<w:style w:type="table" w:styleId="T"><w:tblStylePr w:type="lastCol"><w:rPr><w:sz w:val="32"/></w:rPr></w:tblStylePr><w:tblStylePr w:type="firstRow"><w:rPr><w:b/></w:rPr></w:tblStylePr></w:style>';
  const r=await report(`<w:tbl><w:tblPr><w:tblStyle w:val="T"/><w:tblLook w:lastColumn="1" w:firstRow="1"/></w:tblPr><w:tblGrid><w:gridCol/><w:gridCol/><w:gridCol/></w:tblGrid><w:tr><w:tc><w:tcPr><w:gridSpan w:val="3"/><w:cnfStyle w:firstRow="0"/></w:tcPr>${p()}</w:tc></w:tr></w:tbl>`,styles);
- expect(r.document.paragraphs[0].runs[0].properties.fontSize.value).toBe(16);expect(r.document.paragraphs[0].runs[0].properties.bold.value).toBeNull();
+ expect(r.document.paragraphs[0].runs[0].properties.fontSize.value).toBe(16);expect(r.document.paragraphs[0].runs[0].properties.bold).toMatchObject({value:false,status:'resolved',source:{property:'OOXML-default:bold'}});
 });
 it.each(['vMerge','hMerge'])('retains unknown for conditional %s and normalizes geometry units',async merge=>{
  const r=await report(`<w:tbl><w:tblPr><w:tblStyle w:val="T"/><w:tblW w:type="pct" w:w="2500"/></w:tblPr><w:tr><w:trPr><w:trHeight w:val="720" w:hRule="exact"/><w:tblHeader/></w:trPr><w:tc><w:tcPr><w:${merge} w:val="restart"/><w:tcW w:type="dxa" w:w="1440"/><w:tcBorders><w:top w:val="single" w:sz="8"/></w:tcBorders></w:tcPr>${p()}</w:tc></w:tr></w:tbl>`,defaults+'<w:style w:type="table" w:styleId="T"/>');

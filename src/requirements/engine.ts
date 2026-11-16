@@ -1,3 +1,4 @@
+import { evaluateHeadings } from './headings';
 import { GENERAL_RULES } from './general';
 import type { DocumentModel } from '../analyzer/model';
 import { unknownPage } from '../analyzer/location';
@@ -17,8 +18,10 @@ export function profileFacts(profile:WorkProfile,model:DocumentModel):Record<str
  for(const [key,count] of [['tables',model.tables],['images',model.images],['formulas',model.objects.filter(o=>o.kind==='formula').length],['lists',model.paragraphs.filter(p=>p.role==='list').length],['headings',model.paragraphs.filter(p=>p.role==='heading').length]] as const)facts[`has.${key}`]=count>0?true:model.unsupported.length?undefined:false;
  if(profile.workKind&&['master','diploma-project','diploma-work','bachelor'].includes(profile.workKind)&&profile.approvalVariant==='combined')facts.titleForm='Ж';
  if(profile.approvalVariant==='separate')facts.approvalForm='Е';
- // Candidate structure is deliberately not a confirmed presence or absence.
+ // Confirmed recognized elements establish presence; absence is not inferred from candidates.
  for(const kind of ['introduction','conclusion','contents','abbreviations','bibliography','appendices','citations','citation-inline','citation-footnote','citation-list','handwritten-formulas','embedded-drawings'])facts[`has.${kind}`]=undefined;
+ for(const kind of ['introduction','conclusion','contents','abbreviations','bibliography','appendices'])if(model.structure?.elements.some(e=>e.confidence==='confirmed'&&e.kind===(kind==='appendices'?'appendix':kind)))facts[`has.${kind}`]=true;
+ if(model.structure?.elements.some(e=>e.confidence==='confirmed'&&e.kind==='body'))facts.pointsWithSubpoints=new Set(model.structure.elements.filter(e=>e.kind==='subpoint'&&e.parentId).map(e=>e.parentId)).size;
  for(const [kind,artifactKind] of [['drawings','drawing'],['posters','poster'],['slides','slides'],['separateAppendices','appendix']] as const)if(profile.artifactManifest?.some(a=>a.kind===artifactKind))facts[`has.${kind}`]=true;
  if(profile.artifactManifest?.some(a=>a.kind==='appendix'))facts['has.appendices']=true;
  return facts;
@@ -37,7 +40,7 @@ export function predicate(a:Assertion,actual:unknown,tolerance=0):boolean|'unkno
  // Relations and patterns require dedicated validators. Imported data is never executed.
  default:return 'unknown';}
 }
-function reason(rule:Rule):CheckResult['reasonCode'] {return rule.evidence.includes('external-artifact')?'external_artifact':rule.evidence.includes('layout')?'needs_layout':rule.evidence.includes('external-standard')?'external_standard':rule.evidence.includes('structure')?'ambiguous_role':'unimplemented';}
+function reason(rule:Rule):CheckResult['reasonCode'] {return rule.evidence.includes('external-artifact')?'external_artifact':rule.evidence.includes('layout')?'needs_layout':rule.evidence.includes('external-standard')?'external_standard':'unimplemented';}
 const reasons:Record<NonNullable<CheckResult['reasonCode']>,string>={unknown_context:'Неизвестен контекст применения правила',ambiguous_role:'Структурная роль или связь не подтверждена; совпадение строки недостаточно',missing_fact:'Не найден достоверный факт документа',unsupported:'Конструкция не поддержана',needs_layout:'Нужна подтверждённая вёрстка с картой исходных объектов; сохранённые разрывы не доказывают пагинацию',external_standard:'Полный текст внешнего стандарта и нормативный модуль отсутствуют',external_artifact:'Нужен отдельный артефакт или подтверждение процедуры; один DOCX не даёт доказательств',unimplemented:'Предикат нормы ещё не реализован'};
 function result(rule:Rule,profile:WorkProfile,facts:Record<string,unknown>):CheckResult{
  const applies=applicability(rule,facts);const code=applies==='unknown'?'unknown_context':reason(rule);
@@ -48,6 +51,14 @@ export function evaluateRequirements(model:DocumentModel,profile:WorkProfile,for
  const facts=profileFacts(profile,model),results:CheckResult[]=[];
  for(const rule of rules){
   const base=result(rule,profile,facts);
+  const headings=evaluateHeadings(rule,model,base);
+  if(headings){results.push(...headings);continue;}
+  if(rule.id==='stu.structure.title'||rule.id==='stu.structure.body'){
+   const kind=rule.id.endsWith('.title')?'title':'body';
+   const element=model.structure?.elements.find(e=>e.kind===kind&&e.confidence==='confirmed');
+   if(element){const p=model.paragraphs.find(p=>p.id===element.paragraphIds[0]);results.push({...base,status:'pass',applicability:true,actual:true,reasonCode:undefined,at:element.at,paragraphText:p?.text,location:p?.location??base.location,evidence:[{kind:'classification',detail:element.evidence.join('; ')}],explanation:'Элемент распознан по документу; наличие не подтверждает полноту содержания или правильность реквизитов'});continue;}
+   base.reasonCode='missing_fact';base.explanation=kind==='title'?'Титульный блок не распознан по доступным признакам; отсутствие не доказано':'Область основной части не распознана; отсутствие не доказано';
+  }
   if(rule.target==='artifact'){
    const sheetRules=rule.id.startsWith('stu.stamp.')||rule.id.startsWith('stu.fold.')||rule.id==='stu.appendix.format-eligibility';
    if(sheetRules){
@@ -68,6 +79,7 @@ export function evaluateRequirements(model:DocumentModel,profile:WorkProfile,for
      results.push({...r,...base,at:r.at,paragraphText:r.paragraphText,location:r.location,source:r.source,actual:r.actual,expected:rule.assertion.value,tolerance:r.tolerance,property:rule.property,applicability:applies,
       status:applies===false?'not_applicable':applies==='unknown'?'unknown':r.status,
       reasonCode:applies===false?undefined:applies==='unknown'?'ambiguous_role':r.status==='unknown'?'missing_fact':undefined,
+      recommendation:applies===true?r.recommendation:base.recommendation,
       explanation:applies===false?'Область объекта исключает роль основного текста':applies==='unknown'?reasons.ambiguous_role:r.explanation,
       evidence:[{kind:'ooxml',detail:`Сохранён исходный факт или его неопределённость: ${r.explanation}`,source:r.source},{kind:'classification',detail:p?.roleEvidence?.basis.join('; ')??'Роль неизвестна'}]});
     }

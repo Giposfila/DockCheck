@@ -39,7 +39,7 @@ export function validateFormatting(v:unknown):asserts v is Requirements {
  for(const key of ['portraitMarginsMm','landscapeMarginsMm']){const m=v[key];if(key==='landscapeMarginsMm'&&m===undefined)continue;if(!record(m))throw Error('Неверные поля');keys(m,['top','bottom','left','right']);for(const s of ['top','bottom','left','right'])if(typeof m[s]!=='number'||!Number.isFinite(m[s])||m[s]<0)throw Error('Неверное поле страницы');}
  for(const k of ['requireA4','requireJustified','requirePageNumbers'])if(typeof v[k]!=='boolean')throw Error('Неверный флаг');
  if(!Array.isArray(v.requiredSections)||!v.requiredSections.every(x=>typeof x==='string'))throw Error('Неверный состав');
- if(v.textRoles!==undefined&&(!Array.isArray(v.textRoles)||v.textRoles.some(x=>!['body','heading','table','footer','header','note','list','caption','textbox','unknown'].includes(x))))throw Error('Неверная роль');
+ if(v.textRoles!==undefined&&(!Array.isArray(v.textRoles)||v.textRoles.some(x=>!['body','heading','table','footer','header','note','list','caption','textbox','title','contents','bibliography','unknown'].includes(x))))throw Error('Неверная роль');
 }
 export function parseProfile(input:unknown):WorkProfile {
  if(!record(input))throw Error('Профиль должен быть объектом');

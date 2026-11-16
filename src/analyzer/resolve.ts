@@ -1,4 +1,4 @@
-import { describeStructure, resolveVisibleNumbers } from './structure';
+import { classifyFormattingRoles, describeStructure, resolveVisibleNumbers } from './structure';
 import { all, attr, child, children, W, REL, type Package } from './package';
 import { extract } from './extract';
 import { tableStyle, tableGeometry } from './tables';
@@ -25,6 +25,8 @@ export async function analyze(pkg: Package): Promise<DocumentModel> {
  let tables = 0, images = 0, sectionNumber = 1;
  const paragraphCounts = new Map<string,number>();
  const tableIds = new Map<Element,number>();
+ // Complex TOC fields can span paragraphs. Keep their stack per story, including nested PAGEREF.
+ const storyFields=new Map<string,{instruction:string}[]>();
  function address(node:Element,part:string,paragraph=true): Paragraph['at'] {
   const ancestors:Element[]=[];
   for(let n:Node|null=node.parentNode;n && n.nodeType===1;n=n.parentNode) ancestors.unshift(n as Element);
@@ -77,8 +79,8 @@ export async function analyze(pkg: Package): Promise<DocumentModel> {
    if (p.numId && p.numId.value!=='0') { list=numbering(nums,String(p.numId.value),String(p.level?.value ?? '0'),stylesXml); p=overlay(style.p,table.p,base.p,list.p,extract(pp,part)); role='list'; }
    invalid ||= !!list?.invalid;
    if (invalid) limitations.add('Цикл, отсутствующий стиль, уровень списка или исправления свойств');
-   const namedStyle=stylesXml && all(stylesXml,'style').find(s=>attr(s,'styleId')===id);
-   const styleName=attr(child(namedStyle,'name'),'val') ?? id ?? '';
+   const styleNames=style.names(id);
+   const styleName=styleNames.join(' / ');
    const heading = /heading|заголов/i.test(styleName) || p.outlineLevel?.status==='resolved' && Number(p.outlineLevel.value)<9;
    const effectiveRole=atRole();
    function atRole():Paragraph['role'] {
@@ -87,9 +89,14 @@ export async function analyze(pkg: Package): Promise<DocumentModel> {
     return heading?'heading':role;
    }
    const at=address(node,part);
-   const paragraph: Paragraph = {at,savedBreaks:[],explicit:extract(pp,part),fieldStatus:'none',pageField:all(node,'fldSimple').some(n=>/^\s*PAGE(?:\s|$)/i.test(attr(n,'instr') ?? '')),id:`${part}:p${paragraphs.length+1}`,location:locationLabel(at),text:'',role:effectiveRole,properties:p,runs:[]};
+   const paragraph: Paragraph = {styleNames,at,savedBreaks:[],explicit:extract(pp,part),fieldStatus:'none',pageField:all(node,'fldSimple').some(n=>/^\s*PAGE(?:\s|$)/i.test(attr(n,'instr') ?? '')),id:`${part}:p${paragraphs.length+1}`,location:locationLabel(at),text:'',role:effectiveRole,properties:p,runs:[]};
    at.paragraphId=paragraph.id;
    paragraph.location=locationLabel(at);
+   const storyKey=`${part}:${at.area}:${at.storyId??''}`;
+   const storyStack=storyFields.get(storyKey)??[];
+   storyFields.set(storyKey,storyStack);
+   const inContents=()=>storyStack.some(f=>/^\s*TOC(?:\s|$)/i.test(f.instruction));
+   paragraph.contentsField=inContents();
    const fields:{instruction:string;start:number}[]=[];
    function runs(n: Element) {
     if (n!==node && ['p','txbxContent'].includes(n.localName)) return;
@@ -113,17 +120,26 @@ export async function analyze(pkg: Package): Promise<DocumentModel> {
      for(const c of children(n)) {
       if(c.localName==='fldChar') {
        const type=attr(c,'fldCharType');
+       if(type==='begin')storyStack.push({instruction:''});
+       if(inContents())paragraph.contentsField=true;
+       if(type==='end')storyStack.pop();
        if(type==='begin') {if(fields.length)paragraph.fieldStatus='unsupported';fields.push({instruction:'',start:paragraph.runs.length});}
        if(type==='end') {const f=fields.pop();if(f && /^\s*PAGE(?:\s|$)/i.test(f.instruction)) {paragraph.pageField=true;if(paragraph.fieldStatus!=='unsupported')paragraph.fieldStatus='resolved';for(const r of paragraph.runs.slice(f.start))r.pageField=true;}}
       }
-      if(c.localName==='instrText') {if(fields.length)fields.at(-1)!.instruction+=c.textContent ?? '';else paragraph.fieldStatus='unsupported';}
+      if(c.localName==='instrText') {
+       if(storyStack.length)storyStack.at(-1)!.instruction+=c.textContent??'';
+       if(inContents())paragraph.contentsField=true;
+       if(fields.length)fields.at(-1)!.instruction+=c.textContent ?? '';else paragraph.fieldStatus='unsupported';
+      }
      }
      let simple:Element|undefined;
      for(let a:Node|null=n.parentNode;a && a!==node;a=a.parentNode) if((a as Element).localName==='fldSimple')simple=a as Element;
+     if(simple&&/^\s*TOC(?:\s|$)/i.test(attr(simple,'instr')??''))paragraph.contentsField=true;
      const field=!!simple && /\bPAGE\b/i.test(attr(simple,'instr') ?? '') || /\bPAGE\b/i.test(all(n,'instrText').map(x=>x.textContent ?? '').join(''));
      if(/[\u0590-\u08ff]/u.test(text)) props.fontSize={...unknown('Для сложных письменностей требуется отдельное разрешение szCs и bidi'),status:'unsupported'};
      props.font=resolveFont(props,text || (field?'0':''),theme);
      const color=resolveColor(props,theme); if(color) props.color=color;
+     if(!invalid&&!rs.invalid&&!all(n,'rPrChange').length)for(const [key,value] of [['bold',false],['underline','none']] as const)props[key]??={value,status:'resolved',source:{part,property:`OOXML-default:${key}`}};
      if (invalid || rs.invalid || all(n,'rPrChange').length) for (const key of [...Object.keys(props),'font','fontSize','bold']) props[key]={...unknown(),status:'unsupported',reason:'Не разрешены стили, условная область таблицы или исправления'};
      for(const chunk of chunks) {
       const start=paragraph.text.length;const id=`${paragraph.id}:r${paragraph.runs.length+1}`;
@@ -207,6 +223,6 @@ export async function analyze(pkg: Package): Promise<DocumentModel> {
  for(const p of paragraphs){fixSource(p.properties);fixSource(p.explicit);for(const r of p.runs){fixSource(r.properties);fixSource(r.explicit);for(const span of r.fontRanges)if(span.property.source && sourcePaths[span.property.source.part])span.property={...span.property,source:{...span.property.source,part:sourcePaths[span.property.source.part]!}};}}
  for(const region of unsupported)limitations.add(region.reason);
  const model:DocumentModel={objects,paragraphs,sections,unsupported,limitations:[...limitations],tables,images};
- resolveVisibleNumbers(paragraphs);model.structure=describeStructure(model);
+ resolveVisibleNumbers(paragraphs);model.structure=describeStructure(model);classifyFormattingRoles(model);
  return model;
 }
