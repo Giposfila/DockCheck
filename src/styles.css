@@ -98,6 +98,17 @@ form fieldset { border:0; padding:24px 0; margin:0; border-bottom:1px solid var(
 .finding-card summary { cursor: pointer; }
 .finding-card blockquote { white-space: pre-wrap; overflow-wrap: anywhere; margin: 16px 0; padding: 12px; border-left: 3px solid #d3b15c; background: #faf7ef; max-height: 260px; overflow: auto; }
 .finding-card mark { background: #ffe49c; color: #332500; text-decoration: underline; text-decoration-thickness: 2px; }
+.quote-preview { position: relative; margin: 14px 0 18px; padding: 12px; border-left: 3px solid #d3b15c; border-radius: 0 8px 8px 0; background: #faf7ef; }
+.finding-card .quote-preview > blockquote { margin: 0; padding: 0; border: 0; background: transparent; max-height: none; overflow: visible; }
+.quote-actions { display: flex; justify-content: flex-end; align-items: flex-start; gap: 6px; margin-top: 10px; }
+.quote-actions .icon-button { width: 34px; height: 34px; border-radius: 8px; color: #696d65; background: var(--paper); }
+.quote-actions .icon-button:hover, .quote-context[open] > summary { color: var(--ink); background: #eae6d8; border-color: #c7b578; }
+.finding-card .quote-context { margin: 0; }
+.quote-context > summary { list-style: none; }
+.quote-context > summary::-webkit-details-marker { display: none; }
+.quote-context[open] { display: contents; }
+.quote-context[open] > blockquote { flex-basis: 100%; margin: 6px 0 0; background: var(--paper); }
+.quote-actions:has(.quote-context[open]) { flex-wrap: wrap; }
 .invisible-symbol { color: #76634d; border: 1px dotted currentColor; }
 .page-reference { font-size: 13px; color: #655a4b; }
 button:focus-visible, summary:focus-visible { outline: 3px solid #986b1b; outline-offset: 3px; }

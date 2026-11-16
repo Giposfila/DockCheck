@@ -1,6 +1,6 @@
 import './styles.css';
 import { exportReport, exportReportJson, groupResults, resultFinding } from './report';
-import { pageLabel, unknownPage } from './analyzer/location';
+import { pageLabel } from './analyzer/location';
 import { checkDocx, DEFAULT_REQUIREMENTS } from './checker';
 import { DEFAULT_PROFILE, PROFILE_STORAGE_KEY, LEGACY_STORAGE_KEY, formattingFor, migrateLegacy, parseProfile, profileConflicts, WORK_KINDS } from './requirements/profile';
 import type { WorkProfile } from './requirements/profile';
@@ -11,7 +11,7 @@ const STANDARD_URL = 'https://iubp.sfu-kras.ru/sites/default/files/page_files/st
 const STORAGE_KEY = PROFILE_STORAGE_KEY;
 let storageNotice='';
 
-const icon = (name: 'lock' | 'file' | 'upload' | 'settings' | 'check' | 'alert' | 'eye' | 'download' | 'close' | 'arrow') => {
+const icon = (name: 'lock' | 'file' | 'upload' | 'settings' | 'check' | 'alert' | 'eye' | 'download' | 'close' | 'arrow' | 'copy' | 'search') => {
   const paths: Record<typeof name, string> = {
     lock: '<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
     file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/>',
@@ -23,6 +23,8 @@ const icon = (name: 'lock' | 'file' | 'upload' | 'settings' | 'check' | 'alert' 
     download: '<path d="M12 3v12m0 0 5-5m-5 5-5-5"/><path d="M5 21h14"/>',
     close: '<path d="m6 6 12 12M18 6 6 18"/>',
     arrow: '<path d="M5 12h14m-5-5 5 5-5 5"/>',
+    copy: '<rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>',
+    search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
   };
   return `<svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name]}</svg>`;
 };
@@ -314,11 +316,10 @@ function findingCard(finding: Finding): string {
     <div class="finding-status">${finding.severity === 'error' ? icon('alert') : icon('eye')}</div>
     <div class="finding-body">
       <div class="finding-top"><span>${finding.origin==='local'?'Локальное сравнение':finding.modality==='recommendation'?'Рекомендация':finding.origin==='standard'?'СТУ':'Возможности анализа'} · ${categoryLabels[finding.category]} · п. ${escapeHtml(finding.clause)}</span><span class="location">${escapeHtml(finding.location)}</span></div>
-      <h3>${escapeHtml(finding.title)}</h3>
-      <p class="page-reference">${escapeHtml(pageLabel(finding.at?.page ?? unknownPage()))}</p>
+      ${finding.at?.page && finding.at.page.status !== 'unknown' ? `<p class="page-reference">${escapeHtml(pageLabel(finding.at.page))}</p>` : ''}
       ${quoteHtml(finding)}
+      <h3>${escapeHtml(finding.title)}</h3>
       ${finding.recommendation ? `<p>${escapeHtml(finding.recommendation)}</p>` : ""}
-      <details><summary>Источник свойства и требование</summary><p>${escapeHtml(finding.explanation ?? '')}</p><p>${escapeHtml(JSON.stringify(finding.source ?? 'Источник не определён'))}</p><p>${escapeHtml(finding.clause)}</p><p>Норма: ${escapeHtml(JSON.stringify(finding.normSource??null))}</p><p>Причина: ${escapeHtml(finding.reasonCode??'не требуется')}</p><p>Доказательства: ${escapeHtml(JSON.stringify(finding.evidence??[]))}</p></details>
       <div class="comparison"><div><span>СЕЙЧАС</span><p>${escapeHtml(finding.actual)}</p></div><div><span>ТРЕБУЕТСЯ</span><p>${escapeHtml(finding.expected)}</p></div></div>
     </div>
   </article>`;
@@ -330,12 +331,15 @@ function visibleText(text:string,spaces=false):string {
 }
 function quoteHtml(f:Finding):string {
  const range=f.at?.range, text=f.paragraphText;
- if(!range || text===undefined || !text.length) return '<p>Текстовая цитата неприменима: используйте расположение объекта.</p>';
- const start=Math.max(0,range.start-70),end=Math.min(text.length,range.end+70);
- const quote=(from:number,to:number,spaces=false)=>`${visibleText(text.slice(from,range.start),spaces)}<mark>${visibleText(text.slice(range.start,range.end),spaces)}</mark>${visibleText(text.slice(range.end,to),spaces)}`;
- return `<blockquote>${start?'…':''}${quote(start,end)}${end<text.length?'…':''}</blockquote>
- <details><summary>Полный абзац и невидимые символы</summary><blockquote>${quote(0,text.length,true)}</blockquote></details>
- <button class="button button-ghost copy-quote" data-result="${escapeHtml(f.id)}">Скопировать цитату для поиска</button>`;
+ if(!range || text===undefined || !text.length) return '';
+ const excerpt=text.slice(range.start,range.end);
+ const beginning=Array.from(excerpt).slice(0,180).join('');
+ return `<div class="quote-preview">
+   <blockquote>${visibleText(beginning)}${beginning.length<excerpt.length?'…':''}</blockquote>
+   <div class="quote-actions">
+     <button type="button" class="icon-button copy-quote" data-result="${escapeHtml(f.id)}" aria-label="Скопировать промежуток" title="Скопировать промежуток">${icon('copy')}</button>
+   </div>
+ </div>`;
 }
 function renderFindings(nextReport: CheckReport) {
  const container=document.querySelector('#findings')!;
@@ -347,7 +351,7 @@ function renderFindings(nextReport: CheckReport) {
   const r=nextReport.results[Number(button.dataset.result)], range=r.at?.range;
   if(!range || r.paragraphText===undefined) return;
   const text=r.paragraphText.slice(range.start,range.end);
-  try {await navigator.clipboard.writeText(text);showToast('Цитата скопирована. Вставьте её в поиск Word (Ctrl+F).');} catch {showToast('Буфер обмена недоступен. Выделите и скопируйте текст цитаты.',true);}
+  try {await navigator.clipboard.writeText(text);showToast('Промежуток скопирован');} catch {showToast('Не удалось скопировать промежуток',true);}
  }));
 }
 
